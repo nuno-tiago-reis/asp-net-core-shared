@@ -1,0 +1,144 @@
+###############################
+#     User-specific Files     #
+###############################
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+###############################
+# Visual Studio Build Results #
+###############################
+
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Bd]ld/
+[Bb]in/
+[Ll]og/
+[Oo]bj/
+
+###############################
+#  Visual Studio Cache Files  #
+###############################
+
+*.[Cc]ache
+
+###############################
+#   Visual Studio Profiler    #
+###############################
+
+*.psess
+*.sap
+*.vsp
+*.vspx
+
+###############################
+#     Visual Studio Code      #
+###############################
+
+/**/.vscode/
+
+###############################
+#     Visual Studio 2019      #
+###############################
+
+/**/.vs/
+
+###############################
+#     MSTest Test Results     #
+###############################
+
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+
+###############################
+#            NUnit            #
+###############################
+
+TestResult.xml
+*.VisualState.xml
+
+###############################
+#            NuGet            #
+###############################
+
+*.nupkg
+*.nuget.props
+*.nuget.targets
+
+**/packages/*
+!**/packages/build/
+**/Packages/*
+!**/Packages/build/
+
+###############################
+#          ReSharper          #
+###############################
+
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+###############################
+#          WebPublish         #
+###############################
+
+*.[Pp]ublish.xml
+*.azurePubxml
+*.pubxml
+*.publishproj
+
+###############################
+#           Others            #
+###############################
+
+*.dbmdl
+*.dbproj.schemaview
+*.pfx
+*.publishsettings
+
+###############################
+#           Angular           #
+###############################
+
+**/dist
+**/tmp
+**/out-tsc
+**/node_modules
+
+###############################
+#           GhostDoc          #
+###############################
+
+*.GhostDoc.xml
+
+###############################
+#          SQLServer          #
+###############################
+
+*.mdf
+*.ldf
+
+###############################
+#           System            # 
+###############################
+
+.DS_Store
+Thumbs.db
+
+###############################
+#        Miscellaneous        #
+###############################
+
+*.min.*
+*.xml
+
+tempkey.rsa
+appsettings.local.json
+
+**/wwwroot/lib
+**/wwwroot/is-cache
