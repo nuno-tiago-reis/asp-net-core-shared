@@ -52,7 +52,7 @@ namespace Memento.Shared.Models
 		/// </summary>
 		/// 
 		/// <param name="modelFilter">The model filter.</param>
-		Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter);
+		Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter = null);
 
 		/// <summary>
 		/// Checks if a model instance matching the given id exists.

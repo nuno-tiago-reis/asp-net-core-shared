@@ -55,7 +55,7 @@ namespace Memento.Shared.Models
 		/// Initializes a new instance of the <see cref="ModelRepository{TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection}"/> class.
 		/// </summary>
 		/// 
-		/// <param name="context">The context</param>
+		/// <param name="context">The context.</param>
 		/// <param name="lookupNormalizer">The lookup normalizer.</param>
 		/// <param name="serviceProvider">The services provider.</param>
 		/// <param name="logger">The logger.</param>
@@ -154,7 +154,7 @@ namespace Memento.Shared.Models
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter)
+		public async virtual Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter = null)
 		{
 			// Get the queryables
 			var modelQuery = this.GetSimpleQueryable();
