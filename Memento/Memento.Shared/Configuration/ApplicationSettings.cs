@@ -7,11 +7,6 @@
 	{
 		#region [Properties]
 		/// <summary>
-		/// Gets or sets the 'DataProtection' settings.
-		/// </summary>
-		public DataProtectionSettings DataProtection { get; set; }
-
-		/// <summary>
 		/// Gets or sets the 'Logging' settings.
 		/// </summary>
 		public LoggingSettings Logging { get; set; }
