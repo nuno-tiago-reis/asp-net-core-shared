@@ -1,4 +1,6 @@
 ﻿using Memento.Shared.Controllers;
+using Memento.Shared.Exceptions;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace Memento.Shared.Services.Http
 {
+	/// <summary>
+	/// Implements the generic interface for an http service.
+	/// Provides methods to interact with the APIs (CRUD).
+	/// </summary>
 	public sealed class HttpService : IHttpService
 	{
 		#region [Constants]
@@ -24,6 +30,11 @@ namespace Memento.Shared.Services.Http
 		/// The http client.
 		/// </summary>
 		private readonly HttpClient HttpClient;
+
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		private readonly ILogger Logger;
 		#endregion
 
 		#region [Constructors]
@@ -32,9 +43,11 @@ namespace Memento.Shared.Services.Http
 		/// </summary>
 		/// 
 		/// <param name="httpClient">The http client.</param>
-		public HttpService(HttpClient httpClient)
+		/// <param name="logger">The logger.</param>
+		public HttpService(HttpClient httpClient, ILogger<HttpService> logger)
 		{
 			this.HttpClient = httpClient;
+			this.Logger = logger;
 		}
 		#endregion
 
@@ -42,89 +55,139 @@ namespace Memento.Shared.Services.Http
 		/// <inheritdoc />
 		public async Task<MementoResponse<TResponse>> Post<TRequest, TResponse>(string url, TRequest request) where TRequest : class where TResponse : class
 		{
-			// Serialize the request
-			var requestMessage = Serialize(request);
-
-			// Send the request and process the response
-			var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
-			if (responseMessage.HasMementoHeader())
+			try
 			{
-				var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+				// Serialize the request
+				var requestMessage = Serialize(request);
 
-				return response;
+				// Send the request and process the response
+				var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
+				if (responseMessage.HasMementoHeader())
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+
+					return response;
+				}
+				else
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
+
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				}
 			}
-			else
+			catch (Exception exception)
 			{
-				var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
 
-				return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
 			}
 		}
 
 		/// <inheritdoc />
 		public async Task<MementoResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null) where TResponse : class
 		{
-			// Serialize the query string parameters
-			if (parameters != null && parameters.Count > 0)
+			try
 			{
-				url += $"?{string.Join("&", parameters.Select(parameter => $"{parameter.Key}={parameter.Value}"))}";
+				// Serialize the query string parameters
+				if (parameters != null && parameters.Count > 0)
+				{
+					url += $"?{string.Join("&", parameters.Select(parameter => $"{parameter.Key}={parameter.Value}"))}";
+				}
+
+				// Send the request and process the response
+				var responseMessage = await this.HttpClient.GetAsync(url);
+				if (responseMessage.HasMementoHeader())
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+
+					return response;
+				}
+				else
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
+
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				}
 			}
-
-			// Send the request and process the response
-			var responseMessage = await this.HttpClient.GetAsync(url);
-			if (responseMessage.HasMementoHeader())
+			catch (Exception exception)
 			{
-				var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
 
-				return response;
-			}
-			else
-			{
-				var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
-
-				return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
 			}
 		}
 
 		/// <inheritdoc />
 		public async Task<MementoResponse> Put<TRequest>(string url, TRequest request) where TRequest : class
 		{
-			// Serialize the request
-			var requestMessage = Serialize(request);
-
-			// Send the request and process the response
-			var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
-			if (responseMessage.HasMementoHeader())
+			try
 			{
-				var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
+				// Serialize the request
+				var requestMessage = Serialize(request);
 
-				return response;
+				// Send the request and process the response
+				var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
+				if (responseMessage.HasMementoHeader())
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
+
+					return response;
+				}
+				else
+				{
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				}
 			}
-			else
+			catch (Exception exception)
 			{
-				return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
+
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
 			}
 		}
 
 		/// <inheritdoc />
 		public async Task<MementoResponse> Delete(string url)
 		{
-			// Send the request and process the response
-			var responseMessage = await this.HttpClient.DeleteAsync(url);
-			if (responseMessage.HasMementoHeader())
+			try
 			{
-				var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
+				// Send the request and process the response
+				var responseMessage = await this.HttpClient.DeleteAsync(url);
+				if (responseMessage.HasMementoHeader())
+				{
+					// Deserialize the response
+					var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
 
-				return response;
+					return response;
+				}
+				else
+				{
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				}
 			}
-			else
+			catch (Exception exception)
 			{
-				return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
+
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
 			}
 		}
 		#endregion
 
-		#region [Methods] Serialization
+		#region [Methods] Utility
 		/// <summary>
 		/// Serializes the given object into a string content.
 		/// </summary>

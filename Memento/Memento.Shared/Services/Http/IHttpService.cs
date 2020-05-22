@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 namespace Memento.Shared.Services.Http
 {
 	/// <summary>
-	/// Defines a generic interface for a storage services.
-	/// Provides methods to interact with the storage (CRUD and more).
+	/// Defines a generic interface for an http service.
+	/// Provides methods to interact with the APIs (CRUD).
 	/// </summary>
 	public interface IHttpService
 	{

@@ -1,5 +1,6 @@
 ﻿using Memento.Shared.Configuration;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System.IO;
 using System.Threading.Tasks;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 namespace Memento.Shared.Services.Storage
 {
 	/// <summary>
-	/// Implements the generic interface for a storage services.
+	/// Implements the generic interface for a storage service using the File System Storage.
 	/// Provides methods to interact with the storage (CRUD and more).
 	/// </summary>
 	public sealed class FileSystemStorageService : IStorageService
@@ -17,6 +18,11 @@ namespace Memento.Shared.Services.Storage
 		/// The storage settings.
 		/// </summary>
 		private readonly FileSystemStorageSettings Settings;
+
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		private readonly ILogger Logger;
 		#endregion
 
 		#region [Constructors]
@@ -25,9 +31,11 @@ namespace Memento.Shared.Services.Storage
 		/// </summary>
 		/// 
 		/// <param name="settings">The settings.</param>
-		public FileSystemStorageService(IOptions<FileSystemStorageSettings> settings)
+		/// <param name="logger">The logger.</param>
+		public FileSystemStorageService(IOptions<FileSystemStorageSettings> settings, ILogger<FileSystemStorageService> logger)
 		{
 			this.Settings = settings.Value;
+			this.Logger = logger;
 		}
 		#endregion
 

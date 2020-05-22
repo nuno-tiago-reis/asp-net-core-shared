@@ -1,15 +1,18 @@
 ﻿using Memento.Shared.Configuration;
+using Memento.Shared.Exceptions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using System;
 using System.IO;
 using System.Threading.Tasks;
 
 namespace Memento.Shared.Services.Storage
 {
 	/// <summary>
-	/// Implements the generic interface for a storage services.
+	/// Implements the generic interface for a storage service using the Azure Storage.
 	/// Provides methods to interact with the storage (CRUD and more).
 	/// </summary>
 	public sealed class AzureStorageService : IStorageService
@@ -19,6 +22,11 @@ namespace Memento.Shared.Services.Storage
 		/// The storage settings.
 		/// </summary>
 		private readonly AzureStorageSettings Settings;
+
+		/// <summary>
+		/// The logger.
+		/// </summary>
+		private readonly ILogger Logger;
 		#endregion
 
 		#region [Constructors]
@@ -27,9 +35,11 @@ namespace Memento.Shared.Services.Storage
 		/// </summary>
 		/// 
 		/// <param name="settings">The settings.</param>
-		public AzureStorageService(IOptions<AzureStorageSettings> settings)
+		/// <param name="logger">The logger.</param>
+		public AzureStorageService(IOptions<AzureStorageSettings> settings, ILogger<AzureStorageService> logger)
 		{
 			this.Settings = settings.Value;
+			this.Logger = logger;
 		}
 		#endregion
 
@@ -37,50 +47,97 @@ namespace Memento.Shared.Services.Storage
 		/// <inheritdoc />
 		public async Task<string> CreateAsync(IFormFile file, string fileName = null)
 		{
-			// Get the container reference
-			var container = await this.GetCloudBlobContainerAsync();
+			try
+			{
+				// Get the container reference
+				var container = await this.GetCloudBlobContainerAsync();
 
-			// Create the blob
-			var blob = await this.CreateCloudBlobAsync(container, file, fileName);
+				// Create the blob
+				var blob = await this.CreateCloudBlobAsync(container, file, fileName);
 
-			return blob.Uri.ToString();
+				// Return the blob uri
+				return blob.Uri.ToString();
+			}
+			catch (Exception exception)
+			{
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
+
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
+			}
 		}
 
 		/// <inheritdoc />
 		public async Task<string> UpdateAsync(IFormFile file, string fileName = null)
 		{
-			// Get the container reference
-			var container = await this.GetCloudBlobContainerAsync();
+			try
+			{
+				// Get the container reference
+				var container = await this.GetCloudBlobContainerAsync();
 
-			// Delete the blob
-			await this.DeleteCloudBlobAsync(container, fileName ?? file.FileName);
+				// Delete the blob
+				await this.DeleteCloudBlobAsync(container, fileName ?? file.FileName);
 
-			// Create the blob
-			var blob = await this.CreateCloudBlobAsync(container, file, fileName);
+				// Create the blob
+				var blob = await this.CreateCloudBlobAsync(container, file, fileName);
+				
+				// Return the blob uri
+				return blob.Uri.ToString();
+			}
+			catch (Exception exception)
+			{
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
 
-			return blob.Uri.ToString();
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
+			}
 		}
 
 		/// <inheritdoc />
 		public async Task<Stream> GetAsync(string fileName)
 		{
-			// Get the container reference
-			var container = await this.GetCloudBlobContainerAsync();
+			try
+			{
+				// Get the container reference
+				var container = await this.GetCloudBlobContainerAsync();
 
-			// Get the blob
-			var blob = await this.GetCloudBlobAsync(container, fileName);
+				// Get the blob
+				var blob = await this.GetCloudBlobAsync(container, fileName);
 
-			return await blob.OpenReadAsync();
+				// Return the blob stream
+				return await blob.OpenReadAsync();
+			}
+			catch (Exception exception)
+			{
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
+
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
+			}
 		}
 
 		/// <inheritdoc />
 		public async Task DeleteAsync(string fileName)
 		{
-			// Get the container reference
-			var container = await this.GetCloudBlobContainerAsync();
+			try
+			{
+				// Get the container reference
+				var container = await this.GetCloudBlobContainerAsync();
 
-			// Delete the blob
-			await this.DeleteCloudBlobAsync(container, fileName);
+				// Delete the blob
+				await this.DeleteCloudBlobAsync(container, fileName);
+			}
+			catch (Exception exception)
+			{
+				// Log the exception
+				this.Logger.LogError(exception.Message, exception);
+
+				// Wrap the exception
+				throw new MementoException(exception.Message, exception, MementoExceptionType.InternalServerError);
+			}
 		}
 		#endregion
 

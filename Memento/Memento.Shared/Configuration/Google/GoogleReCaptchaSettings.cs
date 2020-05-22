@@ -1,11 +1,16 @@
 ﻿namespace Memento.Shared.Configuration
 {
 	/// <summary>
-	/// Implements the 'ReCaptcha' settings.
+	/// Implements the 'GoogleReCaptcha' settings.
 	/// </summary>
-	public sealed class ReCaptchaSettings
+	public sealed class GoogleReCaptchaSettings
 	{
 		#region [Properties]
+		/// <summary>
+		/// Gets or sets the http client name.
+		/// </summary>
+		public string HttpClientName { get; set; }
+
 		/// <summary>
 		/// Gets or sets the host.
 		/// </summary>
