@@ -3,10 +3,10 @@
 namespace Memento.Shared.Controllers
 {
 	/// <summary>
-	/// Implements a generic http response.
-	/// Provides properties to indicate success.
+	/// Implements the memento response.
+	/// Provides a shared strucuted to be used in every request.
 	/// </summary>
-	public sealed class MementoHttpResponse<T> where T : class
+	public sealed class MementoResponse<T> where T : class
 	{
 		#region [Properties]
 		/// <summary>
@@ -32,14 +32,14 @@ namespace Memento.Shared.Controllers
 
 		#region [Constructor]
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MementoHttpResponse{T}"/> class.
+		/// Initializes a new instance of the <see cref="MementoResponse{T}"/> class.
 		/// </summary>
 		/// 
 		/// <param name="success">The success flag.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="data">The data.</param>
 		/// <param name="errors">The errors.</param>
-		public MementoHttpResponse(bool success, string message, T data = null, IEnumerable<string> errors = null)
+		public MementoResponse(bool success, string message, T data = null, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
 			this.Message = message;
@@ -50,10 +50,10 @@ namespace Memento.Shared.Controllers
 	}
 
 	/// <summary>
-	/// Implements a generic http response.
-	/// Provides properties to indicate success.
+	/// Implements the memento response.
+	/// Provides a shared strucuted to be used in every request.
 	/// </summary>
-	public sealed class MementoHttpResponse
+	public sealed class MementoResponse
 	{
 		#region [Properties]
 		/// <summary>
@@ -74,13 +74,13 @@ namespace Memento.Shared.Controllers
 
 		#region [Constructor]
 		/// <summary>
-		/// Initializes a new instance of the <see cref="MementoHttpResponse"/> class.
+		/// Initializes a new instance of the <see cref="MementoResponse"/> class.
 		/// </summary>
 		/// 
 		/// <param name="success">The success flag.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="errors">The errors.</param>
-		public MementoHttpResponse(bool success, string message, IEnumerable<string> errors = null)
+		public MementoResponse(bool success, string message, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
 			this.Message = message;

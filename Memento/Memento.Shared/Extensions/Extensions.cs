@@ -266,6 +266,5 @@ namespace Memento.Shared.Extensions
 			return Encoding.UTF8.GetString(Convert.FromBase64String(instance));
 		}
 		#endregion
-
 	}
 }

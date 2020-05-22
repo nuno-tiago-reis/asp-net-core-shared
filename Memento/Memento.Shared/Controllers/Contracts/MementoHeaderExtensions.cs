@@ -8,7 +8,7 @@ namespace Memento.Shared.Controllers
 	/// Implements the Memento http header extensions.
 	/// Provides a way to identity if the response originated in a Memento API.
 	/// </summary>
-	public static class MementoHttpHeaderExtensions
+	public static class MementoHeaderExtensions
 	{
 		#region [Constants]
 		/// <summary>

@@ -40,7 +40,7 @@ namespace Memento.Shared.Services.Http
 
 		#region [Methods]
 		/// <inheritdoc />
-		public async Task<MementoHttpResponse<TResponse>> Post<TRequest, TResponse>(string url, TRequest request) where TRequest : class where TResponse : class
+		public async Task<MementoResponse<TResponse>> Post<TRequest, TResponse>(string url, TRequest request) where TRequest : class where TResponse : class
 		{
 			// Serialize the request
 			var requestMessage = Serialize(request);
@@ -49,7 +49,7 @@ namespace Memento.Shared.Services.Http
 			var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
 			if (responseMessage.HasMementoHeader())
 			{
-				var response = await this.DeserializeAsync<MementoHttpResponse<TResponse>>(responseMessage.Content);
+				var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
 
 				return response;
 			}
@@ -57,12 +57,12 @@ namespace Memento.Shared.Services.Http
 			{
 				var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
 
-				return new MementoHttpResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
 			}
 		}
 
 		/// <inheritdoc />
-		public async Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null) where TResponse : class
+		public async Task<MementoResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null) where TResponse : class
 		{
 			// Serialize the query string parameters
 			if (parameters != null && parameters.Count > 0)
@@ -74,7 +74,7 @@ namespace Memento.Shared.Services.Http
 			var responseMessage = await this.HttpClient.GetAsync(url);
 			if (responseMessage.HasMementoHeader())
 			{
-				var response = await this.DeserializeAsync<MementoHttpResponse<TResponse>>(responseMessage.Content);
+				var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
 
 				return response;
 			}
@@ -82,12 +82,12 @@ namespace Memento.Shared.Services.Http
 			{
 				var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
 
-				return new MementoHttpResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+				return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
 			}
 		}
 
 		/// <inheritdoc />
-		public async Task<MementoHttpResponse> Put<TRequest>(string url, TRequest request) where TRequest : class
+		public async Task<MementoResponse> Put<TRequest>(string url, TRequest request) where TRequest : class
 		{
 			// Serialize the request
 			var requestMessage = Serialize(request);
@@ -96,30 +96,30 @@ namespace Memento.Shared.Services.Http
 			var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
 			if (responseMessage.HasMementoHeader())
 			{
-				var response = await this.DeserializeAsync<MementoHttpResponse>(responseMessage.Content);
+				var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
 
 				return response;
 			}
 			else
 			{
-				return new MementoHttpResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
 			}
 		}
 
 		/// <inheritdoc />
-		public async Task<MementoHttpResponse> Delete(string url)
+		public async Task<MementoResponse> Delete(string url)
 		{
 			// Send the request and process the response
 			var responseMessage = await this.HttpClient.DeleteAsync(url);
 			if (responseMessage.HasMementoHeader())
 			{
-				var response = await this.DeserializeAsync<MementoHttpResponse>(responseMessage.Content);
+				var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
 
 				return response;
 			}
 			else
 			{
-				return new MementoHttpResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+				return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
 			}
 		}
 		#endregion

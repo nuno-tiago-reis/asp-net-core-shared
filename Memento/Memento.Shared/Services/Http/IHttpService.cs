@@ -20,7 +20,7 @@ namespace Memento.Shared.Services.Http
 		/// 
 		/// <param name="url">The url.</param>
 		/// <param name="request">The request.</param>
-		Task<MementoHttpResponse<TResponse>> Post<TRequest, TResponse>(string url, TRequest request)
+		Task<MementoResponse<TResponse>> Post<TRequest, TResponse>(string url, TRequest request)
 			where TRequest : class
 			where TResponse : class;
 
@@ -32,7 +32,7 @@ namespace Memento.Shared.Services.Http
 		/// 
 		/// <param name="url">The url.</param>
 		/// <param name="parameters">The parameters.</param>
-		Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null)
+		Task<MementoResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null)
 			where TResponse : class;
 
 		/// <summary>
@@ -43,7 +43,7 @@ namespace Memento.Shared.Services.Http
 		/// 
 		/// <param name="url">The url.</param>
 		/// <param name="request">The request.</param>
-		Task<MementoHttpResponse> Put<TRequest>(string url, TRequest request)
+		Task<MementoResponse> Put<TRequest>(string url, TRequest request)
 			where TRequest : class;
 
 		/// <summary>
@@ -51,7 +51,7 @@ namespace Memento.Shared.Services.Http
 		/// </summary>
 		/// 
 		/// <param name="url">The url.</param>
-		Task<MementoHttpResponse> Delete(string url);
+		Task<MementoResponse> Delete(string url);
 		#endregion
 	}
 }
