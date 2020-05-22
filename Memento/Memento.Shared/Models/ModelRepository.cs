@@ -76,7 +76,7 @@ namespace Memento.Shared.Models
 		}
 		#endregion
 
-		#region [Methods] IEntityRepository
+		#region [Methods] IModelRepository
 		/// <inheritdoc />
 		public async virtual Task<TModel> CreateAsync(TModel model)
 		{
