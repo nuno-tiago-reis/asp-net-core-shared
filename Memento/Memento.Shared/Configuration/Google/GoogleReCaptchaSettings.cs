@@ -7,11 +7,6 @@
 	{
 		#region [Properties]
 		/// <summary>
-		/// Gets or sets the http client name.
-		/// </summary>
-		public string HttpClientName { get; set; }
-
-		/// <summary>
 		/// Gets or sets the host.
 		/// </summary>
 		public string Host { get; set; }

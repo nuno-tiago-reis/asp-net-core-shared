@@ -24,9 +24,9 @@ namespace Memento.Shared.Services.ReCaptcha
 		private readonly GoogleReCaptchaSettings ReCaptchaSettings;
 
 		/// <summary>
-		/// The http client factory.
+		/// The http client.
 		/// </summary>
-		private readonly IHttpClientFactory HttpClientFactory;
+		private readonly HttpClient HttpClient;
 
 		/// <summary>
 		/// The logger.
@@ -40,12 +40,12 @@ namespace Memento.Shared.Services.ReCaptcha
 		/// </summary>
 		/// 
 		/// <param name="recaptchaSettings">The recaptcha settings.</param>
-		/// <param name="httpClientFactory">The http client factory.</param>
+		/// <param name="httpClient">The http client.</param>
 		/// <param name="logger">The logger.</param>
-		public GoogleRecaptchaService(IOptions<GoogleReCaptchaSettings> recaptchaSettings, IHttpClientFactory httpClientFactory, ILogger<GoogleRecaptchaService> logger)
+		public GoogleRecaptchaService(IOptions<GoogleReCaptchaSettings> recaptchaSettings, HttpClient httpClient, ILogger<GoogleRecaptchaService> logger)
 		{
 			this.ReCaptchaSettings = recaptchaSettings.Value;
-			this.HttpClientFactory = httpClientFactory;
+			this.HttpClient = httpClient;
 			this.Logger = logger;
 		}
 		#endregion
@@ -56,9 +56,6 @@ namespace Memento.Shared.Services.ReCaptcha
 		{
 			try
 			{
-				// Create the client
-				var client = this.HttpClientFactory.CreateClient(this.ReCaptchaSettings.HttpClientName);
-
 				// Create the request
 				var request = new FormUrlEncodedContent(new[]
 				{
@@ -67,7 +64,7 @@ namespace Memento.Shared.Services.ReCaptcha
 				});
 
 				// Send the request and process the response
-				using (var response = await client.PostAsync(string.Empty, request))
+				using (var response = await this.HttpClient.PostAsync(string.Empty, request))
 				{
 					// An error occurred
 					if (response.StatusCode != HttpStatusCode.OK)
