@@ -5,6 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<!-- AutoMapper -->
+		<PackageReference Include="AutoMapper" Version="9.0.0" />
+		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
 		<!-- Microsoft.AspNetCore -->
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
