@@ -10,7 +10,6 @@ namespace Memento.Shared.Pagination
 	/// 
 	/// <typeparam name="T">The type.</typeparam>
 	public interface IPage<T> : IList<T>
-		where T : class
 	{
 		#region [Properties]
 		/// <summary>

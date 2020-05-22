@@ -13,7 +13,6 @@ namespace Memento.Shared.Pagination
 	/// 
 	/// <typeparam name="T">The type.</typeparam>
 	public sealed class Page<T> : List<T>, IPage<T>
-		where T : class
 	{
 		#region [Properties]
 		/// <inheritdoc />
