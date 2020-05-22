@@ -1,16 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Memento.Shared.Models
+namespace Memento.Shared.Pagination
 {
 	/// <summary>
-	/// Defines a generic interface for a model page.
-	/// Provides properties to paginate the model queries.
+	/// Defines a generic interface for a page.
+	/// Provides properties to paginate queries.
 	/// </summary>
 	/// 
-	/// <typeparam name="TModel">The model type.</typeparam>
-	public interface IModelPage<TModel> : IList<TModel>
-		where TModel : class, IModel
+	/// <typeparam name="T">The type.</typeparam>
+	public interface IPage<T> : IList<T>
+		where T : class
 	{
 		#region [Properties]
 		/// <summary>

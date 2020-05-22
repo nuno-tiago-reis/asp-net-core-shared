@@ -4,16 +4,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Models
+namespace Memento.Shared.Pagination
 {
 	/// <summary>
-	/// Implements the generic interface for a model page.
-	/// Provides properties to paginate the model queries.
+	/// Implements the generic interface for a page.
+	/// Provides properties to paginate the queries.
 	/// </summary>
 	/// 
-	/// <typeparam name="TModel">The model type.</typeparam>
-	public sealed class ModelPage<TModel> : List<TModel>, IModelPage<TModel>
-		where TModel : Model
+	/// <typeparam name="T">The type.</typeparam>
+	public sealed class Page<T> : List<T>, IPage<T>
+		where T : class
 	{
 		#region [Properties]
 		/// <inheritdoc />
@@ -37,7 +37,7 @@ namespace Memento.Shared.Models
 
 		#region [Constructors]
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ModelPage{TModel}"/> class.
+		/// Initializes a new instance of the <see cref="Page{T}"/> class.
 		/// </summary>
 		/// 
 		/// <param name="items">The items.</param>
@@ -46,7 +46,7 @@ namespace Memento.Shared.Models
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		private ModelPage(IEnumerable<TModel> items, int itemCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
+		private Page(IEnumerable<T> items, int itemCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
 		{
 			this.PageNumber = pageNumber;
 			this.PageSize = pageSize;
@@ -72,11 +72,11 @@ namespace Memento.Shared.Models
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		public static ModelPage<TModel> Create(IEnumerable<TModel> enumerable, int enumerableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
+		public static Page<T> Create(IEnumerable<T> enumerable, int enumerableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
 		{
 			var items = enumerable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
-			return new ModelPage<TModel>(items, enumerableCount, pageNumber, pageSize, orderBy, orderDirection);
+			return new Page<T>(items, enumerableCount, pageNumber, pageSize, orderBy, orderDirection);
 		}
 
 		/// <summary>
@@ -89,11 +89,11 @@ namespace Memento.Shared.Models
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		public static async Task<ModelPage<TModel>> CreateAsync(IQueryable<TModel> queryable, IQueryable<TModel> queryableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
+		public static async Task<Page<T>> CreateAsync(IQueryable<T> queryable, IQueryable<T> queryableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
 		{
 			var items = await queryable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
 
-			return new ModelPage<TModel>(items, await queryableCount.CountAsync(), pageNumber, pageSize, orderBy, orderDirection);
+			return new Page<T>(items, await queryableCount.CountAsync(), pageNumber, pageSize, orderBy, orderDirection);
 		}
 
 		/// <summary>
@@ -106,11 +106,11 @@ namespace Memento.Shared.Models
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		public static ModelPage<TModel> CreateUnmodified(IEnumerable<TModel> enumerable, int enumerableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
+		public static Page<T> CreateUnmodified(IEnumerable<T> enumerable, int enumerableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
 		{
 			var items = enumerable.ToList();
 
-			return new ModelPage<TModel>(items, enumerableCount, pageNumber, pageSize, orderBy, orderDirection);
+			return new Page<T>(items, enumerableCount, pageNumber, pageSize, orderBy, orderDirection);
 		}
 
 		/// <summary>
@@ -123,11 +123,11 @@ namespace Memento.Shared.Models
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		public static async Task<ModelPage<TModel>> CreateUnmodifiedAsync(IQueryable<TModel> queryable, int queryableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
+		public static async Task<Page<T>> CreateUnmodifiedAsync(IQueryable<T> queryable, int queryableCount, int pageNumber, int pageSize, Enum orderBy, Enum orderDirection)
 		{
 			var items = await queryable.ToListAsync();
 
-			return new ModelPage<TModel>(items, queryableCount, pageNumber, pageSize, orderBy, orderDirection);
+			return new Page<T>(items, queryableCount, pageNumber, pageSize, orderBy, orderDirection);
 		}
 		#endregion
 	}

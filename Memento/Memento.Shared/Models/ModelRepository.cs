@@ -1,4 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
+using Memento.Shared.Pagination;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -154,7 +155,7 @@ namespace Memento.Shared.Models
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter = null)
+		public async virtual Task<IPage<TModel>> GetAllAsync(TModelFilter modelFilter = null)
 		{
 			// Get the queryables
 			var modelQuery = this.GetSimpleQueryable();
@@ -168,7 +169,7 @@ namespace Memento.Shared.Models
 			this.FilterQueryable(modelCountQuery, modelFilter);
 
 			// Create the model page
-			var models = await ModelPage<TModel>.CreateAsync
+			var models = await Page<TModel>.CreateAsync
 			(
 				// models
 				modelQuery,

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Memento.Shared.Pagination;
+using System;
 using System.Threading.Tasks;
 
 namespace Memento.Shared.Models
@@ -52,7 +53,7 @@ namespace Memento.Shared.Models
 		/// </summary>
 		/// 
 		/// <param name="modelFilter">The model filter.</param>
-		Task<IModelPage<TModel>> GetAllAsync(TModelFilter modelFilter = null);
+		Task<IPage<TModel>> GetAllAsync(TModelFilter modelFilter = null);
 
 		/// <summary>
 		/// Checks if a model instance matching the given id exists.
