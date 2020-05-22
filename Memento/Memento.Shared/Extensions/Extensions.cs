@@ -28,6 +28,121 @@ namespace Memento.Shared.Extensions
 		public const string DOES_NOT_EXIST_MESSAGE = "The {0} does not exist.";
 		#endregion
 
+		#region [Extensions] Byte[]
+		/// <summary>
+		/// Converts the string to an utf8 byte array.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		public static byte[] GetBytes(this string instance)
+		{
+			return Encoding.UTF8.GetBytes(instance);
+		}
+
+		/// <summary>
+		/// Converts the byte array to an utf8 string.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		public static string GetString(this byte[] instance)
+		{
+			return Encoding.UTF8.GetString(instance);
+		}
+		#endregion
+
+		#region [Extensions] DateTime
+		/// <summary>
+		/// Converts the DateTime to an UTC string.
+		/// </summary>
+		public static String ToUtcString(this DateTime instance)
+		{
+			return instance.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+		}
+		#endregion
+
+		#region [Extensions] Generic
+		/// <summary>
+		/// Returns a message indicating that the given objects field is invalid.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		/// <param name="expression">The expression.</param>
+		public static string InvalidFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
+		{
+			string name = ((MemberExpression) expression.Body).Member.Name;
+
+			return string.Format(INVALID_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
+		}
+
+		/// <summary>
+		/// Returns a message indicating that the given objects field already exists.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		/// <param name="expression">The expression.</param>
+		public static string ExistingFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
+		{
+			string name = ((MemberExpression)expression.Body).Member.Name;
+
+			return string.Format(EXISTING_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
+		}
+
+		/// <summary>
+		/// Returns a message indicating that the given object does not exist.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		public static string DoesNotExist<T>(this T instance)
+		{
+			return string.Format(DOES_NOT_EXIST_MESSAGE, instance.GetType().Name.SpacesFromCamel());
+		}
+
+		/// <summary>
+		/// Clamps a value according to the given minimum and maximum.
+		/// </summary>
+		/// 
+		/// <param name="value">The value.</param>
+		/// <param name="minimum">The minimum.</param>
+		/// <param name="maximum">The maximum.</param>
+		public static T Clamp<T>(this T value, T minimum, T maximum) where T : IComparable<T>
+		{
+			var result = value;
+			if (value.CompareTo(maximum) > 0)
+				result = maximum;
+			if (value.CompareTo(minimum) < 0)
+				result = minimum;
+			return result;
+		}
+
+		/// <summary>
+		/// Floors a value according to the given maximum.
+		/// </summary>
+		/// 
+		/// <param name="value">The value.</param>
+		/// <param name="maximum">The maximum.</param>
+		public static T Floor<T>(this T value, T maximum) where T : IComparable<T>
+		{
+			var result = value;
+			if (value.CompareTo(maximum) > 0)
+				result = maximum;
+			return result;
+		}
+
+		/// <summary>
+		/// Ceils a value according to the given minimum.
+		/// </summary>
+		/// 
+		/// <param name="value">The value.</param>
+		/// <param name="minimum">The minimum.</param>
+		public static T Ceil<T>(this T value, T minimum) where T : IComparable<T>
+		{
+			var result = value;
+			if (value.CompareTo(minimum) < 0)
+				result = minimum;
+			return result;
+		}
+		#endregion
+
 		#region [Extensions] String
 		/// <summary>
 		/// Spaces a string according to its camel case.
@@ -152,109 +267,5 @@ namespace Memento.Shared.Extensions
 		}
 		#endregion
 
-		#region [Extensions] Byte[]
-		/// <summary>
-		/// Converts the string to an utf8 byte array.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		public static byte[] GetBytes(this string instance)
-		{
-			return Encoding.UTF8.GetBytes(instance);
-		}
-
-		/// <summary>
-		/// Converts the byte array to an utf8 string.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		public static string GetString(this byte[] instance)
-		{
-			return Encoding.UTF8.GetString(instance);
-		}
-		#endregion
-
-		#region [Extensions] Generic
-		/// <summary>
-		/// Returns a message indicating that the given objects field is invalid.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		/// <param name="expression">The expression.</param>
-		public static string InvalidFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
-		{
-			string name = ((MemberExpression) expression.Body).Member.Name;
-
-			return string.Format(INVALID_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
-		}
-
-		/// <summary>
-		/// Returns a message indicating that the given objects field already exists.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		/// <param name="expression">The expression.</param>
-		public static string ExistingFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
-		{
-			string name = ((MemberExpression)expression.Body).Member.Name;
-
-			return string.Format(EXISTING_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
-		}
-
-		/// <summary>
-		/// Returns a message indicating that the given object does not exist.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		public static string DoesNotExist<T>(this T instance)
-		{
-			return string.Format(DOES_NOT_EXIST_MESSAGE, instance.GetType().Name.SpacesFromCamel());
-		}
-
-		/// <summary>
-		/// Clamps a value according to the given minimum and maximum.
-		/// </summary>
-		/// 
-		/// <param name="value">The value.</param>
-		/// <param name="minimum">The minimum.</param>
-		/// <param name="maximum">The maximum.</param>
-		public static T Clamp<T>(this T value, T minimum, T maximum) where T : IComparable<T>
-		{
-			var result = value;
-			if (value.CompareTo(maximum) > 0)
-				result = maximum;
-			if (value.CompareTo(minimum) < 0)
-				result = minimum;
-			return result;
-		}
-
-		/// <summary>
-		/// Floors a value according to the given maximum.
-		/// </summary>
-		/// 
-		/// <param name="value">The value.</param>
-		/// <param name="maximum">The maximum.</param>
-		public static T Floor<T>(this T value, T maximum) where T : IComparable<T>
-		{
-			var result = value;
-			if (value.CompareTo(maximum) > 0)
-				result = maximum;
-			return result;
-		}
-
-		/// <summary>
-		/// Ceils a value according to the given minimum.
-		/// </summary>
-		/// 
-		/// <param name="value">The value.</param>
-		/// <param name="minimum">The minimum.</param>
-		public static T Ceil<T>(this T value, T minimum) where T : IComparable<T>
-		{
-			var result = value;
-			if (value.CompareTo(minimum) < 0)
-				result = minimum;
-			return result;
-		}
-		#endregion
 	}
 }
