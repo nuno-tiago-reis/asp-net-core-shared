@@ -32,7 +32,7 @@ namespace Memento.Shared.Services.Http
 		/// 
 		/// <param name="url">The url.</param>
 		/// <param name="parameters">The parameters.</param>
-		Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters)
+		Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null)
 			where TResponse : class;
 
 		/// <summary>

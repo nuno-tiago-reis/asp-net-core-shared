@@ -62,7 +62,7 @@ namespace Memento.Shared.Services.Http
 		}
 
 		/// <inheritdoc />
-		public async Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters) where TResponse : class
+		public async Task<MementoHttpResponse<TResponse>> Get<TResponse>(string url, Dictionary<string, string> parameters = null) where TResponse : class
 		{
 			// Serialize the query string parameters
 			if (parameters != null && parameters.Count > 0)
