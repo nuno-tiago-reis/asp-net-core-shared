@@ -2,7 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Memento.Shared.Controlers
+namespace Memento.Shared.Controllers
 {
 	/// <summary>
 	/// Implements an abstract controller that provides logging and mapping properties.
