@@ -134,7 +134,7 @@ namespace Memento.Shared.Services.Http
 				var requestMessage = Serialize(request);
 
 				// Send the request and process the response
-				var responseMessage = await this.HttpClient.PostAsync(url, requestMessage);
+				var responseMessage = await this.HttpClient.PutAsync(url, requestMessage);
 				if (responseMessage.HasMementoHeader())
 				{
 					// Deserialize the response
