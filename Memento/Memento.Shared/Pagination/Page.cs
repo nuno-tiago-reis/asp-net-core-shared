@@ -57,9 +57,26 @@ namespace Memento.Shared.Pagination
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Page{T}"/> class.
 		/// </summary>
-		public Page()
+		/// 
+		/// <param name="items">The items.</param>
+		/// <param name="totalItems">The total items.</param>
+		/// <param name="totalPages">The total pages.</param>
+		/// <param name="pageNumber">The page number.</param>
+		/// <param name="pageSize">The page size.</param>
+		/// <param name="orderBy">The parameter on which the results were ordered.</param>
+		/// <param name="orderDirection">The direction on which the results were ordered.</param>
+		internal Page(IEnumerable<T> items, int totalItems, int totalPages, int pageNumber, int pageSize, string orderBy, string orderDirection)
 		{
-			// Nothing to do here.
+			this.PageNumber = pageNumber;
+			this.PageSize = pageSize;
+
+			this.TotalPages = totalPages;
+			this.TotalItems = totalItems;
+
+			this.OrderBy = orderBy;
+			this.OrderDirection = orderDirection;
+
+			this.AddRange(items);
 		}
 
 		/// <summary>
@@ -89,26 +106,9 @@ namespace Memento.Shared.Pagination
 		/// <summary>
 		/// Initializes a new instance of the <see cref="Page{T}"/> class.
 		/// </summary>
-		/// 
-		/// <param name="items">The items.</param>
-		/// <param name="totalItems">The total items.</param>
-		/// <param name="totalPages">The total pages.</param>
-		/// <param name="pageNumber">The page number.</param>
-		/// <param name="pageSize">The page size.</param>
-		/// <param name="orderBy">The parameter on which the results were ordered.</param>
-		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		internal Page(IEnumerable<T> items, int totalItems, int totalPages, int pageNumber, int pageSize, string orderBy, string orderDirection)
+		public Page()
 		{
-			this.PageNumber = pageNumber;
-			this.PageSize = pageSize;
-
-			this.TotalPages = totalPages;
-			this.TotalItems = totalItems;
-
-			this.OrderBy = orderBy;
-			this.OrderDirection = orderDirection;
-
-			this.AddRange(items);
+			// Nothing to do here.
 		}
 		#endregion
 

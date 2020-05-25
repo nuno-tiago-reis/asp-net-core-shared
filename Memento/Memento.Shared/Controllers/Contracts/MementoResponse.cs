@@ -46,6 +46,14 @@ namespace Memento.Shared.Controllers
 			this.Data = data;
 			this.Errors = errors;
 		}
+
+		/// <summary>
+		/// Initializes a new instance of the <see cref="MementoResponse{T}"/> class.
+		/// </summary>
+		public MementoResponse()
+		{
+			// Nothing to do here.
+		}
 		#endregion
 	}
 
