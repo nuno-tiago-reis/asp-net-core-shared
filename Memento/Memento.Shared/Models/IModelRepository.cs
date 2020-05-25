@@ -13,7 +13,7 @@ namespace Memento.Shared.Models
 	/// <typeparam name="TModelFilter">The model filter type.</typeparam>
 	/// <typeparam name="TModelFilterOrderBy">The model filter order by type.</typeparam>
 	/// <typeparam name="TModelFilterOrderDirection">The model filter order direction type.</typeparam>
-	public interface IModelRepository<TModel, in TModelFilter, in TModelFilterOrderBy, in TModelFilterOrderDirection>
+	public interface IModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>
 		where TModel : class, IModel
 		where TModelFilter : class, IModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>
 		where TModelFilterOrderBy : Enum

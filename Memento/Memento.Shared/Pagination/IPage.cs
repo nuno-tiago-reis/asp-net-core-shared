@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace Memento.Shared.Pagination
 {
@@ -23,24 +22,29 @@ namespace Memento.Shared.Pagination
 		int PageSize { get; set; }
 
 		/// <summary>
-		/// Gets or sets the total count of model pages.
+		/// Gets or sets the total count of item pages.
 		/// </summary>
 		int TotalPages { get; set; }
 
 		/// <summary>
-		/// Gets or sets the total count of model instances.
+		/// Gets or sets the total count of items.
 		/// </summary>
-		int TotalCount { get; set; }
+		int TotalItems { get; set; }
 
 		/// <summary>
-		/// Gets or sets the parameter on which the results were ordered.
+		/// Gets or sets the parameter on which the items were ordered.
 		/// </summary>
-		Enum OrderBy { get; set; }
+		string OrderBy { get; set; }
 
 		/// <summary>
-		/// Gets or sets the direction on which the results were ordered.
+		/// Gets or sets the direction on which the items were ordered.
 		/// </summary>
-		Enum OrderDirection { get; set; }
+		string OrderDirection { get; set; }
+
+		/// <summary>
+		/// Gets or sets the items.
+		/// </summary>
+		T[] Items { get; set; }
 		#endregion
 	}
 }

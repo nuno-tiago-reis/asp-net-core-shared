@@ -177,8 +177,8 @@ namespace Memento.Shared.Models
 				// model pagination
 				modelFilter.PageNumber,
 				modelFilter.PageSize,
-				modelFilter.OrderBy,
-				modelFilter.OrderDirection
+				modelFilter.OrderBy.ToString(),
+				modelFilter.OrderDirection.ToString()
 			);
 
 			// Detach the models before returning them
@@ -202,15 +202,15 @@ namespace Memento.Shared.Models
 		/// Normalizes the model.
 		/// </summary>
 		/// 
-		/// <param name="model">The model.</param>
-		protected abstract void NormalizeModel(TModel model);
+		/// <param name="sourceModel">The source model.</param>
+		protected abstract void NormalizeModel(TModel sourceModel);
 
 		/// <summary>
 		/// Validates the model.
 		/// </summary>
 		/// 
-		/// <param name="model">The model.</param>
-		protected abstract void ValidateModel(TModel model);
+		/// <param name="sourceModel">The source model.</param>
+		protected abstract void ValidateModel(TModel sourceModel);
 
 		/// <summary>
 		/// Updates the model.
