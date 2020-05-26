@@ -11,6 +11,8 @@
 		<PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
 		<!-- Microsoft.AspNetCore -->
 		<PackageReference Include="Microsoft.AspNetCore.Components" Version="3.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureStorage" Version="3.1.0" />
+		<PackageReference Include="Microsoft.AspNetCore.DataProtection.AzureKeyVault" Version="3.1.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
@@ -18,6 +20,7 @@
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
 		<!-- Microsoft.Azure -->
 		<PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
 		<!-- Microsoft.EntityFrameworkCore -->
@@ -30,11 +33,19 @@
 		<PackageReference Include="Microsoft.Extensions.Identity.Core" Version="3.1.0" />
 		<!-- Microsoft.JSInterop -->
 		<PackageReference Include="Microsoft.JSInterop" Version="3.1.0" />
+		<!-- SendGrid-->
+		<PackageReference Include="SendGrid" Version="9.15.1" />
+		<!-- Serilog -->
+		<PackageReference Include="Serilog.AspNetCore" Version="3.2.0" />
+		<PackageReference Include="Serilog.Sinks.Async" Version="1.4.0" />
+		<PackageReference Include="Serilog.Sinks.Console" Version="3.1.1" />
 		<!-- Sotsera -->
 		<PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
 		<!-- System -->
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="System.Text.Json" Version="4.7.0" />
+		<!-- Twilio -->
+		<PackageReference Include="Twilio" Version="5.41.1" />
 	</ItemGroup>
 
 </Project>

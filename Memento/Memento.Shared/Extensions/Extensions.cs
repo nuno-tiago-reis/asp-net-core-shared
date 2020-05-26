@@ -11,23 +11,6 @@ namespace Memento.Shared.Extensions
 	/// </summary>
 	public static class Extensions
 	{
-		#region [Constants]
-		/// <summary>
-		/// The model invalid field message model.
-		/// </summary>
-		public const string INVALID_FIELD_MESSAGE = "The {0} value is invalid.";
-
-		/// <summary>
-		/// The model existing field message format.
-		/// </summary>
-		public const string EXISTING_FIELD_MESSAGE = "The {0} value is taken.";
-
-		/// <summary>
-		/// The model does not exist message format.
-		/// </summary>
-		public const string DOES_NOT_EXIST_MESSAGE = "The {0} does not exist.";
-		#endregion
-
 		#region [Extensions] Byte[]
 		/// <summary>
 		/// Converts the string to an utf8 byte array.
@@ -61,42 +44,6 @@ namespace Memento.Shared.Extensions
 		#endregion
 
 		#region [Extensions] Generic
-		/// <summary>
-		/// Returns a message indicating that the given objects field is invalid.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		/// <param name="expression">The expression.</param>
-		public static string InvalidFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
-		{
-			string name = ((MemberExpression) expression.Body).Member.Name;
-
-			return string.Format(INVALID_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
-		}
-
-		/// <summary>
-		/// Returns a message indicating that the given objects field already exists.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		/// <param name="expression">The expression.</param>
-		public static string ExistingFieldMessage<T, TP>(this T _, Expression<Func<T, TP>> expression)
-		{
-			string name = ((MemberExpression)expression.Body).Member.Name;
-
-			return string.Format(EXISTING_FIELD_MESSAGE, name.SpacesFromCamel().ToLower());
-		}
-
-		/// <summary>
-		/// Returns a message indicating that the given object does not exist.
-		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		public static string DoesNotExist<T>(this T instance)
-		{
-			return string.Format(DOES_NOT_EXIST_MESSAGE, instance.GetType().Name.SpacesFromCamel());
-		}
-
 		/// <summary>
 		/// Clamps a value according to the given minimum and maximum.
 		/// </summary>

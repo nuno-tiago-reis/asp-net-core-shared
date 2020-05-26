@@ -1,5 +1,5 @@
-﻿using Memento.Shared.Controllers;
-using Memento.Shared.Exceptions;
+﻿using Memento.Shared.Exceptions;
+using Memento.Shared.Models.Response;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
