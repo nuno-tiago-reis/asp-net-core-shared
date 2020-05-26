@@ -31,17 +31,17 @@ namespace Memento.Shared.Models.Repository
 		/// <summary>
 		/// The key for the message that indicates that the model does not exist.
 		/// </summary>
-		protected const string MODEL_DOES_NOT_EXIST = "MODEL_DOES_NOT_EXIST";
+		protected const string MODEL_DOES_NOT_EXIST = "{0}_DOES_NOT_EXIST";
 
 		/// <summary>
 		/// The key for the message that indicates that the model has an invalid field.
 		/// </summary>
-		private static readonly string MODEL_HAS_INVALID_FIELD = "MODEL_HAS_INVALID_FIELD";
+		protected const string MODEL_HAS_INVALID_FIELD = "MODEL_HAS_INVALID_FIELD";
 
 		/// <summary>
 		/// The key for the message that indicates that the model has an duplicate field.
 		/// </summary>
-		private static readonly string MODEL_HAS_DUPLICATE_FIELD = "MODEL_HAS_DUPLICATE_FIELD";
+		protected const string MODEL_HAS_DUPLICATE_FIELD = "MODEL_HAS_DUPLICATE_FIELD";
 		#endregion
 
 		#region [Properties]
@@ -278,9 +278,13 @@ namespace Memento.Shared.Models.Repository
 		/// <param name="expression">The expression.</param>
 		protected virtual string GetModelDoesNotMessage()
 		{
-			string name = typeof(TModel).Name.SpacesFromCamel().ToLower();
+			// Get the name
+			string modelName = typeof(TModel).Name.ToUpper();
 
-			return string.Format(this.Localizer.GetString(this.GetType(), MODEL_DOES_NOT_EXIST), name);
+			// Translate the name
+			string localizedModelName = this.Localizer.GetString(modelName);
+
+			return string.Format(this.Localizer.GetString(string.Format(MODEL_DOES_NOT_EXIST, modelName)), localizedModelName);
 		}
 
 		/// <summary>
@@ -291,9 +295,13 @@ namespace Memento.Shared.Models.Repository
 		/// <param name="expression">The expression.</param>
 		protected virtual string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			string name = ((MemberExpression)expression.Body).Member.Name.SpacesFromCamel().ToLower();
+			// Get the name
+			string name = $"{typeof(TModel).Name.ToUpper()}_{((MemberExpression)expression.Body).Member.Name.ToUpper()}";
 
-			return string.Format(this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD), name);
+			// Translate the name
+			string localizedName = this.Localizer.GetString(name);
+
+			return string.Format(this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD), localizedName);
 		}
 
 		/// <summary>
@@ -304,9 +312,13 @@ namespace Memento.Shared.Models.Repository
 		/// <param name="expression">The expression.</param>
 		protected virtual string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
-			string name = ((MemberExpression)expression.Body).Member.Name.SpacesFromCamel().ToLower();
+			// Get the name
+			string name = $"{typeof(TModel).Name.ToUpper()}_{((MemberExpression)expression.Body).Member.Name.ToUpper()}";
 
-			return string.Format(this.Localizer.GetString(MODEL_HAS_INVALID_FIELD), name);
+			// Translate the name
+			string localizedName = this.Localizer.GetString(name);
+
+			return string.Format(this.Localizer.GetString($"{typeof(TModel).Name.ToUpper()}_{MODEL_HAS_INVALID_FIELD}"), localizedName);
 		}
 		#endregion
 	}
