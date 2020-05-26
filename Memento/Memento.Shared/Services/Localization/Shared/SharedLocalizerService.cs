@@ -42,6 +42,12 @@ namespace Memento.Shared.Services.Localization
 		{
 			return this.StringLocalizer[$"{typeof(T).FullName}.{key}"];
 		}
+
+		/// <inheritdoc />
+		public String GetString(Type type, string key)
+		{
+			return this.StringLocalizer[$"{type.FullName}.{key}"];
+		}
 		#endregion
 	}
 }

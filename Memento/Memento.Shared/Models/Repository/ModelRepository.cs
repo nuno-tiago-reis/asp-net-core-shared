@@ -1,4 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
+using Memento.Shared.Extensions;
 using Memento.Shared.Models.Pagination;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Identity;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Memento.Shared.Models.Repository
@@ -27,9 +29,19 @@ namespace Memento.Shared.Models.Repository
 	{
 		#region [Constants]
 		/// <summary>
-		/// The message that indicates that the model does not exist.
+		/// The key for the message that indicates that the model does not exist.
 		/// </summary>
-		protected const string MODEL_DOES_NOT_EXIST_MESSAGE = "The '{0}' does not exist.";
+		protected const string MODEL_DOES_NOT_EXIST = "MODEL_DOES_NOT_EXIST";
+
+		/// <summary>
+		/// The key for the message that indicates that the model has an invalid field.
+		/// </summary>
+		private static readonly string MODEL_HAS_INVALID_FIELD = "MODEL_HAS_INVALID_FIELD";
+
+		/// <summary>
+		/// The key for the message that indicates that the model has an duplicate field.
+		/// </summary>
+		private static readonly string MODEL_HAS_DUPLICATE_FIELD = "MODEL_HAS_DUPLICATE_FIELD";
 		#endregion
 
 		#region [Properties]
@@ -111,7 +123,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == model.Id);
 			if (contextModel == null)
 			{
-				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Normalize the model
@@ -137,7 +149,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Delete the model
@@ -153,7 +165,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.GetDetailedQueryable().FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Detach the model before returning it
@@ -205,7 +217,7 @@ namespace Memento.Shared.Models.Repository
 		}
 		#endregion
 
-		#region [Methods] Utility
+		#region [Methods] Model
 		/// <summary>
 		/// Normalizes the model.
 		/// </summary>
@@ -227,7 +239,9 @@ namespace Memento.Shared.Models.Repository
 		/// <param name="sourceModel">The source model.</param>
 		/// <param name="targetModel">The target model.</param>
 		protected abstract void UpdateModel(TModel sourceModel, TModel targetModel);
+		#endregion
 
+		#region [Methods] Queryable
 		/// <summary>
 		/// Gets a model queryable to be used in count queries.
 		/// This queryable should only include the base entity without including any relations.
@@ -253,6 +267,47 @@ namespace Memento.Shared.Models.Repository
 		/// <param name="modelQueryable">The model queryable.</param>
 		/// <param name="modelFilter">The model filter.</param>
 		protected abstract void FilterQueryable(IQueryable<TModel> modelQueryable, TModelFilter modelFilter);
+		#endregion
+
+		#region [Methods] Messages
+		/// <summary>
+		/// Returns a message indicating that the given models field is invalid.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		/// <param name="expression">The expression.</param>
+		protected virtual string GetModelDoesNotMessage()
+		{
+			string name = typeof(TModel).Name.SpacesFromCamel().ToLower();
+
+			return string.Format(this.Localizer.GetString(this.GetType(), MODEL_DOES_NOT_EXIST), name);
+		}
+
+		/// <summary>
+		/// Returns a message indicating that the given models field is invalid.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		/// <param name="expression">The expression.</param>
+		protected virtual string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
+		{
+			string name = ((MemberExpression)expression.Body).Member.Name.SpacesFromCamel().ToLower();
+
+			return string.Format(this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD), name);
+		}
+
+		/// <summary>
+		/// Returns a message indicating that the given models field is invalid.
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		/// <param name="expression">The expression.</param>
+		protected virtual string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
+		{
+			string name = ((MemberExpression)expression.Body).Member.Name.SpacesFromCamel().ToLower();
+
+			return string.Format(this.Localizer.GetString(MODEL_HAS_INVALID_FIELD), name);
+		}
 		#endregion
 	}
 }
