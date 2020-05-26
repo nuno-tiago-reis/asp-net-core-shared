@@ -10,7 +10,7 @@ namespace Memento.Shared.Middleware.Toaster
 	{
 		#region [Extensions]
 		/// <summary>
-		/// Adds the Toaster middleware to the ASP.NET Core Pipeline to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the Toaster middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{ToasterOptions}"/>
 		/// </summary>
 		/// 

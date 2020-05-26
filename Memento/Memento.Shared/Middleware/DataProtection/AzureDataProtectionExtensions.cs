@@ -20,7 +20,7 @@ namespace Memento.Shared.Middleware.DataProtection
 
 		#region [Extensions]
 		/// <summary>
-		/// Adds the AzureDataProtection middleware to the ASP.NET Core Pipeline to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the AzureDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// </summary>
 		///
 		/// <param name="options">The options.</param>

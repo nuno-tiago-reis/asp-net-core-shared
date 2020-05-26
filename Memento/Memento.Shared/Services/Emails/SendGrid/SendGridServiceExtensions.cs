@@ -10,7 +10,7 @@ namespace Memento.Shared.Services.Emails
 	{
 		#region [Extensions]
 		/// <summary>
-		/// Adds the <see cref="SendGridService"/> to the ASP.NET Core Dependency Injection to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the <see cref="SendGridService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{SendGridOptions}"/>
 		/// </summary>
 		/// 

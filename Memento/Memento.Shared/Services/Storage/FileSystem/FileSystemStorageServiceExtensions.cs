@@ -10,7 +10,7 @@ namespace Memento.Shared.Services.Storage
 	{
 		#region [Extensions]
 		/// <summary>
-		/// Adds the <see cref="FileSystemStorageService"/> to the ASP.NET Core Dependency Injection to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the <see cref="FileSystemStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{FileSystemStorageOptions}"/>
 		/// </summary>
 		/// 

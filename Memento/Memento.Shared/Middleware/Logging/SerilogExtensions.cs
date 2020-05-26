@@ -26,7 +26,7 @@ namespace Memento.Shared.Middleware.Logging
 
 		#region [Methods]
 		/// <summary>
-		/// Adds the Serilog logger to the ASP.NET Core App to the specified <seealso cref="IWebHostBuilder"/>.
+		/// Registers the Serilog logger in the specified <seealso cref="IWebHostBuilder"/>.
 		/// Configures the options using specified <seealso cref="Action{SerilogOptions}"/>
 		/// </summary>
 		/// 

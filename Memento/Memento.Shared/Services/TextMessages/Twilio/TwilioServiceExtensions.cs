@@ -10,7 +10,7 @@ namespace Memento.Shared.Services.TextMessages
 	{
 		#region [Extensions]
 		/// <summary>
-		/// Adds the <see cref="TwilioService"/> to the ASP.NET Core Dependency Injection to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the <see cref="TwilioService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{TwilioOptions}"/>
 		/// </summary>
 		/// 

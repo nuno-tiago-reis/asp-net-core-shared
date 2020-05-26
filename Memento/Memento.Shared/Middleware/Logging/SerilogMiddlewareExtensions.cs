@@ -19,7 +19,7 @@ namespace Memento.Shared.Middleware.Logging
 
 		#region [Extensions]
 		/// <summary>
-		/// Adds the Serilog middleware to the ASP.NET Core Pipeline to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the Serilog middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// </summary>
 		public static IServiceCollection AddSerilogMiddleware(this IServiceCollection instance)
 		{
@@ -36,7 +36,7 @@ namespace Memento.Shared.Middleware.Logging
 		}
 
 		/// <summary>
-		/// Uses the Serilog middleware in the ASP.NET Core Pipeline to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the Serilog middleware in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
 		/// Configures the options using specified <seealso cref="Action{SerilogMiddlewareOptions}"/>
 		/// </summary>
 		/// 

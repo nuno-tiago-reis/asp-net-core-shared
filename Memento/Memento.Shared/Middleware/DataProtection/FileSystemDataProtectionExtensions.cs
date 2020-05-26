@@ -13,7 +13,7 @@ namespace Memento.Shared.Middleware.DataProtection
 	{
 		#region [Extensions]
 		/// <summary>
-		/// Adds the FileSystemDataProtection middleware to the ASP.NET Core Pipeline to the specified <seealso cref="IServiceCollection"/>.
+		/// Registers the FileSystemDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// </summary>
 		///
 		/// <param name="options">The options.</param>

@@ -1,10 +1,10 @@
 ﻿namespace Memento.Shared.Services.Localization
 {
 	/// <summary>
-	/// Defines a generic interface for a shared localizer service.
+	/// Defines a generic interface for a localizer service.
 	/// Provides methods to get localized strings using keys.
 	/// </summary>
-	public interface ISharedLocalizer
+	public interface ILocalizerService
 	{
 		#region [Methods]
 		/// <summary>

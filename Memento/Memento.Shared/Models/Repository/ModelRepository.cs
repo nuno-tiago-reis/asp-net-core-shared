@@ -46,7 +46,7 @@ namespace Memento.Shared.Models.Repository
 		/// <summary>
 		/// The localizer.
 		/// </summary>
-		protected readonly ISharedLocalizer Localizer;
+		protected readonly ILocalizerService Localizer;
 
 		/// <summary>
 		/// The lookup normalizer.
@@ -71,7 +71,7 @@ namespace Memento.Shared.Models.Repository
 		public ModelRepository
 		(
 			DbContext context,
-			ISharedLocalizer localizer,
+			ILocalizerService localizer,
 			ILookupNormalizer lookupNormalizer,
 			ILogger<ModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>> logger
 		)

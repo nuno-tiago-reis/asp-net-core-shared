@@ -85,7 +85,7 @@ namespace Memento.Shared.Services.Templates
 				var viewEngineResult = this.ViewEngine.FindView(actionContext, name, false);
 				if (!viewEngineResult.Success)
 				{
-					throw new InvalidOperationException($"Couldn't find the view '{name}'");
+					throw new ArgumentException($"The {nameof(name)} parameter is invalid (couldn't find the view).");
 				}
 
 				using (var output = new StringWriter())

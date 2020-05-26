@@ -37,7 +37,7 @@ namespace Memento.Shared.Components
 		/// The shared localizer service.
 		/// </summary>
 		[Inject]
-		protected ISharedLocalizer SharedLocalizer { get; set; }
+		protected ILocalizerService SharedLocalizer { get; set; }
 
 		/// <summary>
 		/// The toaster service.

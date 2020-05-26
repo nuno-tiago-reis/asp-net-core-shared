@@ -9,7 +9,7 @@ namespace Memento.Shared.Services.Localization
 	/// </summary>
 	///
 	/// <typeparam name="TSharedResources">The shared resources type.</typeparam>
-	public abstract class SharedLocalizer<TSharedResources> : ISharedLocalizer where TSharedResources : class
+	public abstract class SharedLocalizerService<TSharedResources> : ILocalizerService where TSharedResources : class
 	{
 		#region [Properties]
 		/// <summary>
@@ -24,7 +24,7 @@ namespace Memento.Shared.Services.Localization
 		/// </summary>
 		/// 
 		/// <param name="stringLocalizer">The string localizer.</param>
-		public SharedLocalizer(IStringLocalizer<TSharedResources> stringLocalizer)
+		public SharedLocalizerService(IStringLocalizer<TSharedResources> stringLocalizer)
 		{
 			this.StringLocalizer = stringLocalizer;
 		}
