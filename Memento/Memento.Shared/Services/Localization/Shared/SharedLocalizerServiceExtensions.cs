@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Options;
 using System;
 using System.Globalization;
 using System.Linq;
@@ -16,44 +15,46 @@ namespace Memento.Shared.Services.Localization
 		#region [Extensions]
 		/// <summary>
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IMvcBuilder"/>.
-		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
+		/// Uses the specified <seealso cref="SharedLocalizerOptions"/>
 		/// </summary>
 		/// 
-		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
-		public static IMvcBuilder AddSharedLocalization<T>(this IMvcBuilder instance, Action<SharedLocalizerOptions> action = null) where T : class
+		/// <param name="options">The options.</param>
+		///
+		/// <typeparam name="T">The shared resources type.</typeparam>
+		public static IMvcBuilder AddSharedLocalization<T>(this IMvcBuilder builder, SharedLocalizerOptions options) where T : class
 		{
-			// Register the provider
-			instance.AddDataAnnotationsLocalization(options =>
+			// Validate the options
+			if (options == null)
+			{
+				throw new ArgumentException($"The {nameof(options)} are invalid.");
+			}
+
+			// Validate the default culture
+			if (!string.IsNullOrWhiteSpace(options.DefaultCulture))
+			{
+				throw new ArgumentException($"The {nameof(options.DefaultCulture)} parameter is invalid.");
+			}
+
+			// Validate the supported cultures
+			if (options.SupportedCultures == null || options.SupportedCultures.Length == 0)
+			{
+				throw new ArgumentException($"The {nameof(options.SupportedCultures)} parameter is invalid.");
+			}
+
+			// Register the service
+			builder.Services.AddScoped<ILocalizerService, SharedLocalizerService<T>>();
+
+			// Configure the options
+			builder.Services.ConfigureOptions(options);
+
+			// Register the data annotations provider
+			builder.AddDataAnnotationsLocalization(options =>
 			{
 				options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(T));
 			});
 
-			// Register the service
-			instance.Services.AddScoped<ILocalizerService, SharedLocalizerService<T>>();
-
-			// Configure the options
-			instance.Services.Configure<SharedLocalizerOptions>(options =>
-			{
-				action?.Invoke(options);
-
-				// Validate the default culture
-				if (!string.IsNullOrWhiteSpace(options.DefaultCulture))
-				{
-					throw new ArgumentException($"The {nameof(options.DefaultCulture)} parameter is invalid.");
-				}
-
-				// Validate the supported cultures
-				if (options.SupportedCultures == null || options.SupportedCultures.Length == 0)
-				{
-					throw new ArgumentException($"The {nameof(options.SupportedCultures)} parameter is invalid.");
-				}
-			});
-
-			// Get the options
-			var options = instance.Services.BuildServiceProvider().GetService <IOptions<SharedLocalizerOptions>>()?.Value;
-
 			// Configure the localization options
-			instance.Services.Configure<RequestLocalizationOptions>(localizationOptions =>
+			builder.Services.Configure<RequestLocalizationOptions>(localizationOptions =>
 			{
 				var defaultCulture = new RequestCulture(options.DefaultCulture);
 				var supportedCultures = options.SupportedCultures.Select(culture => new CultureInfo(culture)).ToList();
@@ -63,20 +64,38 @@ namespace Memento.Shared.Services.Localization
 				localizationOptions.SupportedUICultures = supportedCultures;
 			});
 
+			return builder;
+		}
 
-			return instance;
+		/// <summary>
+		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IMvcBuilder"/>.
+		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
+		/// </summary>
+		/// 
+		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
+		public static IMvcBuilder AddSharedLocalization<T>(this IMvcBuilder builder, Action<SharedLocalizerOptions> action) where T : class
+		{
+			// Create the options
+			var options = new SharedLocalizerOptions();
+			// Configure the options
+			action?.Invoke(options);
+
+			// Register the service
+			builder.AddSharedLocalization<T>(options);
+
+			return builder;
 		}
 
 		/// <summary>
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
+		/// Uses the specified <seealso cref="SharedLocalizerOptions"/>
 		/// </summary>
-		public static IApplicationBuilder UseSharedLocalization(this IApplicationBuilder instance)
+		/// 
+		/// <param name="options">The options.</param>
+		public static IApplicationBuilder UseSharedLocalization(this IApplicationBuilder builder, SharedLocalizerOptions options)
 		{
-			// Get the options
-			var options = instance.ApplicationServices.GetService<IOptions<SharedLocalizerOptions>>()?.Value;
-
 			// Configure the localization options
-			instance.UseRequestLocalization(localizationOptions =>
+			builder.UseRequestLocalization(localizationOptions =>
 			{
 				var defaultCulture = new RequestCulture(options.DefaultCulture);
 				var supportedCultures = options.SupportedCultures.Select(culture => new CultureInfo(culture)).ToList();
@@ -86,7 +105,26 @@ namespace Memento.Shared.Services.Localization
 				localizationOptions.SupportedUICultures = supportedCultures;
 			});
 
-			return instance;
+			return builder;
+		}
+
+		/// <summary>
+		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
+		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
+		/// </summary>
+		/// 
+		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
+		public static IApplicationBuilder UseSharedLocalization(this IApplicationBuilder builder, Action<SharedLocalizerOptions> action)
+		{
+			// Create the options
+			var options = new SharedLocalizerOptions();
+			// Configure the options
+			action?.Invoke(options);
+
+			// Register the service
+			builder.UseSharedLocalization(options);
+
+			return builder;
 		}
 		#endregion
 	}

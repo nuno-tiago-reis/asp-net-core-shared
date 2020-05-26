@@ -1,6 +1,6 @@
 ﻿using Sotsera.Blazor.Toaster.Core.Models;
 
-namespace Memento.Shared.Middleware.Toaster
+namespace Memento.Shared.Services.Toaster
 {
 	/// <summary>
 	/// Implements the 'Toaster' options.

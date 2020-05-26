@@ -11,34 +11,56 @@ namespace Memento.Shared.Services.Storage
 		#region [Extensions]
 		/// <summary>
 		/// Registers the <see cref="AzureStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
+		/// Uses the specified <seealso cref="AzureStorageOptions"/>
+		/// </summary>
+		/// 
+		/// <param name="options">The options.</param>
+		public static IServiceCollection AddAzureStorageService(this IServiceCollection services, AzureStorageOptions options)
+		{
+			// Validate the options
+			if (options == null)
+			{
+				throw new ArgumentException($"The {nameof(options)} are invalid.");
+			}
+
+			// Validate the connection string
+			if (!string.IsNullOrWhiteSpace(options.ConnectionString))
+			{
+				throw new ArgumentException($"The {nameof(options.ConnectionString)} parameter is invalid.");
+			}
+
+			// Validate the container
+			if (!string.IsNullOrWhiteSpace(options.Container))
+			{
+				throw new ArgumentException($"The {nameof(options.Container)} parameter is invalid.");
+			}
+
+			// Register the service
+			services.AddScoped<IStorageService, AzureStorageService>();
+
+			// Configure the options
+			services.ConfigureOptions(options);
+
+			return services;
+		}
+
+		/// <summary>
+		/// Registers the <see cref="AzureStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{AzureStorageOptions}"/>
 		/// </summary>
 		/// 
 		/// <param name="action">The action that configures the <seealso cref="AzureStorageOptions"/>.</param>
-		public static IServiceCollection AddAzureStorageService(this IServiceCollection instance, Action<AzureStorageOptions> action = null)
+		public static IServiceCollection AddAzureStorageService(this IServiceCollection services, Action<AzureStorageOptions> action)
 		{
-			// Register the service
-			instance.AddScoped<IStorageService, AzureStorageService>();
-
+			// Create the options
+			var options = new AzureStorageOptions();
 			// Configure the options
-			instance.Configure<AzureStorageOptions>(options =>
-			{
-				action?.Invoke(options);
+			action?.Invoke(options);
 
-				// Validate the connection string
-				if (!string.IsNullOrWhiteSpace(options.ConnectionString))
-				{
-					throw new ArgumentException($"The {nameof(options.ConnectionString)} parameter is invalid.");
-				}
+			// Register the service
+			services.AddAzureStorageService(options);
 
-				// Validate the container
-				if (!string.IsNullOrWhiteSpace(options.Container))
-				{
-					throw new ArgumentException($"The {nameof(options.Container)} parameter is invalid.");
-				}
-			});
-
-			return instance;
+			return services;
 		}
 		#endregion
 	}

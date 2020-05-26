@@ -32,6 +32,11 @@ namespace Memento.Shared.Middleware.DataProtection
 		public string KeyId { get; set; }
 
 		/// <summary>
+		/// Gets or sets the key lifetime.
+		/// </summary>
+		public TimeSpan? KeyLifetime { get; set; }
+
+		/// <summary>
 		/// Gets or sets the client identifier.
 		/// </summary>
 		public string ClientId { get; set; }
@@ -40,11 +45,6 @@ namespace Memento.Shared.Middleware.DataProtection
 		/// Gets or sets the client secret
 		/// </summary>
 		public string ClientSecret { get; set; }
-
-		/// <summary>
-		/// Gets or sets the key lifetime.
-		/// </summary>
-		public TimeSpan? KeyLifetime { get; set; }
 		#endregion
 	}
 

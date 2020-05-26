@@ -12,52 +12,72 @@ namespace Memento.Shared.Services.Templates
 		#region [Extensions]
 		/// <summary>
 		/// Registers the <see cref="RazorTemplateService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
+		/// Uses the specified <seealso cref="RazorTemplateOptions"/>
+		/// </summary>
+		/// 
+		/// <param name="options">The options.</param>
+		public static IServiceCollection AddRazorTemplateService(this IServiceCollection services, RazorTemplateOptions options)
+		{
+			// Validate the options
+			if (options == null)
+			{
+				throw new ArgumentException($"The {nameof(options)} are invalid.");
+			}
+
+			// Register the service
+			services.AddScoped<ITemplateService, RazorTemplateService>();
+
+			// Configure the options
+			services.Configure<RazorViewEngineOptions>(templateOptions =>
+			{
+				foreach (var provider in options.FileProviders)
+				{
+					templateOptions.FileProviders.Add(provider);
+				}
+				foreach (var expander in options.ViewLocationExpanders)
+				{
+					templateOptions.ViewLocationExpanders.Add(expander);
+				}
+				foreach (var format in options.AreaViewLocationFormats)
+				{
+					templateOptions.AreaViewLocationFormats.Add(format);
+				}
+				foreach (var format in options.ViewLocationFormats)
+				{
+					templateOptions.ViewLocationFormats.Add(format);
+				}
+				foreach (var format in options.AreaPageViewLocationFormats)
+				{
+					templateOptions.AreaPageViewLocationFormats.Add(format);
+				}
+				foreach (var format in options.PageViewLocationFormats)
+				{
+					templateOptions.PageViewLocationFormats.Add(format);
+				}
+
+				templateOptions.AllowRecompilingViewsOnFileChange = options.AllowRecompilingViewsOnFileChange;
+			});
+
+			return services;
+		}
+
+		/// <summary>
+		/// Registers the <see cref="RazorTemplateService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{RazorTemplateOptions}"/>
 		/// </summary>
 		/// 
 		/// <param name="action">The action that configures the <seealso cref="RazorTemplateOptions"/>.</param>
-		public static IServiceCollection AddRazorTemplateService(this IServiceCollection instance, Action<RazorTemplateOptions> action = null)
+		public static IServiceCollection AddRazorTemplateService(this IServiceCollection services, Action<RazorTemplateOptions> action)
 		{
-			// Register the service
-			instance.AddScoped<ITemplateService, RazorTemplateService>();
-
+			// Create the options
+			var options = new RazorTemplateOptions();
 			// Configure the options
-			instance.Configure<RazorViewEngineOptions>(options =>
-			{
-				// Create the options
-				var templateOptions = new RazorTemplateOptions();
-				// Configure the options
-				action?.Invoke(templateOptions);
+			action?.Invoke(options);
 
-				foreach (var provider in templateOptions.FileProviders)
-				{
-					options.FileProviders.Add(provider);
-				}
-				foreach (var expander in templateOptions.ViewLocationExpanders)
-				{
-					options.ViewLocationExpanders.Add(expander);
-				}
-				foreach (var format in templateOptions.AreaViewLocationFormats)
-				{
-					options.AreaViewLocationFormats.Add(format);
-				}
-				foreach (var format in templateOptions.ViewLocationFormats)
-				{
-					options.ViewLocationFormats.Add(format);
-				}
-				foreach (var format in templateOptions.AreaPageViewLocationFormats)
-				{
-					options.AreaPageViewLocationFormats.Add(format);
-				}
-				foreach (var format in templateOptions.PageViewLocationFormats)
-				{
-					options.PageViewLocationFormats.Add(format);
-				}
+			// Register the service
+			services.AddRazorTemplateService(options);
 
-				options.AllowRecompilingViewsOnFileChange = templateOptions.AllowRecompilingViewsOnFileChange;
-			});
-
-			return instance;
+			return services;
 		}
 		#endregion
 	}
