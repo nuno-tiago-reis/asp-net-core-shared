@@ -1,7 +1,7 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Models.Repository
+namespace Memento.Shared.Models.Repositories
 {
 	/// <summary>
 	/// Defines a generic interface for a model context.

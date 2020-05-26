@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Models.Repository
+﻿namespace Memento.Shared.Models.Repositories
 {
 	/// <summary>
 	/// Enumerates the order directions.

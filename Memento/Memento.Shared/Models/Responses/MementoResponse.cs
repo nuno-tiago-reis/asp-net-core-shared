@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace Memento.Shared.Models.Response
+namespace Memento.Shared.Models.Responses
 {
 	/// <summary>
 	/// Implements the generic 'Memento' response.

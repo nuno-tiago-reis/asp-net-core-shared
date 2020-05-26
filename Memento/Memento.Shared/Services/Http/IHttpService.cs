@@ -1,4 +1,4 @@
-﻿using Memento.Shared.Models.Response;
+﻿using Memento.Shared.Models.Responses;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

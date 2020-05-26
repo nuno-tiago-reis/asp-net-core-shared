@@ -2,7 +2,7 @@
 using System;
 using System.Net.Http;
 
-namespace Memento.Shared.Models.Response
+namespace Memento.Shared.Models.Responses
 {
 	/// <summary>
 	/// Implements the 'MementoResponse' extensions.

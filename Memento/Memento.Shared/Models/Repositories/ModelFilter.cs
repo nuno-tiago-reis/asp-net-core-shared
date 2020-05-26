@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Memento.Shared.Models.Repository
+namespace Memento.Shared.Models.Repositories
 {
 	/// <summary>
 	/// Implements the generic interface for a model filter.

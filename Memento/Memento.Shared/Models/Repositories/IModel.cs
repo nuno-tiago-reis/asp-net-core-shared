@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Memento.Shared.Models.Repository
+namespace Memento.Shared.Models.Repositories
 {
 	/// <summary>
 	/// Defines a generic interface for a model.
