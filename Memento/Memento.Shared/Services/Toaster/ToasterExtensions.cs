@@ -16,10 +16,10 @@ namespace Memento.Shared.Services.Toaster
 		/// </summary>
 		/// 
 		/// <param name="options">The options.</param>
-		public static IServiceCollection AddToaster(this IServiceCollection services, ToasterOptions options)
+		public static IServiceCollection AddToasterService(this IServiceCollection services, ToasterOptions options = null)
 		{
 			// Register the service
-			services.AddToaster(options);
+			services.AddToaster(options ?? new ToasterOptions());
 
 			return services;
 		}
@@ -30,7 +30,7 @@ namespace Memento.Shared.Services.Toaster
 		/// </summary>
 		/// 
 		/// <param name="action">The action that configures the <seealso cref="ToasterOptions"/>.</param>
-		public static IServiceCollection AddToaster(this IServiceCollection services, Action<ToasterOptions> action)
+		public static IServiceCollection AddToasterService(this IServiceCollection services, Action<ToasterOptions> action)
 		{
 			// Create the options
 			var options = new ToasterOptions();
