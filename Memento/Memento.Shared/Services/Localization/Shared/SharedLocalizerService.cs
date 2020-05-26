@@ -32,21 +32,46 @@ namespace Memento.Shared.Services.Localization
 
 		#region [Methods]
 		/// <inheritdoc />
-		public String GetString(string key)
+		public String GetString(string key, params string[] arguments)
 		{
-			return this.StringLocalizer[key];
+			if (arguments != null && arguments.Length > 0)
+			{
+				return this.StringLocalizer[string.Format(key, arguments)];
+			}
+			else
+			{
+				return this.StringLocalizer[key];
+			}
 		}
 
 		/// <inheritdoc />
-		public String GetString<T>(string key) where T : class
+		public String GetString<T>(string key, params string[] arguments) where T : class
 		{
-			return this.StringLocalizer[$"{typeof(T).FullName}.{key}"];
+			string format = $"{typeof(T).FullName}.{key}";
+
+			if (arguments != null && arguments.Length > 0)
+			{
+				return this.StringLocalizer[string.Format(format, arguments)];
+			}
+			else
+			{
+				return this.StringLocalizer[format];
+			}
 		}
 
 		/// <inheritdoc />
-		public String GetString(Type type, string key)
+		public String GetString(Type type, string key, params string[] arguments)
 		{
-			return this.StringLocalizer[$"{type.FullName}.{key}"];
+			string format = $"{type.FullName}.{key}";
+
+			if (arguments != null && arguments.Length > 0)
+			{
+				return this.StringLocalizer[string.Format(format, arguments)];
+			}
+			else
+			{
+				return this.StringLocalizer[format];
+			}
 		}
 		#endregion
 	}

@@ -1,5 +1,4 @@
 ﻿using Memento.Shared.Exceptions;
-using Memento.Shared.Extensions;
 using Memento.Shared.Models.Pagination;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Identity;
@@ -279,12 +278,9 @@ namespace Memento.Shared.Models.Repositories
 		protected virtual string GetModelDoesNotMessage()
 		{
 			// Get the name
-			string modelName = typeof(TModel).Name.ToUpper();
+			string name = typeof(TModel).Name.ToUpper();
 
-			// Translate the name
-			string localizedModelName = this.Localizer.GetString(modelName);
-
-			return string.Format(this.Localizer.GetString(string.Format(MODEL_DOES_NOT_EXIST, modelName)), localizedModelName);
+			return this.Localizer.GetString(MODEL_DOES_NOT_EXIST, name);
 		}
 
 		/// <summary>
@@ -318,7 +314,7 @@ namespace Memento.Shared.Models.Repositories
 			// Translate the name
 			string localizedName = this.Localizer.GetString(name);
 
-			return string.Format(this.Localizer.GetString($"{typeof(TModel).Name.ToUpper()}_{MODEL_HAS_INVALID_FIELD}"), localizedName);
+			return string.Format(this.Localizer.GetString(MODEL_HAS_INVALID_FIELD), localizedName);
 		}
 		#endregion
 	}

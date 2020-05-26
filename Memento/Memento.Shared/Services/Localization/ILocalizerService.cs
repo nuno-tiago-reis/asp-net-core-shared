@@ -13,15 +13,17 @@ namespace Memento.Shared.Services.Localization
 		/// Returns the localized string with the given key.
 		/// </summary>
 		/// 
-		/// <param name="key">The key</param>
-		string GetString(string key);
+		/// <param name="key">The key.</param>
+		/// <param name="arguments">The arguments.</param>
+		string GetString(string key, params string[] arguments);
 
 		/// <summary>
 		/// Returns the localized string with the given key (assumes the context of <seealso cref="{T}"/>).
 		/// </summary>
 		/// 
 		/// <param name="key">The key</param>
-		string GetString<T>(string key) where T : class;
+		/// <param name="arguments">The arguments.</param>
+		string GetString<T>(string key, params string[] arguments) where T : class;
 
 		/// <summary>
 		/// Returns the localized string with the given key (assumes the context of <seealso cref="Type"/>).
@@ -29,7 +31,8 @@ namespace Memento.Shared.Services.Localization
 		/// 
 		/// <param name="type">The type</param>
 		/// <param name="key">The key</param>
-		string GetString(Type type, string key);
+		/// <param name="arguments">The arguments.</param>
+		string GetString(Type type, string key, params string[] arguments);
 		#endregion
 	}
 }
