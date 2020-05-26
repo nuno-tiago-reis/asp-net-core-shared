@@ -24,9 +24,9 @@ namespace Memento.Shared.Controllers
 		protected readonly IMapper Mapper;
 
 		/// <summary>
-		/// The shared localizer service.
+		/// The localizer service.
 		/// </summary>
-		protected readonly ILocalizerService SharedLocalizer;
+		protected readonly ILocalizerService Localizer;
 		#endregion
 
 		#region [Constructors]
@@ -36,12 +36,12 @@ namespace Memento.Shared.Controllers
 		/// 
 		/// <param name="logger">The logger.</param>
 		/// <param name="mapper">The mapper.</param>
-		/// <param name="sharedLocalizer">The shared localizer.</param>
-		protected MementoApiController(ILogger logger = null, IMapper mapper = null, ILocalizerService sharedLocalizer = null)
+		/// <param name="localizer">The localizer.</param>
+		protected MementoApiController(ILogger logger = null, IMapper mapper = null, ILocalizerService localizer = null)
 		{
 			this.Logger = logger;
 			this.Mapper = mapper;
-			this.SharedLocalizer = sharedLocalizer;
+			this.Localizer = localizer;
 		}
 		#endregion
 	}

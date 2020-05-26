@@ -25,9 +25,9 @@ namespace Memento.Shared.Controllers
 		protected readonly IMapper Mapper;
 
 		/// <summary>
-		/// The shared localizer service.
+		/// The localizer service.
 		/// </summary>
-		protected readonly ILocalizerService SharedLocalizer;
+		protected readonly ILocalizerService Localizer;
 
 		/// <summary>
 		/// The toaster service.
@@ -42,13 +42,13 @@ namespace Memento.Shared.Controllers
 		/// 
 		/// <param name="logger">The logger.</param>
 		/// <param name="mapper">The mapper.</param>
-		/// <param name="sharedLocalizer">The shared localizer.</param>
+		/// <param name="localizer">The localizer.</param>
 		/// <param name="toaster">The toaster.</param>
-		protected MementoViewController(ILogger logger = null, IMapper mapper = null, ILocalizerService sharedLocalizer = null, IToaster toaster = null)
+		protected MementoViewController(ILogger logger = null, IMapper mapper = null, ILocalizerService localizer = null, IToaster toaster = null)
 		{
 			this.Logger = logger;
 			this.Mapper = mapper;
-			this.SharedLocalizer = sharedLocalizer;
+			this.Localizer = localizer;
 			this.Toaster = toaster;
 		}
 		#endregion
