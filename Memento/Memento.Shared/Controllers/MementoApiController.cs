@@ -1,4 +1,5 @@
 using AutoMapper;
+using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -24,9 +25,9 @@ namespace Memento.Shared.Controllers
 		protected readonly IMapper Mapper;
 
 		/// <summary>
-		/// The string localizer service.
+		/// The shared localizer service.
 		/// </summary>
-		protected readonly IStringLocalizer StringLocalizer;
+		protected readonly ISharedLocalizer SharedLocalizer;
 		#endregion
 
 		#region [Constructors]
@@ -36,12 +37,12 @@ namespace Memento.Shared.Controllers
 		/// 
 		/// <param name="logger">The logger.</param>
 		/// <param name="mapper">The mapper.</param>
-		/// <param name="stringLocalizer">The string localizer.</param>
-		protected MementoApiController(ILogger logger = null, IMapper mapper = null, IStringLocalizer stringLocalizer = null)
+		/// <param name="sharedLocalizer">The shared localizer.</param>
+		protected MementoApiController(ILogger logger = null, IMapper mapper = null, ISharedLocalizer sharedLocalizer = null)
 		{
 			this.Logger = logger;
 			this.Mapper = mapper;
-			this.StringLocalizer = stringLocalizer;
+			this.SharedLocalizer = sharedLocalizer;
 		}
 		#endregion
 	}

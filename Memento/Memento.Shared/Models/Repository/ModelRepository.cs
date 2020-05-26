@@ -1,5 +1,6 @@
 ﻿using Memento.Shared.Exceptions;
 using Memento.Shared.Models.Pagination;
+using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -24,6 +25,13 @@ namespace Memento.Shared.Models.Repository
 		where TModelFilterOrderBy : Enum
 		where TModelFilterOrderDirection : Enum
 	{
+		#region [Constants]
+		/// <summary>
+		/// The message that indicates that the model does not exist.
+		/// </summary>
+		protected const string MODEL_DOES_NOT_EXIST_MESSAGE = "The '{0}' does not exist.";
+		#endregion
+
 		#region [Properties]
 		/// <summary>
 		/// The context.
@@ -36,17 +44,17 @@ namespace Memento.Shared.Models.Repository
 		protected readonly DbSet<TModel> Models;
 
 		/// <summary>
+		/// The localizer.
+		/// </summary>
+		protected readonly ISharedLocalizer Localizer;
+
+		/// <summary>
 		/// The lookup normalizer.
 		/// </summary>
 		protected readonly ILookupNormalizer LookupNormalizer;
 
 		/// <summary>
-		/// The service provider.
-		/// </summary>
-		protected readonly IServiceProvider ServiceProvider;
-
-		/// <summary>
-		/// The logger instance.
+		/// The logger.
 		/// </summary>
 		protected readonly ILogger Logger;
 		#endregion
@@ -57,21 +65,21 @@ namespace Memento.Shared.Models.Repository
 		/// </summary>
 		/// 
 		/// <param name="context">The context.</param>
-		/// <param name="lookupNormalizer">The lookup normalizer.</param>
-		/// <param name="serviceProvider">The services provider.</param>
 		/// <param name="logger">The logger.</param>
+		/// <param name="lookupNormalizer">The lookup normalizer.</param>
+		/// <param name="stringLocalizer">The string localizer.</param>
 		public ModelRepository
 		(
 			DbContext context,
+			ISharedLocalizer localizer,
 			ILookupNormalizer lookupNormalizer,
-			IServiceProvider serviceProvider,
 			ILogger<ModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>> logger
 		)
 		{
 			this.Context = context;
 			this.Models = context.Set<TModel>();
+			this.Localizer = localizer;
 			this.LookupNormalizer = lookupNormalizer;
-			this.ServiceProvider = serviceProvider;
 			this.Logger = logger;
 		}
 		#endregion
@@ -103,7 +111,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == model.Id);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.ModelDoesNotExistMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
 			}
 
 			// Normalize the model
@@ -129,7 +137,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.ModelDoesNotExistMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
 			}
 
 			// Delete the model
@@ -145,7 +153,7 @@ namespace Memento.Shared.Models.Repository
 			var contextModel = await this.GetDetailedQueryable().FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.ModelDoesNotExistMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(string.Format(MODEL_DOES_NOT_EXIST_MESSAGE, typeof(TModel).Name), MementoExceptionType.NotFound);
 			}
 
 			// Detach the model before returning it

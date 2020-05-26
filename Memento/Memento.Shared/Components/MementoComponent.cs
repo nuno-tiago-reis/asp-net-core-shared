@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
@@ -33,10 +34,10 @@ namespace Memento.Shared.Components
 		protected IMapper Mapper { get; set; }
 
 		/// <summary>
-		/// The string localizer service.
+		/// The shared localizer service.
 		/// </summary>
 		[Inject]
-		protected IStringLocalizer<T> StringLocalizer { get; set; }
+		protected ISharedLocalizer SharedLocalizer { get; set; }
 
 		/// <summary>
 		/// The toaster service.
