@@ -1,7 +1,6 @@
 using AutoMapper;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 
 namespace Memento.Shared.Controllers

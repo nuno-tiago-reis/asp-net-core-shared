@@ -1,8 +1,8 @@
 using AutoMapper;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
+using Sotsera.Blazor.Toaster;
 
 namespace Memento.Shared.Controllers
 {
@@ -28,6 +28,11 @@ namespace Memento.Shared.Controllers
 		/// The shared localizer service.
 		/// </summary>
 		protected readonly ILocalizerService SharedLocalizer;
+
+		/// <summary>
+		/// The toaster service.
+		/// </summary>
+		protected readonly IToaster Toaster;
 		#endregion
 
 		#region [Constructors]
@@ -38,11 +43,13 @@ namespace Memento.Shared.Controllers
 		/// <param name="logger">The logger.</param>
 		/// <param name="mapper">The mapper.</param>
 		/// <param name="sharedLocalizer">The shared localizer.</param>
-		protected MementoViewController(ILogger logger = null, IMapper mapper = null, ILocalizerService sharedLocalizer = null)
+		/// <param name="toaster">The toaster.</param>
+		protected MementoViewController(ILogger logger = null, IMapper mapper = null, ILocalizerService sharedLocalizer = null, IToaster toaster = null)
 		{
 			this.Logger = logger;
 			this.Mapper = mapper;
 			this.SharedLocalizer = sharedLocalizer;
+			this.Toaster = toaster;
 		}
 		#endregion
 	}
