@@ -24,19 +24,19 @@ namespace Memento.Shared.Services.TextMessages
 			}
 
 			// Validate the api key
-			if (!string.IsNullOrWhiteSpace(options.ApiKey))
+			if (string.IsNullOrWhiteSpace(options.ApiKey))
 			{
 				throw new ArgumentException($"The {nameof(options.ApiKey)} parameter is invalid.");
 			}
 
 			// Validate the api secret
-			if (!string.IsNullOrWhiteSpace(options.ApiSecret))
+			if (string.IsNullOrWhiteSpace(options.ApiSecret))
 			{
 				throw new ArgumentException($"The {nameof(options.ApiSecret)} parameter is invalid.");
 			}
 
 			// Validate the sender phone number
-			if (!string.IsNullOrWhiteSpace(options.Sender?.PhoneNumber))
+			if (string.IsNullOrWhiteSpace(options.Sender?.PhoneNumber))
 			{
 				throw new ArgumentException($"The {nameof(options.Sender)}.{nameof(options.Sender.PhoneNumber)} parameter is invalid.");
 			}

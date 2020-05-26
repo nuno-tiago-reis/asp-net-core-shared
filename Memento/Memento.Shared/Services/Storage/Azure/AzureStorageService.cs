@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.IO;
 using System.Threading.Tasks;
@@ -35,9 +34,9 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="options">The options.</param>
 		/// <param name="logger">The logger.</param>
-		public AzureStorageService(IOptions<AzureStorageOptions> options, ILogger<AzureStorageService> logger)
+		public AzureStorageService(AzureStorageOptions options, ILogger<AzureStorageService> logger)
 		{
-			this.Options = options.Value;
+			this.Options = options;
 			this.Logger = logger;
 		}
 		#endregion

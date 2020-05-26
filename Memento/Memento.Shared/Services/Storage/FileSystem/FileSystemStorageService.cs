@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -31,9 +30,9 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="options">The options.</param>
 		/// <param name="logger">The logger.</param>
-		public FileSystemStorageService(IOptions<FileSystemStorageOptions> options, ILogger<FileSystemStorageService> logger)
+		public FileSystemStorageService(FileSystemStorageOptions options, ILogger<FileSystemStorageService> logger)
 		{
-			this.Options = options.Value;
+			this.Options = options;
 			this.Logger = logger;
 		}
 		#endregion

@@ -28,19 +28,19 @@ namespace Memento.Shared.Middleware.DataProtection
 			}
 
 			// Validate the certificate filename
-			if (!string.IsNullOrWhiteSpace(options.CertificateFileName))
+			if (string.IsNullOrWhiteSpace(options.CertificateFileName))
 			{
 				throw new ArgumentException($"The {nameof(options.CertificateFileName)} parameter is invalid.");
 			}
 
 			// Validate the certificate password
-			if (!string.IsNullOrWhiteSpace(options.CertificatePassword))
+			if (string.IsNullOrWhiteSpace(options.CertificatePassword))
 			{
 				throw new ArgumentException($"The {nameof(options.CertificatePassword)} parameter is invalid.");
 			}
 
 			// Validate the folder
-			if (!string.IsNullOrWhiteSpace(options.Folder))
+			if (string.IsNullOrWhiteSpace(options.Folder))
 			{
 				throw new ArgumentException($"The {nameof(options.Folder)} parameter is invalid.");
 			}

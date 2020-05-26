@@ -24,19 +24,19 @@ namespace Memento.Shared.Services.ReCaptcha
 			}
 
 			// Validate the host
-			if (!string.IsNullOrWhiteSpace(options.Host))
+			if (string.IsNullOrWhiteSpace(options.Host))
 			{
 				throw new ArgumentException($"The {nameof(options.Host)} parameter is invalid.");
 			}
 
 			// Validate the site key
-			if (!string.IsNullOrWhiteSpace(options.SiteKey))
+			if (string.IsNullOrWhiteSpace(options.SiteKey))
 			{
 				throw new ArgumentException($"The {nameof(options.SiteKey)} parameter is invalid.");
 			}
 
 			// Validate the site secret
-			if (!string.IsNullOrWhiteSpace(options.SiteSecret))
+			if (string.IsNullOrWhiteSpace(options.SiteSecret))
 			{
 				throw new ArgumentException($"The {nameof(options.SiteSecret)} parameter is invalid.");
 			}
@@ -45,7 +45,7 @@ namespace Memento.Shared.Services.ReCaptcha
 			services.AddHttpClient<IRecaptchaService, GoogleRecaptchaService>();
 
 			// Configure the options
-			services.ConfigureOptions(options);
+			services.AddSingleton(options);
 
 			return services;
 		}

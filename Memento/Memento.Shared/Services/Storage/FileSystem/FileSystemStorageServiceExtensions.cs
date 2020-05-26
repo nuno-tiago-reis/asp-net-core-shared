@@ -24,7 +24,7 @@ namespace Memento.Shared.Services.Storage
 			}
 
 			// Validate the folder
-			if (!string.IsNullOrWhiteSpace(options.Folder))
+			if (string.IsNullOrWhiteSpace(options.Folder))
 			{
 				throw new ArgumentException($"The {nameof(options.Folder)} parameter is invalid.");
 			}

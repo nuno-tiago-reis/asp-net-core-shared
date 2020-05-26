@@ -1,6 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
@@ -40,9 +39,9 @@ namespace Memento.Shared.Services.Emails
 		/// <param name="options">The options.</param>
 		/// <param name="httpClient">The http client.</param>
 		/// <param name="logger">The logger.</param>
-		public SendGridService(IOptions<SendGridOptions> options, HttpClient httpClient, ILogger<SendGridService> logger)
+		public SendGridService(SendGridOptions options, HttpClient httpClient, ILogger<SendGridService> logger)
 		{
-			this.Options = options.Value;
+			this.Options = options;
 			this.HttpClient = httpClient;
 			this.Logger = logger;
 		}

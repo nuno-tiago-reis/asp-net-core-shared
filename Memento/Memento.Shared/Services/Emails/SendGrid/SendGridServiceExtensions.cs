@@ -24,19 +24,19 @@ namespace Memento.Shared.Services.Emails
 			}
 
 			// Validate the api key
-			if (!string.IsNullOrWhiteSpace(options.ApiKey))
+			if (string.IsNullOrWhiteSpace(options.ApiKey))
 			{
 				throw new ArgumentException($"The {nameof(options.ApiKey)} parameter is invalid.");
 			}
 
 			// Validate the sender email
-			if (!string.IsNullOrWhiteSpace(options.Sender?.Email))
+			if (string.IsNullOrWhiteSpace(options.Sender?.Email))
 			{
 				throw new ArgumentException($"The {nameof(options.Sender)}.{nameof(options.Sender.Email)} parameter is invalid.");
 			}
 
 			// Validate the sender name
-			if (!string.IsNullOrWhiteSpace(options.Sender?.Name))
+			if (string.IsNullOrWhiteSpace(options.Sender?.Name))
 			{
 				throw new ArgumentException($"The {nameof(options.Sender)}.{nameof(options.Sender.Name)} parameter is invalid.");
 			}
@@ -45,7 +45,7 @@ namespace Memento.Shared.Services.Emails
 			services.AddScoped<IEmailService, SendGridService>();
 
 			// Configure the options
-			services.ConfigureOptions(options);
+			services.AddSingleton(options);
 
 			return services;
 		}

@@ -9,7 +9,7 @@ namespace Memento.Shared.Services.Localization
 	/// </summary>
 	///
 	/// <typeparam name="TSharedResources">The shared resources type.</typeparam>
-	public abstract class SharedLocalizerService<TSharedResources> : ILocalizerService where TSharedResources : class
+	public sealed class SharedLocalizerService<TSharedResources> : ILocalizerService where TSharedResources : class
 	{
 		#region [Properties]
 		/// <summary>

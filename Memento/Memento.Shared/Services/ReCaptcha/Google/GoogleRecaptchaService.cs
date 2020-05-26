@@ -1,6 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Net;
@@ -40,9 +39,9 @@ namespace Memento.Shared.Services.ReCaptcha
 		/// <param name="options">The options.</param>
 		/// <param name="httpClient">The http client.</param>
 		/// <param name="logger">The logger.</param>
-		public GoogleRecaptchaService(IOptions<GoogleReCaptchaOptions> options, HttpClient httpClient, ILogger<GoogleRecaptchaService> logger)
+		public GoogleRecaptchaService(GoogleReCaptchaOptions options, HttpClient httpClient, ILogger<GoogleRecaptchaService> logger)
 		{
-			this.Options = options.Value;
+			this.Options = options;
 			this.HttpClient = httpClient;
 			this.Logger = logger;
 		}

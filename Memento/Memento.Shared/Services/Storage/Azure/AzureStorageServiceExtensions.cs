@@ -24,13 +24,13 @@ namespace Memento.Shared.Services.Storage
 			}
 
 			// Validate the connection string
-			if (!string.IsNullOrWhiteSpace(options.ConnectionString))
+			if (string.IsNullOrWhiteSpace(options.ConnectionString))
 			{
 				throw new ArgumentException($"The {nameof(options.ConnectionString)} parameter is invalid.");
 			}
 
 			// Validate the container
-			if (!string.IsNullOrWhiteSpace(options.Container))
+			if (string.IsNullOrWhiteSpace(options.Container))
 			{
 				throw new ArgumentException($"The {nameof(options.Container)} parameter is invalid.");
 			}

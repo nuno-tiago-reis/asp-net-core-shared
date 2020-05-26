@@ -35,7 +35,7 @@ namespace Memento.Shared.Middleware.DataProtection
 			}
 
 			// Validate the key vault key id
-			if (!string.IsNullOrWhiteSpace(options.KeyVault?.KeyId))
+			if (string.IsNullOrWhiteSpace(options.KeyVault?.KeyId))
 			{
 				throw new ArgumentException($"The {nameof(options.KeyVault)}.{nameof(options.KeyVault.KeyId)} parameter is invalid.");
 			}
@@ -47,25 +47,25 @@ namespace Memento.Shared.Middleware.DataProtection
 			}
 
 			// Validate the key vault client id
-			if (!string.IsNullOrWhiteSpace(options.KeyVault?.ClientId))
+			if (string.IsNullOrWhiteSpace(options.KeyVault?.ClientId))
 			{
 				throw new ArgumentException($"The {nameof(options.KeyVault)}.{nameof(options.KeyVault.ClientId)} parameter is invalid.");
 			}
 
 			// Validate the key vault client secret
-			if (!string.IsNullOrWhiteSpace(options.KeyVault?.ClientSecret))
+			if (string.IsNullOrWhiteSpace(options.KeyVault?.ClientSecret))
 			{
 				throw new ArgumentException($"The {nameof(options.KeyVault)}.{nameof(options.KeyVault.ClientSecret)} parameter is invalid.");
 			}
 
 			// Validate the storage connection string
-			if (!string.IsNullOrWhiteSpace(options.Storage?.ConnectionString))
+			if (string.IsNullOrWhiteSpace(options.Storage?.ConnectionString))
 			{
 				throw new ArgumentException($"The {nameof(options.KeyVault)}.{nameof(options.Storage.ConnectionString)}  parameter is invalid.");
 			}
 
 			// Validate the storage container
-			if (!string.IsNullOrWhiteSpace(options.Storage?.Container))
+			if (string.IsNullOrWhiteSpace(options.Storage?.Container))
 			{
 				throw new ArgumentException($"The {nameof(options.KeyVault)}.{nameof(options.Storage.Container)} parameter is invalid.");
 			}
