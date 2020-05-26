@@ -24,7 +24,7 @@ namespace Memento.Shared.Components
 		/// The logger service.
 		/// </summary>
 		[Inject]
-		protected ILogger Logger { get; set; }
+		protected ILogger<T> Logger { get; set; }
 
 		/// <summary>
 		/// The mapper service

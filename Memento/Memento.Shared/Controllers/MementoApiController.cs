@@ -21,27 +21,27 @@ namespace Memento.Shared.Controllers
 		/// <summary>
 		/// The key for the message that indicates that the model was created successfully.
 		/// </summary>
-		protected const string CREATE_SUCCESSFULL = "{0}_CONTROLLER_CREATE_SUCCESSFULL";
+		protected const string CREATE_SUCCESSFUL = "{0}_CONTROLLER_CREATE_SUCCESSFUL";
 
 		/// <summary>
 		/// The key for the message that indicates that the model was updated successfully.
 		/// </summary>
-		protected const string UPDATE_SUCCESSFULL = "{0}_CONTROLLER_UPDATE_SUCCESSFULL";
+		protected const string UPDATE_SUCCESSFUL = "{0}_CONTROLLER_UPDATE_SUCCESSFUL";
 
 		/// <summary>
 		/// The key for the message that indicates that the model was deleted successfully.
 		/// </summary>
-		protected const string DELETE_SUCCESSFULL = "{0}_CONTROLLER_DELETE_SUCCESSFULL";
+		protected const string DELETE_SUCCESSFUL = "{0}_CONTROLLER_DELETE_SUCCESSFUL";
 
 		/// <summary>
 		/// The key for the message that indicates that the model was obtained successfully.
 		/// </summary>
-		protected const string GET_SUCCESSFULL = "{0}_CONTROLLER_GET_SUCCESSFULL";
+		protected const string GET_SUCCESSFUL = "{0}_CONTROLLER_GET_SUCCESSFUL";
 
 		/// <summary>
 		/// The key for the message that indicates that the models was obtained successfully.
 		/// </summary>
-		protected const string GET_ALL_SUCCESSFULL = "{0}_CONTROLLER_GET_ALL_SUCCESSFULL";
+		protected const string GET_ALL_SUCCESSFUL = "{0}_CONTROLLER_GET_ALL_SUCCESSFUL";
 		#endregion
 
 		#region [Attributes]
@@ -91,7 +91,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(CREATE_SUCCESSFULL, typeof(TModel).Name.ToUpper()));
+			var message = this.Localizer.GetString(string.Format(CREATE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the contract
 			var contract = this.Mapper.Map<TContract>(model);
@@ -111,7 +111,7 @@ namespace Memento.Shared.Controllers
 		protected ActionResult<MementoResponse> BuildUpdateResponse<TModel>()
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(UPDATE_SUCCESSFULL, typeof(TModel).Name.ToUpper()));
+			var message = this.Localizer.GetString(string.Format(UPDATE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the response
 			var response = new MementoResponse(true, message);
@@ -128,7 +128,7 @@ namespace Memento.Shared.Controllers
 		protected ActionResult<MementoResponse> BuildDeleteResponse<TModel>()
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(DELETE_SUCCESSFULL, typeof(TModel).Name.ToUpper()));
+			var message = this.Localizer.GetString(string.Format(DELETE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the response
 			var response = new MementoResponse(true, message);
@@ -152,7 +152,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(GET_SUCCESSFULL, typeof(TModel).Name.ToUpper()));
+			var message = this.Localizer.GetString(string.Format(GET_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the contract
 			var contract = this.Mapper.Map<TContract>(model);
@@ -179,7 +179,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(GET_ALL_SUCCESSFULL, typeof(TModel).Name.ToUpper());
+			var message = this.Localizer.GetString(GET_ALL_SUCCESSFUL, typeof(TModel).Name.ToUpper());
 
 			// Build the contracts
 			var contracts = this.Mapper.Map<Page<TContract>>(models);
