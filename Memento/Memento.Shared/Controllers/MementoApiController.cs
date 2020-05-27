@@ -3,6 +3,7 @@ using Memento.Shared.Models.Pagination;
 using Memento.Shared.Models.Repositories;
 using Memento.Shared.Models.Responses;
 using Memento.Shared.Services.Localization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -97,7 +98,7 @@ namespace Memento.Shared.Controllers
 			var contract = this.Mapper.Map<TContract>(model);
 
 			// Build the response
-			var response = new MementoResponse<TContract>(true, message, contract);
+			var response = new MementoResponse<TContract>(true, StatusCodes.Status201Created, message, contract);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();
@@ -114,7 +115,7 @@ namespace Memento.Shared.Controllers
 			var message = this.Localizer.GetString(string.Format(UPDATE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the response
-			var response = new MementoResponse(true, message);
+			var response = new MementoResponse(true, StatusCodes.Status200OK, message);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();
@@ -131,7 +132,7 @@ namespace Memento.Shared.Controllers
 			var message = this.Localizer.GetString(string.Format(DELETE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
 
 			// Build the response
-			var response = new MementoResponse(true, message);
+			var response = new MementoResponse(true, StatusCodes.Status200OK, message);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();
@@ -158,7 +159,7 @@ namespace Memento.Shared.Controllers
 			var contract = this.Mapper.Map<TContract>(model);
 
 			// Build the response
-			var response = new MementoResponse<TContract>(true, message, contract);
+			var response = new MementoResponse<TContract>(true, StatusCodes.Status200OK, message, contract);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();
@@ -185,7 +186,7 @@ namespace Memento.Shared.Controllers
 			var contracts = this.Mapper.Map<Page<TContract>>(models);
 
 			// Build the response
-			var response = new MementoResponse<Page<TContract>>(true, message, contracts);
+			var response = new MementoResponse<Page<TContract>>(true, StatusCodes.Status200OK, message, contracts);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();

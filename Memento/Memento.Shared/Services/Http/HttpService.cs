@@ -74,7 +74,7 @@ namespace Memento.Shared.Services.Http
 					// Deserialize the response
 					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
 
-					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode ,responseMessage.ReasonPhrase, response, null);
 				}
 			}
 			catch (Exception exception)
@@ -112,7 +112,7 @@ namespace Memento.Shared.Services.Http
 					// Deserialize the response
 					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
 
-					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, response, null);
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, response, null);
 				}
 			}
 			catch (Exception exception)
@@ -144,7 +144,7 @@ namespace Memento.Shared.Services.Http
 				}
 				else
 				{
-					return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, null);
 				}
 			}
 			catch (Exception exception)
@@ -173,7 +173,7 @@ namespace Memento.Shared.Services.Http
 				}
 				else
 				{
-					return new MementoResponse(responseMessage.IsSuccessStatusCode, responseMessage.ReasonPhrase, null);
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, null);
 				}
 			}
 			catch (Exception exception)

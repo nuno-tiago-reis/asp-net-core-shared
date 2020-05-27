@@ -10,19 +10,19 @@ namespace Memento.Shared.Models.Repositories
 	{
 		#region [Properties]
 		/// <inheritdoc />
-		public long Id { get; set; }
+		public virtual long Id { get; set; }
 
 		/// <inheritdoc />
-		public long CreatedBy { get; set; }
+		public virtual long CreatedBy { get; set; }
 
 		/// <inheritdoc />
-		public DateTime CreatedAt { get; set; }
+		public virtual DateTime CreatedAt { get; set; }
 
 		/// <inheritdoc />
-		public long? UpdatedBy { get; set; }
+		public virtual long? UpdatedBy { get; set; }
 
 		/// <inheritdoc />
-		public DateTime? UpdatedAt { get; set; }
+		public virtual DateTime? UpdatedAt { get; set; }
 		#endregion
 	}
 }

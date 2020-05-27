@@ -15,6 +15,11 @@ namespace Memento.Shared.Models.Responses
 		public bool Success { get; set; }
 
 		/// <summary>
+		/// The status code.
+		/// </summary>
+		public int StatusCode { get; set; }
+
+		/// <summary>
 		/// The message.
 		/// </summary>
 		public string Message { get; set; }
@@ -36,12 +41,14 @@ namespace Memento.Shared.Models.Responses
 		/// </summary>
 		/// 
 		/// <param name="success">The success flag.</param>
+		/// <param name="statusCode">The status code.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="data">The data.</param>
 		/// <param name="errors">The errors.</param>
-		public MementoResponse(bool success, string message, T data = null, IEnumerable<string> errors = null)
+		public MementoResponse(bool success, int statusCode, string message, T data = null, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
+			this.StatusCode = statusCode;
 			this.Message = message;
 			this.Data = data;
 			this.Errors = errors;
@@ -70,6 +77,11 @@ namespace Memento.Shared.Models.Responses
 		public bool Success { get; set; }
 
 		/// <summary>
+		/// The status code.
+		/// </summary>
+		public int StatusCode { get; set; }
+
+		/// <summary>
 		/// The message.
 		/// </summary>
 		public string Message { get; set; }
@@ -86,11 +98,13 @@ namespace Memento.Shared.Models.Responses
 		/// </summary>
 		/// 
 		/// <param name="success">The success flag.</param>
+		/// <param name="statusCode">The status code.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="errors">The errors.</param>
-		public MementoResponse(bool success, string message, IEnumerable<string> errors = null)
+		public MementoResponse(bool success, int statusCode, string message, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
+			this.StatusCode = statusCode;
 			this.Message = message;
 			this.Errors = errors;
 		}
