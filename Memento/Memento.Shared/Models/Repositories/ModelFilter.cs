@@ -27,7 +27,7 @@ namespace Memento.Shared.Models.Repositories
 		/// <summary>
 		/// The minimum page size.
 		/// </summary>
-		public const int MinimumPageSize = 5;
+		public const int MinimumPageSize = 1;
 		#endregion
 
 		#region [Attributes]
