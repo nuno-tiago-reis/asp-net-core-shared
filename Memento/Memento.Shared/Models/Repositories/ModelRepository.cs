@@ -1,4 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
+using Memento.Shared.Extensions;
 using Memento.Shared.Models.Pagination;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Identity;
@@ -184,8 +185,8 @@ namespace Memento.Shared.Models.Repositories
 			modelFilter = modelFilter ?? new TModelFilter();
 
 			// Filter the queryables
-			this.FilterQueryable(modelQuery, modelFilter);
-			this.FilterQueryable(modelCountQuery, modelFilter);
+			modelQuery = this.FilterQueryable(modelQuery, modelFilter);
+			modelCountQuery = this.FilterQueryable(modelCountQuery, modelFilter);
 
 			// Create the model page
 			var models = await Page<TModel>.CreateAsync
@@ -265,7 +266,7 @@ namespace Memento.Shared.Models.Repositories
 		/// 
 		/// <param name="modelQueryable">The model queryable.</param>
 		/// <param name="modelFilter">The model filter.</param>
-		protected abstract void FilterQueryable(IQueryable<TModel> modelQueryable, TModelFilter modelFilter);
+		protected abstract IQueryable<TModel> FilterQueryable(IQueryable<TModel> modelQueryable, TModelFilter modelFilter);
 		#endregion
 
 		#region [Methods] Messages
@@ -292,12 +293,9 @@ namespace Memento.Shared.Models.Repositories
 		protected virtual string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
 			// Get the name
-			string name = $"{typeof(TModel).Name.ToUpper()}_{((MemberExpression)expression.Body).Member.Name.ToUpper()}";
+			var name = expression.GetDisplayName();
 
-			// Translate the name
-			string localizedName = this.Localizer.GetString(name);
-
-			return string.Format(this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD), localizedName);
+			return this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD, name);
 		}
 
 		/// <summary>
@@ -309,12 +307,9 @@ namespace Memento.Shared.Models.Repositories
 		protected virtual string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
 		{
 			// Get the name
-			string name = $"{typeof(TModel).Name.ToUpper()}_{((MemberExpression)expression.Body).Member.Name.ToUpper()}";
+			var name = expression.GetDisplayName();
 
-			// Translate the name
-			string localizedName = this.Localizer.GetString(name);
-
-			return string.Format(this.Localizer.GetString(MODEL_HAS_INVALID_FIELD), localizedName);
+			return this.Localizer.GetString(MODEL_HAS_INVALID_FIELD, name);
 		}
 		#endregion
 	}
