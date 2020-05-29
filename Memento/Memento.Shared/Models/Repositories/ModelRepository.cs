@@ -27,23 +27,6 @@ namespace Memento.Shared.Models.Repositories
 		where TModelFilterOrderBy : Enum
 		where TModelFilterOrderDirection : Enum
 	{
-		#region [Constants]
-		/// <summary>
-		/// The key for the message that indicates that the model does not exist.
-		/// </summary>
-		protected const string MODEL_DOES_NOT_EXIST = "{0}_DOES_NOT_EXIST";
-
-		/// <summary>
-		/// The key for the message that indicates that the model has an invalid field.
-		/// </summary>
-		protected const string MODEL_HAS_INVALID_FIELD = "MODEL_HAS_INVALID_FIELD";
-
-		/// <summary>
-		/// The key for the message that indicates that the model has an duplicate field.
-		/// </summary>
-		protected const string MODEL_HAS_DUPLICATE_FIELD = "MODEL_HAS_DUPLICATE_FIELD";
-		#endregion
-
 		#region [Properties]
 		/// <summary>
 		/// The context.
@@ -273,44 +256,21 @@ namespace Memento.Shared.Models.Repositories
 		/// <summary>
 		/// Returns a message indicating that the given models field is invalid.
 		/// </summary>
-		/// 
-		/// <param name="instance">The instance.</param>
-		/// <param name="expression">The expression.</param>
-		protected virtual string GetModelDoesNotMessage()
-		{
-			// Get the name
-			string name = typeof(TModel).Name.ToUpper();
-
-			return this.Localizer.GetString(MODEL_DOES_NOT_EXIST, name);
-		}
+		protected abstract string GetModelDoesNotMessage();
 
 		/// <summary>
 		/// Returns a message indicating that the given models field is invalid.
 		/// </summary>
 		/// 
-		/// <param name="instance">The instance.</param>
 		/// <param name="expression">The expression.</param>
-		protected virtual string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
-		{
-			// Get the name
-			var name = expression.GetDisplayName();
-
-			return this.Localizer.GetString(MODEL_HAS_DUPLICATE_FIELD, name);
-		}
+		protected abstract string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression);
 
 		/// <summary>
 		/// Returns a message indicating that the given models field is invalid.
 		/// </summary>
 		/// 
-		/// <param name="instance">The instance.</param>
 		/// <param name="expression">The expression.</param>
-		protected virtual string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression)
-		{
-			// Get the name
-			var name = expression.GetDisplayName();
-
-			return this.Localizer.GetString(MODEL_HAS_INVALID_FIELD, name);
-		}
+		protected abstract string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression);
 		#endregion
 	}
 }

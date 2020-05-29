@@ -16,14 +16,14 @@
 		<PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Localization" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Abstractions" Version="2.2.0" />
-		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.ViewFeatures" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Routing.Abstractions" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Session" Version="2.2.0" />
 		<PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
 		<!-- Microsoft.Azure -->
-		<PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.5" />
+		<PackageReference Include="Microsoft.Azure.Storage.Blob" Version="11.1.6" />
 		<!-- Microsoft.EntityFrameworkCore -->
 		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.1.0" />
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="3.1.0" />
@@ -44,9 +44,9 @@
 		<PackageReference Include="Sotsera.Blazor.Toaster" Version="3.0.0" />
 		<!-- System -->
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
-		<PackageReference Include="System.Text.Json" Version="4.7.0" />
+		<PackageReference Include="System.Text.Json" Version="4.7.2" />
 		<!-- Twilio -->
-		<PackageReference Include="Twilio" Version="5.41.1" />
+		<PackageReference Include="Twilio" Version="5.42.0" />
 	</ItemGroup>
 
 </Project>

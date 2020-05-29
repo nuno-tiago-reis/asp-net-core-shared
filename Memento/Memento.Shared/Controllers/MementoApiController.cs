@@ -78,7 +78,7 @@ namespace Memento.Shared.Controllers
 		}
 		#endregion
 
-		#region [Methods]
+		#region [Methods] Responses
 		/// <summary>
 		/// Builds an <seealso cref="ActionResult"/> response for a 'Create'.
 		/// </summary>
@@ -92,7 +92,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(CREATE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
+			var message = this.BuildCreateSuccessfulMessage();
 
 			// Build the contract
 			var contract = this.Mapper.Map<TContract>(model);
@@ -112,7 +112,7 @@ namespace Memento.Shared.Controllers
 		protected ActionResult<MementoResponse> BuildUpdateResponse<TModel>()
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(UPDATE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
+			var message = this.BuildUpdateSuccessfulMessage();
 
 			// Build the response
 			var response = new MementoResponse(true, StatusCodes.Status200OK, message);
@@ -129,7 +129,7 @@ namespace Memento.Shared.Controllers
 		protected ActionResult<MementoResponse> BuildDeleteResponse<TModel>()
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(DELETE_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
+			var message = this.BuildDeleteSuccessfulMessage();
 
 			// Build the response
 			var response = new MementoResponse(true, StatusCodes.Status200OK, message);
@@ -153,7 +153,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(string.Format(GET_SUCCESSFUL, typeof(TModel).Name.ToUpper()));
+			var message = this.BuildGetSuccessfulMessage();
 
 			// Build the contract
 			var contract = this.Mapper.Map<TContract>(model);
@@ -180,7 +180,7 @@ namespace Memento.Shared.Controllers
 			where TContract : class
 		{
 			// Build the message
-			var message = this.Localizer.GetString(GET_ALL_SUCCESSFUL, typeof(TModel).Name.ToUpper());
+			var message = this.BuildGetAllSuccessfulMessage();
 
 			// Build the contracts
 			var contracts = this.Mapper.Map<Page<TContract>>(models);
@@ -193,6 +193,33 @@ namespace Memento.Shared.Controllers
 
 			return this.Ok(response);
 		}
+		#endregion
+
+		#region [Methods] Messages
+		/// <summary>
+		/// Returns the message that is sent when a 'Create' is successful.
+		/// </summary>
+		protected abstract string BuildCreateSuccessfulMessage();
+
+		/// <summary>
+		/// Returns the message that is sent when an 'Update' is successful.
+		/// </summary>
+		protected abstract string BuildUpdateSuccessfulMessage();
+
+		/// <summary>
+		/// Returns the message that is sent when a 'Delete' is successful.
+		/// </summary>
+		protected abstract string BuildDeleteSuccessfulMessage();
+
+		/// <summary>
+		/// Returns the message that is sent when a 'Get' is successful.
+		/// </summary>
+		protected abstract string BuildGetSuccessfulMessage();
+
+		/// <summary>
+		/// Returns the message that is sent when a 'GetAll' is successful.
+		/// </summary>
+		protected abstract string BuildGetAllSuccessfulMessage();
 		#endregion
 	}
 }
