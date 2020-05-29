@@ -1,11 +1,9 @@
 ﻿using Memento.Shared.Exceptions;
+using Memento.Shared.Extensions;
 using Memento.Shared.Models.Responses;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
-using Microsoft.Rest;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Mime;
@@ -25,7 +23,7 @@ namespace Memento.Shared.Services.Http
 		/// <summary>
 		/// The serializer options
 		/// </summary>
-		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+		private static readonly JsonSerializerOptions SerializerOptions = new JsonSerializerOptions();
 		#endregion
 
 		#region [Properties]
@@ -51,6 +49,8 @@ namespace Memento.Shared.Services.Http
 		{
 			this.HttpClient = httpClient;
 			this.Logger = logger;
+
+			SerializerOptions.ConfigureDefaultOptions();
 		}
 		#endregion
 

@@ -5,6 +5,8 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
 using System.Timers;
 
@@ -47,7 +49,21 @@ namespace Memento.Shared.Extensions
 		}
 		#endregion
 
-		#region [Extensions] Generic
+		#region [Extensions] Enum
+		/// <summary>
+		/// Returns a message using the localized display name of the expression field.
+		/// </summary>
+		/// 
+		/// <param name="message">The message.</param>
+		public static string GetLocalizedMessage<T, P>(this Enum instance, string message)
+		{
+			var member = instance.GetType().GetMember(instance.ToString()).First();
+			var memberAttribute = member.GetCustomAttribute<DisplayAttribute>();
+
+			return string.Format(message, memberAttribute.GetName() ?? member.Name.SpacesFromCamel());
+		}
+
+
 		/// <summary>
 		/// Returns a message using the localized display name of the enum value.
 		/// </summary>
@@ -128,6 +144,25 @@ namespace Memento.Shared.Extensions
 			if (value.CompareTo(minimum) < 0)
 				result = minimum;
 			return result;
+		}
+		#endregion
+
+		#region [Extensions] JsonOptions
+		/// <summary>
+		/// Configures the default options for the JsonSerializerOptions.
+		/// </summary>
+		public static void ConfigureDefaultOptions(this JsonSerializerOptions instance)
+		{
+			// convert enums to strings
+			instance.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, true));
+			// don't convert dictionary keys
+			instance.DictionaryKeyPolicy = null;
+			// dont ignore null values
+			instance.IgnoreNullValues = false;
+			// ignore casing when deserializing
+			instance.PropertyNameCaseInsensitive = true;
+			// convert properties to camel case
+			instance.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
 		}
 		#endregion
 
