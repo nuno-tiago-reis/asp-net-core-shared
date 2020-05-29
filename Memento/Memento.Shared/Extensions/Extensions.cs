@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
 using System.Text;
@@ -43,6 +44,19 @@ namespace Memento.Shared.Extensions
 		public static String ToUtcString(this DateTime instance)
 		{
 			return instance.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+		}
+		#endregion
+
+		#region [Extensions] Generic
+		/// <summary>
+		/// Returns a message using the localized display name of the enum value.
+		/// </summary>
+		public static string GetLocalizedName(this Enum instance)
+		{
+			var member = instance.GetType().GetMember(instance.ToString()).First();
+			var memberAttribute = member.GetCustomAttribute<DisplayAttribute>();
+
+			return memberAttribute.GetName() ?? member.Name.SpacesFromCamel();
 		}
 		#endregion
 
