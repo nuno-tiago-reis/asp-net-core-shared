@@ -94,18 +94,15 @@ namespace Memento.Shared.Services.Storage
 		}
 
 		/// <inheritdoc />
-		public async Task<Stream> GetAsync(string fileName)
+		public async Task DeleteAsync(string fileName)
 		{
 			try
 			{
 				// Get the container reference
 				var container = await this.GetCloudBlobContainerAsync();
 
-				// Get the blob
-				var blob = await this.GetCloudBlobAsync(container, fileName);
-
-				// Return the blob stream
-				return await blob.OpenReadAsync();
+				// Delete the blob
+				await this.DeleteCloudBlobAsync(container, fileName);
 			}
 			catch (Exception exception)
 			{
@@ -118,15 +115,18 @@ namespace Memento.Shared.Services.Storage
 		}
 
 		/// <inheritdoc />
-		public async Task DeleteAsync(string fileName)
+		public async Task<Stream> GetAsync(string fileName)
 		{
 			try
 			{
 				// Get the container reference
 				var container = await this.GetCloudBlobContainerAsync();
 
-				// Delete the blob
-				await this.DeleteCloudBlobAsync(container, fileName);
+				// Get the blob
+				var blob = await this.GetCloudBlobAsync(container, fileName);
+
+				// Return the blob stream
+				return await blob.OpenReadAsync();
 			}
 			catch (Exception exception)
 			{

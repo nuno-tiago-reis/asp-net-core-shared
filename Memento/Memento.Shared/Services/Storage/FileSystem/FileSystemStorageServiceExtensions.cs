@@ -29,6 +29,9 @@ namespace Memento.Shared.Services.Storage
 				throw new ArgumentException($"The {nameof(options.Folder)} parameter is invalid.");
 			}
 
+			// Register the http context accessor
+			services.AddHttpContextAccessor();
+
 			// Register the service
 			services.AddScoped<IStorageService, FileSystemStorageService>();
 

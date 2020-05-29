@@ -28,20 +28,20 @@ namespace Memento.Shared.Services.Storage
 		Task<string> UpdateAsync(string file, string fileName);
 
 		/// <summary>
+		/// Deletes a file from the storage provider.
+		/// </summary>
+		/// 
+		/// <param name="containerName">The container name.</param>
+		/// <param name="fileName">The container file name.</param>
+		Task DeleteAsync(string fileName);
+
+		/// <summary>
 		/// Gets a file from the storage provider.
 		/// </summary>
 		/// 
 		/// <param name="containerName">The container name.</param>
 		/// <param name="fileName">The file name.</param>
 		Task<Stream> GetAsync(string fileName);
-
-		/// <summary>
-		/// Delets a file from the storage provider.
-		/// </summary>
-		/// 
-		/// <param name="containerName">The container name.</param>
-		/// <param name="fileName">The container file name.</param>
-		Task DeleteAsync(string fileName);
 		#endregion
 	}
 }
