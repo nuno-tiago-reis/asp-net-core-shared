@@ -116,7 +116,12 @@ namespace Memento.Shared.Models.Repositories
 
 			// Update the model
 			this.UpdateModel(model, contextModel);
-			// Save the model changes
+			// Save the changes
+			await this.Context.SaveChangesAsync();
+
+			// Update the models relations
+			this.UpdateModelRelations(model, contextModel);
+			// Save the changes
 			await this.Context.SaveChangesAsync();
 
 			// Detach the model before returning it
@@ -222,6 +227,14 @@ namespace Memento.Shared.Models.Repositories
 		/// <param name="sourceModel">The source model.</param>
 		/// <param name="targetModel">The target model.</param>
 		protected abstract void UpdateModel(TModel sourceModel, TModel targetModel);
+
+		/// <summary>
+		/// Updates the models relations.
+		/// </summary>
+		/// 
+		/// <param name="sourceModel">The source model.</param>
+		/// <param name="targetModel">The target model.</param>
+		protected abstract void UpdateModelRelations(TModel sourceModel, TModel targetModel);
 		#endregion
 
 		#region [Methods] Queryable
