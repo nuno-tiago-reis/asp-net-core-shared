@@ -39,7 +39,7 @@ namespace Memento.Shared.Services.Storage
 			services.AddScoped<IStorageService, AzureStorageService>();
 
 			// Configure the options
-			services.ConfigureOptions(options);
+			services.AddSingleton(options);
 
 			return services;
 		}

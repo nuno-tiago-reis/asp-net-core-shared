@@ -33,7 +33,7 @@ namespace Memento.Shared.Services.Storage
 			services.AddScoped<IStorageService, FileSystemStorageService>();
 
 			// Configure the options
-			services.ConfigureOptions(options);
+			services.AddSingleton(options);
 
 			return services;
 		}

@@ -17,7 +17,7 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="file">The file.</param>
 		/// <param name="fileName">The file name (optional, only if it should be override the file).</param>
-		Task<string> CreateAsync(IFormFile file, string fileName = null);
+		Task<string> CreateAsync(string file, string fileName);
 
 		/// <summary>
 		/// Updates a file in the storage provider.
@@ -25,7 +25,7 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="file">The file.</param>
 		/// <param name="fileName">The file name (optional, only if it should be override the file).</param>
-		Task<string> UpdateAsync(IFormFile file, string fileName = null);
+		Task<string> UpdateAsync(string file, string fileName);
 
 		/// <summary>
 		/// Gets a file from the storage provider.

@@ -45,7 +45,7 @@ namespace Memento.Shared.Services.TextMessages
 			services.AddScoped<ITextMessageService, TwilioService>();
 
 			// Configure the options
-			services.ConfigureOptions(options);
+			services.AddSingleton(options);
 
 			return services;
 		}

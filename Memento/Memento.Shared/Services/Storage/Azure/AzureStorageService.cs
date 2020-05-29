@@ -1,5 +1,5 @@
 ﻿using Memento.Shared.Exceptions;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.Logging;
@@ -43,7 +43,7 @@ namespace Memento.Shared.Services.Storage
 
 		#region [Methods]
 		/// <inheritdoc />
-		public async Task<string> CreateAsync(IFormFile file, string fileName = null)
+		public async Task<string> CreateAsync(string file, string fileName)
 		{
 			try
 			{
@@ -67,7 +67,7 @@ namespace Memento.Shared.Services.Storage
 		}
 
 		/// <inheritdoc />
-		public async Task<string> UpdateAsync(IFormFile file, string fileName = null)
+		public async Task<string> UpdateAsync(string file, string fileName)
 		{
 			try
 			{
@@ -75,7 +75,7 @@ namespace Memento.Shared.Services.Storage
 				var container = await this.GetCloudBlobContainerAsync();
 
 				// Delete the blob
-				await this.DeleteCloudBlobAsync(container, fileName ?? file.FileName);
+				await this.DeleteCloudBlobAsync(container, fileName);
 
 				// Create the blob
 				var blob = await this.CreateCloudBlobAsync(container, file, fileName);
@@ -165,19 +165,29 @@ namespace Memento.Shared.Services.Storage
 		/// </summary>
 		/// 
 		/// <param name="container">The container.</param>
-		/// <param name="file">The file.</param>
+		/// <param name="file">The file (base64).</param>
 		/// <param name="fileName">The file name (optional, only if it should be override the file).</param>
-		private async Task<CloudBlockBlob> CreateCloudBlobAsync(CloudBlobContainer container, IFormFile file, string fileName = null)
+		private async Task<CloudBlockBlob> CreateCloudBlobAsync(CloudBlobContainer container, string file, string fileName)
 		{
 			// Get the blob reference
-			var blob = container.GetBlockBlobReference(fileName ?? file.FileName);
+			var blob = container.GetBlockBlobReference(fileName);
+
+			// Convert the file
+			var bytes = Convert.FromBase64String(file);
 
 			// Upload the blob
-			await blob.UploadFromStreamAsync(file.OpenReadStream());
+			await blob.UploadFromByteArrayAsync(bytes, 0, bytes.Length);
 
 			// Update the blobs properties
-			blob.Properties.ContentDisposition = file.ContentDisposition;
-			blob.Properties.ContentType = file.ContentType;
+			var provider = new FileExtensionContentTypeProvider();
+			if (provider.TryGetContentType(fileName, out var fileContentType))
+			{
+				blob.Properties.ContentType = fileContentType;
+			}
+			else
+			{
+				blob.Properties.ContentType = "application/octet-stream";
+			}
 
 			// Upload the blobs properties
 			await blob.SetPropertiesAsync();

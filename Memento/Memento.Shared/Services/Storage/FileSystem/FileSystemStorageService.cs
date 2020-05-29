@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Logging;
+﻿using Microsoft.Extensions.Logging;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -39,13 +38,13 @@ namespace Memento.Shared.Services.Storage
 
 		#region [Methods]
 		/// <inheritdoc />
-		public Task<string> CreateAsync(IFormFile file, string fileName = null)
+		public Task<string> CreateAsync(string file, string fileName)
 		{
 			throw new System.NotImplementedException();
 		}
 
 		/// <inheritdoc />
-		public Task<string> UpdateAsync(IFormFile file, string fileName = null)
+		public Task<string> UpdateAsync(string file, string fileName)
 		{
 			throw new System.NotImplementedException();
 		}
