@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq.Expressions;
+using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Timers;
 
 namespace Memento.Shared.Extensions
 {
@@ -45,10 +48,36 @@ namespace Memento.Shared.Extensions
 
 		#region [Extensions] Generic
 		/// <summary>
+		/// Returns a message using the localized display name of the expression field.
+		/// </summary>
+		/// 
+		/// <param name="expression">The expression.</param>
+		/// <param name="message">The message.</param>
+		public static string GetLocalizedMessage<T, P>(this T _, Expression<Func<T, P>> expression, string message)
+		{
+			var property = ((MemberExpression)expression.Body).Member;
+			var propertyDisplayName = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+			return string.Format(message, propertyDisplayName.GetName() ?? property.Name.SpacesFromCamel());
+		}
+
+		/// <summary>
+		/// Returns the localized display name of the expression field.
+		/// </summary>
+		/// 
+		/// <param name="expression">The expression.</param>
+		public static string GetLocalizedName<T, P>(this T _, Expression<Func<T, P>> expression)
+		{
+			var property = ((MemberExpression)expression.Body).Member;
+			var propertyDisplayName = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+			return propertyDisplayName.GetName() ?? property.Name.SpacesFromCamel();
+		}
+
+		/// <summary>
 		/// Clamps a value according to the given minimum and maximum.
 		/// </summary>
 		/// 
-		/// <param name="value">The value.</param>
 		/// <param name="minimum">The minimum.</param>
 		/// <param name="maximum">The maximum.</param>
 		public static T Clamp<T>(this T value, T minimum, T maximum) where T : IComparable<T>
@@ -65,7 +94,6 @@ namespace Memento.Shared.Extensions
 		/// Floors a value according to the given maximum.
 		/// </summary>
 		/// 
-		/// <param name="value">The value.</param>
 		/// <param name="maximum">The maximum.</param>
 		public static T Floor<T>(this T value, T maximum) where T : IComparable<T>
 		{
@@ -79,7 +107,6 @@ namespace Memento.Shared.Extensions
 		/// Ceils a value according to the given minimum.
 		/// </summary>
 		/// 
-		/// <param name="value">The value.</param>
 		/// <param name="minimum">The minimum.</param>
 		public static T Ceil<T>(this T value, T minimum) where T : IComparable<T>
 		{
@@ -87,6 +114,99 @@ namespace Memento.Shared.Extensions
 			if (value.CompareTo(minimum) < 0)
 				result = minimum;
 			return result;
+		}
+		#endregion
+
+		#region [Extensions] Expression
+		/// <summary>
+		/// Returns a message using the name of the expression member.
+		/// </summary>
+		public static string GetName(this Expression instance)
+		{
+			if (instance is MemberExpression member)
+			{
+				var property = member.Member;
+
+				return property.Name;
+			}
+			if (instance is LambdaExpression lambda)
+			{
+				var property = lambda.Body as MemberExpression;
+
+				return property?.Member.Name;
+			}
+
+			return null;
+		}
+
+		/// <summary>
+		/// Returns a message using the localized display name of the expression member.
+		/// </summary>
+		public static string GetDisplayName(this Expression instance)
+		{
+			if (instance is MemberExpression member)
+			{
+				var property = member.Member;
+				var propertyDisplayName = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+				return propertyDisplayName?.GetName() ?? property.Name.SpacesFromCamel();
+			}
+			if (instance is LambdaExpression lambda)
+			{
+				var property = lambda.Body as MemberExpression;
+				var propertyDisplayName = property?.Member.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+				return propertyDisplayName?.GetName() ?? property?.Member.Name.SpacesFromCamel();
+			}
+
+			return null;
+		}
+		#endregion
+
+		#region [Extensions] MemberExpression
+		/// <summary>
+		/// Returns a message using the name of the expression member.
+		/// </summary>
+		/// 
+		public static string GetName(this MemberExpression instance)
+		{
+			var property = instance.Member;
+
+			return property.Name;
+		}
+
+		/// <summary>
+		/// Returns a message using the localized display name of the expression member.
+		/// </summary>
+		public static string GetDisplayName(this MemberExpression instance)
+		{
+			var property = instance.Member;
+			var propertyDisplayName = property.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+			return propertyDisplayName?.GetName() ?? property.Name.SpacesFromCamel();
+		}
+		#endregion
+
+		#region [Extensions] MemberInfo
+		/// <summary>
+		/// Returns a message using the name of the member.
+		/// </summary>
+		public static string GetName(this MemberInfo instance)
+		{
+			return instance.Name;
+		}
+
+		/// <summary>
+		/// Returns a message using the localized display name of the member.
+		/// </summary>
+		/// 
+		/// <param name="expression">The expression.</param>
+		/// <param name="message">The message.</param>
+		public static string GetDisplayName(this MemberInfo instance)
+		{
+			var propertyDisplayName = instance.GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+
+			return propertyDisplayName?.GetName() ?? instance.Name.SpacesFromCamel();
 		}
 		#endregion
 
@@ -211,6 +331,19 @@ namespace Memento.Shared.Extensions
 		public static string ConvertFromBase64(this string instance)
 		{
 			return Encoding.UTF8.GetString(Convert.FromBase64String(instance));
+		}
+		#endregion
+
+		#region [Extensions] Timer
+		/// <summary>
+		/// Resets the timer by stopping and starting it again. 
+		/// </summary>
+		/// 
+		/// <param name="instance">The instance.</param>
+		public static void Reset(this Timer instance)
+		{
+			instance.Stop();
+			instance.Start();
 		}
 		#endregion
 	}
