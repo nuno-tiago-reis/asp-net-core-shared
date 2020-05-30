@@ -17,22 +17,22 @@ namespace Memento.Shared.Models.Pagination
 	public sealed class Page<T> : List<T>, IPage<T>
 	{
 		#region [Properties]
-		public int PageNumber { get; set; }
+		public int PageNumber { get; }
 
 		/// <inheritdoc />
-		public int PageSize { get; set; }
+		public int PageSize { get; }
 
 		/// <inheritdoc />
-		public int TotalPages { get; set; }
+		public int TotalPages { get; }
 
 		/// <inheritdoc />
-		public int TotalItems { get; set; }
+		public int TotalItems { get; }
 
 		/// <inheritdoc />
-		public string OrderBy { get; set; }
+		public string OrderBy { get; }
 
 		/// <inheritdoc />
-		public string OrderDirection { get; set; }
+		public string OrderDirection { get; }
 
 		/// <inheritdoc />
 		public T[] Items
@@ -40,15 +40,6 @@ namespace Memento.Shared.Models.Pagination
 			get
 			{
 				return this.ToArray();
-			}
-			set
-			{
-				this.Clear();
-
-				if (value != null)
-				{
-					this.AddRange(value);
-				}
 			}
 		}
 		#endregion

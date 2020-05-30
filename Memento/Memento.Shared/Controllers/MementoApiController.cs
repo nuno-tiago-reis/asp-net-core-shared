@@ -175,7 +175,7 @@ namespace Memento.Shared.Controllers
 		/// <typeparam name="TContract">The contract type.</typeparam>
 		/// 
 		/// <param name="models">The models.</param>
-		protected ActionResult<MementoResponse<Page<TContract>>> BuildGetAllResponse<TModel, TContract>(IPage<TModel> models)
+		protected ActionResult<MementoResponse<IPage<TContract>>> BuildGetAllResponse<TModel, TContract>(IPage<TModel> models)
 			where TModel : class, IModel
 			where TContract : class
 		{
