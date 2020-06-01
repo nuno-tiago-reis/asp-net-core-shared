@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -8,6 +9,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using System.Timers;
 
 namespace Memento.Shared.Extensions
@@ -73,6 +75,35 @@ namespace Memento.Shared.Extensions
 			var memberAttribute = member.GetCustomAttribute<DisplayAttribute>();
 
 			return memberAttribute.GetName() ?? member.Name.SpacesFromCamel();
+		}
+		#endregion
+
+		#region [Extensions] EditForm
+		/// <summary>
+		/// Submits the form.
+		/// </summary>
+		public static async Task SubmitAsync(this EditForm form)
+		{
+			if (form.OnSubmit.HasDelegate)
+			{
+				// When using OnSubmit, the developer takes control of the validation lifecycle
+				await form.OnSubmit.InvokeAsync(form.EditContext);
+			}
+			else
+			{
+				// Otherwise, the system implicitly runs validation on form submission
+				var isValid = form.EditContext.Validate();
+
+				if (isValid && form.OnValidSubmit.HasDelegate)
+				{
+					await form.OnValidSubmit.InvokeAsync(form.EditContext);
+				}
+
+				if (!isValid && form.OnInvalidSubmit.HasDelegate)
+				{
+					await form.OnInvalidSubmit.InvokeAsync(form.EditContext);
+				}
+			}
 		}
 		#endregion
 
