@@ -159,7 +159,7 @@ namespace Memento.Shared.Models.Pagination
 						}
 						else
 						{
-							items.AddRange(JsonSerializer.Deserialize<IEnumerable<T>>(ref reader, options));
+							items.AddRange(JsonSerializer.Deserialize<IList<T>>(ref reader, options));
 						}
 					}
 				}

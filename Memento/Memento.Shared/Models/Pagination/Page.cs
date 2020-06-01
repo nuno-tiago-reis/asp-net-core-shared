@@ -56,7 +56,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		internal Page(IEnumerable<T> items, int totalItems, int totalPages, int pageNumber, int pageSize, string orderBy, string orderDirection)
+		internal Page(IList<T> items, int totalItems, int totalPages, int pageNumber, int pageSize, string orderBy, string orderDirection)
 		{
 			this.PageNumber = pageNumber;
 			this.PageSize = pageSize;
@@ -80,7 +80,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
-		internal Page(IEnumerable<T> items, int totalItems, int pageNumber, int pageSize, string orderBy, string orderDirection)
+		internal Page(IList<T> items, int totalItems, int pageNumber, int pageSize, string orderBy, string orderDirection)
 		{
 			this.PageNumber = pageNumber;
 			this.PageSize = pageSize;
@@ -116,7 +116,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
 		public static Page<T> Create
 		(
-			IEnumerable<T> enumerable, IEnumerable<T> enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+			IList<T> enumerable, IList<T> enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
 		)
 		{
 			var items = enumerable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
@@ -156,7 +156,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
 		public static Page<T> CreateUnmodified
 		(
-			IEnumerable<T> enumerable, int enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
+			IList<T> enumerable, int enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
 		)
 		{
 			var items = enumerable.ToList();
