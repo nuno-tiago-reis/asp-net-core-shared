@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
+using System.Collections.Generic;
 
 namespace Memento.Shared.Models.Repositories
 {
@@ -72,6 +74,134 @@ namespace Memento.Shared.Models.Repositories
 		{
 			this.PageNumber = 1;
 			this.PageSize = DefaultPageSize;
+		}
+		#endregion
+
+		#region [Methods]
+		/// <summary>
+		/// Reads the filter from a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		public virtual void ReadFromQuery(Dictionary<string, StringValues> query)
+		{
+			if (query != null)
+			{
+				this.ReadFilterFromQuery(query);
+				this.ReadPagingFromQuery(query);
+				this.ReadOrderingFromQuery(query);
+			}
+		}
+
+		/// <summary>
+		/// Writes the filter to a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		public virtual Dictionary<string, string> WriteToQuery()
+		{
+			var query = new Dictionary<string, string>();
+
+			this.WriteFilterToQuery(query);
+			this.WritePagingToQuery(query);
+			this.WriteOrderingToQuery(query);
+
+			return query;
+		}
+
+		/// <summary>
+		/// Reads the filters remaining properties from a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected abstract void ReadFilterFromQuery(Dictionary<string, StringValues> query);
+
+
+		/// <summary>
+		/// Reads the filters paging properties from a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected virtual void ReadPagingFromQuery(Dictionary<string, StringValues> query)
+		{
+			// PageNumber
+			if (query.TryGetValue(nameof(this.PageNumber), out var pageNumberQuery))
+			{
+				if (int.TryParse(pageNumberQuery, out var pageNumber))
+				{
+					this.PageNumber = pageNumber;
+				}
+			}
+
+			// PageSize
+			if (query.TryGetValue(nameof(this.PageSize), out var pageSizeQuery))
+			{
+				if (int.TryParse(pageSizeQuery, out var pageSize))
+				{
+					this.PageSize = pageSize;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Reads the filters ordering properties from a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected virtual void ReadOrderingFromQuery(Dictionary<string, StringValues> query)
+		{
+			// OrderBy
+			if (query.TryGetValue(nameof(this.OrderBy), out var orderByQuery))
+			{
+				if (Enum.TryParse(typeof(TModelFilterOrderBy), orderByQuery, out var orderBy))
+				{
+					this.OrderBy = (TModelFilterOrderBy)orderBy;
+				}
+			}
+
+			// OrderDirection
+			if (query.TryGetValue(nameof(this.OrderDirection), out var orderDirectionQuery))
+			{
+				if (Enum.TryParse(typeof(TModelFilterOrderDirection), orderDirectionQuery, out var orderDirection))
+				{
+					this.OrderDirection = (TModelFilterOrderDirection)orderDirection;
+				}
+			}
+		}
+
+		/// <summary>
+		/// Writes the filters remaining properties to a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected abstract void WriteFilterToQuery(Dictionary<string, string> query);
+
+		/// <summary>
+		/// Writes the filters paging properties to a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected virtual void WritePagingToQuery(Dictionary<string, string> query)
+		{
+			// PageNumber
+			query.Add(nameof(this.PageNumber), this.PageNumber.ToString());
+
+			// PageSize
+			query.Add(nameof(this.PageSize), this.PageSize.ToString());
+		}
+
+		/// <summary>
+		/// Writes the filters ordering properties to a query string.
+		/// </summary>
+		/// 
+		/// <param name="query">The query.</param>
+		protected virtual void WriteOrderingToQuery(Dictionary<string, string> query)
+		{
+			// OrderBy
+			query.Add(nameof(this.OrderBy), this.OrderBy.ToString());
+
+			// OrderDirection
+			query.Add(nameof(this.OrderDirection), this.OrderDirection.ToString());
 		}
 		#endregion
 	}
