@@ -22,8 +22,8 @@ namespace Memento.Shared.Models.Repositories
 	/// <typeparam name="TModelFilterOrderBy">The model filter order by type.</typeparam>
 	/// <typeparam name="TModelFilterOrderDirection">The model filter order direction type.</typeparam>
 	public abstract class ModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection> : IModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>
-		where TModel : Model
-		where TModelFilter : ModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>, new()
+		where TModel : class, IModel, new()
+		where TModelFilter : class, IModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>, new()
 		where TModelFilterOrderBy : Enum
 		where TModelFilterOrderDirection : Enum
 	{
