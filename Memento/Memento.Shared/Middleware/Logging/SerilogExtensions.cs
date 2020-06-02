@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Hosting;
-using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 using Serilog.Sinks.SystemConsole.Themes;
@@ -30,6 +29,7 @@ namespace Memento.Shared.Middleware.Logging
 		/// Configures the options using specified <seealso cref="Action{SerilogOptions}"/>
 		/// </summary>
 		/// 
+		/// <param name="builder">The web host builder.</param>
 		/// <param name="action">The action.</param>
 		public static IWebHostBuilder UseSerilogLogging(this IWebHostBuilder builder, Action<SerilogOptions> action)
 		{

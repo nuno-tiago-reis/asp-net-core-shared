@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.Emails
+﻿namespace Memento.Shared.Services.Notifications.SendGrid
 {
 	/// <summary>
 	/// Implements the 'SendGrid' options.

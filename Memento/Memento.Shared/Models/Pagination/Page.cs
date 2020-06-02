@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,27 +15,36 @@ namespace Memento.Shared.Models.Pagination
 	/// 
 	/// <typeparam name="T">The type.</typeparam>
 	[JsonConverter(typeof(PageJsonConverter))]
+	[UsedImplicitly]
 	public sealed class Page<T> : List<T>, IPage<T>
 	{
 		#region [Properties]
+		/// <inheritdoc />
+		[UsedImplicitly]
 		public int PageNumber { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public int PageSize { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public int TotalPages { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public int TotalItems { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public string OrderBy { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public string OrderDirection { get; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public T[] Items
 		{
 			get
@@ -114,6 +124,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
+		[UsedImplicitly]
 		public static Page<T> Create
 		(
 			IList<T> enumerable, IList<T> enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
@@ -121,11 +132,11 @@ namespace Memento.Shared.Models.Pagination
 		{
 			var items = enumerable.Skip((pageNumber - 1) * pageSize).Take(pageSize).ToList();
 
-			return new Page<T>(items, enumerableCount.Count(), pageNumber, pageSize, orderBy, orderDirection);
+			return new Page<T>(items, enumerableCount.Count, pageNumber, pageSize, orderBy, orderDirection);
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="PagedList{T}"/> class asynchronously.
+		/// Creates a new instance of the <see cref="Page{T}"/> class asynchronously.
 		/// </summary>
 		/// 
 		/// <param name="queryable">The queryable.</param>
@@ -134,6 +145,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
+		[UsedImplicitly]
 		public static async Task<Page<T>> CreateAsync
 		(
 			IQueryable<T> queryable, IQueryable<T> queryableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
@@ -145,7 +157,7 @@ namespace Memento.Shared.Models.Pagination
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="PagedList{T}"/> class without modifying the enumerable.
+		/// Creates a new instance of the <see cref="Page{T}"/> class without modifying the enumerable.
 		/// </summary>
 		/// 
 		/// <param name="enumerable">The enumerable.</param>
@@ -154,6 +166,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
+		[UsedImplicitly]
 		public static Page<T> CreateUnmodified
 		(
 			IList<T> enumerable, int enumerableCount, int pageNumber, int pageSize, string orderBy, string orderDirection
@@ -165,7 +178,7 @@ namespace Memento.Shared.Models.Pagination
 		}
 
 		/// <summary>
-		/// Creates a new instance of the <see cref="PagedList{T}"/> class without modifying the enumerable.
+		/// Creates a new instance of the <see cref="Page{T}"/> class without modifying the enumerable.
 		/// </summary>
 		/// 
 		/// <param name="queryable">The queryable.</param>
@@ -174,6 +187,7 @@ namespace Memento.Shared.Models.Pagination
 		/// <param name="pageSize">The page size.</param>
 		/// <param name="orderBy">The parameter on which the results were ordered.</param>
 		/// <param name="orderDirection">The direction on which the results were ordered.</param>
+		[UsedImplicitly]
 		public static async Task<Page<T>> CreateUnmodifiedAsync
 		(
 			IQueryable<T> queryable, int queryableCount, int pageNumber, int pageSize, string orderBy, string orderDirection

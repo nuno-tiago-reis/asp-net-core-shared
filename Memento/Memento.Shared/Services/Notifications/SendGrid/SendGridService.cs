@@ -3,10 +3,9 @@ using Microsoft.Extensions.Logging;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.Emails
+namespace Memento.Shared.Services.Notifications.SendGrid
 {
 	/// <summary>
 	/// Implements the generic interface for an email service using SendGrid.
@@ -21,11 +20,6 @@ namespace Memento.Shared.Services.Emails
 		private readonly SendGridOptions Options;
 
 		/// <summary>
-		/// The http client.
-		/// </summary>
-		private readonly HttpClient HttpClient;
-
-		/// <summary>
 		/// The logger.
 		/// </summary>
 		private readonly ILogger Logger;
@@ -37,12 +31,10 @@ namespace Memento.Shared.Services.Emails
 		/// </summary>
 		/// 
 		/// <param name="options">The options.</param>
-		/// <param name="httpClient">The http client.</param>
 		/// <param name="logger">The logger.</param>
-		public SendGridService(SendGridOptions options, HttpClient httpClient, ILogger<SendGridService> logger)
+		public SendGridService(SendGridOptions options, ILogger<SendGridService> logger)
 		{
 			this.Options = options;
-			this.HttpClient = httpClient;
 			this.Logger = logger;
 		}
 		#endregion

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System.Threading.Tasks;
 
 namespace Memento.Shared.Services.ReCaptcha
 {
@@ -6,6 +7,7 @@ namespace Memento.Shared.Services.ReCaptcha
 	/// Defines a generic interface for a google recaptcha service.
 	/// Provides methods to check if the recaptcha was successful.
 	/// </summary>
+	[UsedImplicitly]
 	public interface IRecaptchaService
 	{
 		#region [Methods]
@@ -14,6 +16,7 @@ namespace Memento.Shared.Services.ReCaptcha
 		/// </summary>
 		/// 
 		/// <param name="recaptchaResponse"></param>
+		[UsedImplicitly]
 		Task<bool> IsReCaptchaPassedAsync(string recaptchaResponse);
 		#endregion
 	}

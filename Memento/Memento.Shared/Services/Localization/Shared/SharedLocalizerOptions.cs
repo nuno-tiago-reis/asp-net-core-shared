@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.Localization
+﻿namespace Memento.Shared.Services.Localization.Shared
 {
 	/// <summary>
 	/// Implements the 'SharedLocalizer' options.
@@ -15,16 +15,6 @@
 		/// Gets or sets the supported cultures.
 		/// </summary>
 		public string[] SupportedCultures { get; set; }
-		#endregion
-
-		#region [Constructor]
-		/// <summary>
-		/// Initializes a new instance of the <see cref="SharedLocalizerOptions"/> class.
-		/// </summary>
-		public SharedLocalizerOptions()
-		{
-			// Nothing to do here.
-		}
 		#endregion
 	}
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 
 namespace Memento.Shared.Models.Bindings
@@ -8,6 +9,7 @@ namespace Memento.Shared.Models.Bindings
 	/// </summary>
 	/// 
 	/// <seealso cref="IModelBinderProvider" />
+	[UsedImplicitly]
 	public sealed class DateTimeModelBinderProvider : IModelBinderProvider
 	{
 		#region [Methods]

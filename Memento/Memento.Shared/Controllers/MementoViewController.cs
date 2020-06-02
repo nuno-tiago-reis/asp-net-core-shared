@@ -1,4 +1,5 @@
 using AutoMapper;
+using JetBrains.Annotations;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,27 +12,32 @@ namespace Memento.Shared.Controllers
 	/// </summary>
 	/// 
 	/// <seealso cref="Controller" />
+	[UsedImplicitly]
 	public abstract class MementoViewController : Controller
 	{
 		#region [Attributes]
 		/// <summary>
 		/// The logger service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILogger Logger;
 
 		/// <summary>
 		/// The mapper service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly IMapper Mapper;
 
 		/// <summary>
 		/// The localizer service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILocalizerService Localizer;
 
 		/// <summary>
 		/// The toaster service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly IToaster Toaster;
 		#endregion
 

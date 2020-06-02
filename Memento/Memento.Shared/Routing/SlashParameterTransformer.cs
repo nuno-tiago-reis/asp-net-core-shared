@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Routing;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Routing;
 using System.Text.RegularExpressions;
 
 namespace Memento.Shared.Routing
@@ -8,6 +9,7 @@ namespace Memento.Shared.Routing
 	/// </summary>
 	/// 
 	/// <seealso cref="IOutboundParameterTransformer" />
+	[UsedImplicitly]
 	public sealed class SlashParameterTransformer : IOutboundParameterTransformer
 	{
 		#region [Methods]
@@ -26,7 +28,7 @@ namespace Memento.Shared.Routing
 			var parameter = string.Empty;
 
 			var regex = new Regex(@"(?<=[A-Z])(?=[A-Z][a-z]) | (?<=[^A-Z])(?=[A-Z]) | (?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
-			var regexTokens = regex.Split(parameter.ToString());
+			var regexTokens = regex.Split(value.ToString());
 
 			foreach (var regexToken in regexTokens)
 			{

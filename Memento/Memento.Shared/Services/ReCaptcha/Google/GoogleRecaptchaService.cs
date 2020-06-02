@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.ReCaptcha
+namespace Memento.Shared.Services.ReCaptcha.Google
 {
 	/// <summary>
 	/// Implements the generic interface for a recaptcha service using the Google ReCaptcha API.

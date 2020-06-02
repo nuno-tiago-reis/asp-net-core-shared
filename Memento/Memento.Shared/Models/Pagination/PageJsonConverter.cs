@@ -33,15 +33,11 @@ namespace Memento.Shared.Models.Pagination
 		/// <inheritdoc />
 		public override JsonConverter CreateConverter(Type type, JsonSerializerOptions options)
 		{
-			var genericType = type.GetGenericArguments()[0];
+			const BindingFlags converterFlags = BindingFlags.Instance | BindingFlags.Public;
 
-			JsonConverter converter = (JsonConverter)Activator.CreateInstance(typeof(PageJsonConverterInner<>).MakeGenericType
-			(
-				new Type[] { genericType }), BindingFlags.Instance | BindingFlags.Public,
-				binder: null,
-				args: new object[] { options },
-				culture: null)
-			;
+			var genericType = typeof(PageJsonConverterInner<>).MakeGenericType(type.GetGenericArguments()[0]);
+
+			var converter = (JsonConverter)Activator.CreateInstance(genericType, converterFlags, null, new object[] { options }, null);
 
 			return converter;
 		}
@@ -114,43 +110,43 @@ namespace Memento.Shared.Models.Pagination
 					string propertyName = reader.GetString();
 
 					// PageSize
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.PageSize), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.PageSize), options))
 					{
 						pageSize = JsonSerializer.Deserialize<int>(ref reader, options);
 					}
 
 					// PageNumber
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.PageNumber), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.PageNumber), options))
 					{
 						pageNumber = JsonSerializer.Deserialize<int>(ref reader, options);
 					}
 
 					// TotalPages
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.TotalPages), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.TotalPages), options))
 					{
 						totalPages = JsonSerializer.Deserialize<int>(ref reader, options);
 					}
 
 					// TotalItems
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.TotalItems), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.TotalItems), options))
 					{
 						totalItems = JsonSerializer.Deserialize<int>(ref reader, options);
 					}
 
 					// OrderBy
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.OrderBy), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.OrderBy), options))
 					{
 						orderBy = JsonSerializer.Deserialize<string>(ref reader, options);
 					}
 
 					// OrderDirection
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.OrderDirection), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.OrderDirection), options))
 					{
 						orderDirection = JsonSerializer.Deserialize<string>(ref reader, options);
 					}
 
 					// Items
-					if (this.PropertyNameMatches(propertyName, nameof(Page<T>.Items), options))
+					if (PropertyNameMatches(propertyName, nameof(Page<T>.Items), options))
 					{
 						if (this.TypeConverter != null)
 						{
@@ -218,16 +214,14 @@ namespace Memento.Shared.Models.Pagination
 			/// 
 			/// <param name="sourceName">The source name.</param>
 			/// <param name="options">The options.</param>
-			private string ConvertPropertyName(string sourceName, JsonSerializerOptions options)
+			private static string ConvertPropertyName(string sourceName, JsonSerializerOptions options)
 			{
-				if (options != null && options.PropertyNamingPolicy != null)
+				if (options?.PropertyNamingPolicy != null)
 				{
 					return options.PropertyNamingPolicy.ConvertName(sourceName);
 				}
-				else
-				{
-					return sourceName;
-				}
+
+				return sourceName;
 			}
 
 			/// <summary>
@@ -237,7 +231,7 @@ namespace Memento.Shared.Models.Pagination
 			/// <param name="sourceName">The source name.</param>
 			/// <param name="targetName">The target name.</param>
 			/// <param name="options">The options.</param>
-			private bool PropertyNameMatches(string sourceName, string targetName, JsonSerializerOptions options)
+			private static bool PropertyNameMatches(string sourceName, string targetName, JsonSerializerOptions options)
 			{
 				if (options.PropertyNameCaseInsensitive == false && sourceName == targetName)
 				{

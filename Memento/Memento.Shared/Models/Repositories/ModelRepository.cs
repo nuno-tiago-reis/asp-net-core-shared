@@ -1,5 +1,5 @@
-﻿using Memento.Shared.Exceptions;
-using Memento.Shared.Extensions;
+﻿using JetBrains.Annotations;
+using Memento.Shared.Exceptions;
 using Memento.Shared.Models.Pagination;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Identity;
@@ -21,6 +21,7 @@ namespace Memento.Shared.Models.Repositories
 	/// <typeparam name="TModelFilter">The model filter type.</typeparam>
 	/// <typeparam name="TModelFilterOrderBy">The model filter order by type.</typeparam>
 	/// <typeparam name="TModelFilterOrderDirection">The model filter order direction type.</typeparam>
+	[UsedImplicitly]
 	public abstract class ModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection> : IModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>
 		where TModel : class, IModel, new()
 		where TModelFilter : class, IModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>, new()
@@ -31,26 +32,31 @@ namespace Memento.Shared.Models.Repositories
 		/// <summary>
 		/// The context.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly DbContext Context;
 
 		/// <summary>
 		/// The models.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly DbSet<TModel> Models;
 
 		/// <summary>
 		/// The localizer.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILocalizerService Localizer;
 
 		/// <summary>
 		/// The lookup normalizer.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILookupNormalizer LookupNormalizer;
 
 		/// <summary>
 		/// The logger.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILogger Logger;
 		#endregion
 
@@ -60,10 +66,10 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="context">The context.</param>
-		/// <param name="logger">The logger.</param>
+		/// <param name="localizer">The string localizer.</param>
 		/// <param name="lookupNormalizer">The lookup normalizer.</param>
-		/// <param name="stringLocalizer">The string localizer.</param>
-		public ModelRepository
+		/// <param name="logger">The logger.</param>
+		protected ModelRepository
 		(
 			DbContext context,
 			ILocalizerService localizer,
@@ -81,7 +87,8 @@ namespace Memento.Shared.Models.Repositories
 
 		#region [Methods] IModelRepository
 		/// <inheritdoc />
-		public async virtual Task<TModel> CreateAsync(TModel model)
+		[UsedImplicitly]
+		public virtual async Task<TModel> CreateAsync(TModel model)
 		{
 			// Normalize the model
 			this.NormalizeModel(model);
@@ -100,13 +107,14 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<TModel> UpdateAsync(TModel model)
+		[UsedImplicitly]
+		public virtual async Task<TModel> UpdateAsync(TModel model)
 		{
 			// Check if the model exists
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == model.Id);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotExistMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Normalize the model
@@ -131,13 +139,14 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
-		public async virtual Task DeleteAsync(long modelId)
+		[UsedImplicitly]
+		public virtual async Task DeleteAsync(long modelId)
 		{
 			// Check if the model exists
 			var contextModel = await this.Models.FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotExistMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Delete the model
@@ -147,13 +156,14 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<TModel> GetAsync(long modelId)
+		[UsedImplicitly]
+		public virtual async Task<TModel> GetAsync(long modelId)
 		{
 			// Check if the model exists
 			var contextModel = await this.GetDetailedQueryable().FirstOrDefaultAsync(m => m.Id == modelId);
 			if (contextModel == null)
 			{
-				throw new MementoException(this.GetModelDoesNotMessage(), MementoExceptionType.NotFound);
+				throw new MementoException(this.GetModelDoesNotExistMessage(), MementoExceptionType.NotFound);
 			}
 
 			// Detach the model before returning it
@@ -163,9 +173,10 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<IPage<TModel>> GetAllAsync(TModelFilter modelFilter = null)
+		[UsedImplicitly]
+		public virtual async Task<IPage<TModel>> GetAllAsync(TModelFilter modelFilter = null)
 		{
-			// Get the queryables
+			// Get the queryable
 			var modelQuery = this.GetSimpleQueryable();
 			var modelCountQuery = this.GetCountQueryable();
 
@@ -199,7 +210,8 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
-		public async virtual Task<bool> ExistsAsync(long modelId)
+		[UsedImplicitly]
+		public virtual async Task<bool> ExistsAsync(long modelId)
 		{
 			return await this.Models.AnyAsync(m => m.Id == modelId);
 		}
@@ -267,15 +279,17 @@ namespace Memento.Shared.Models.Repositories
 
 		#region [Methods] Messages
 		/// <summary>
-		/// Returns a message indicating that the given models field is invalid.
+		/// Returns a message indicating that the given model does not exist.
 		/// </summary>
-		protected abstract string GetModelDoesNotMessage();
+		[UsedImplicitly]
+		protected abstract string GetModelDoesNotExistMessage();
 
 		/// <summary>
-		/// Returns a message indicating that the given models field is invalid.
+		/// Returns a message indicating that the given models field is duplicated.
 		/// </summary>
 		/// 
 		/// <param name="expression">The expression.</param>
+		[UsedImplicitly]
 		protected abstract string GetModelHasDuplicateFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression);
 
 		/// <summary>
@@ -283,6 +297,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="expression">The expression.</param>
+		[UsedImplicitly]
 		protected abstract string GetModelHasInvalidFieldMessage<TProperty>(Expression<Func<TModel, TProperty>> expression);
 		#endregion
 	}

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Net.Http;
 
@@ -6,8 +7,9 @@ namespace Memento.Shared.Models.Responses
 {
 	/// <summary>
 	/// Implements the 'MementoResponse' extensions.
-	/// Provides ways to signal and identity thata response originated in a Memento API.
+	/// Provides ways to signal and identity that a response originated in a Memento API.
 	/// </summary>
+	[UsedImplicitly]
 	public static class MementoResponseExtensions
 	{
 		#region [Constants]
@@ -21,6 +23,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Adds a 'Memento' http header to the http response.
 		/// </summary>
+		[UsedImplicitly]
 		public static void AddMementoHeader(this HttpResponse response)
 		{
 			response.Headers.Add(HEADER_NAME, Guid.NewGuid().ToString());
@@ -30,6 +33,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Adds a 'Memento' http header to the http response.
 		/// </summary>
+		[UsedImplicitly]
 		public static bool HasMementoHeader(this HttpResponse response)
 		{
 			return response.Headers.ContainsKey(HEADER_NAME);
@@ -38,6 +42,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Adds a 'Memento' http header to the http response message.
 		/// </summary>
+		[UsedImplicitly]
 		public static void AddMementoHeader(this HttpResponseMessage responseMessage)
 		{
 			responseMessage.Headers.Add(HEADER_NAME, Guid.NewGuid().ToString());
@@ -47,6 +52,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Adds a 'Memento' http header to the http response message.
 		/// </summary>
+		[UsedImplicitly]
 		public static bool HasMementoHeader(this HttpResponseMessage responseMessage)
 		{
 			return responseMessage.Headers.Contains(HEADER_NAME);

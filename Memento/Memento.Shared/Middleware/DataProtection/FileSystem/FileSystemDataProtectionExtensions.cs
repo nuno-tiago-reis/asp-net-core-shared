@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.IO;
 using System.Security.Cryptography.X509Certificates;
 
-namespace Memento.Shared.Middleware.DataProtection
+namespace Memento.Shared.Middleware.DataProtection.FileSystem
 {
 	/// <summary>
 	/// Implements the necessary methods to add the FileSystemDataProtection middleware to the ASP.NET Core Pipeline.
 	/// </summary>
+	[UsedImplicitly]
 	public static class FileSystemDataProtectionExtensions
 	{
 		#region [Extensions]
@@ -16,9 +18,11 @@ namespace Memento.Shared.Middleware.DataProtection
 		/// Registers the FileSystemDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="FileSystemDataProtectionOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
-		public static IServiceCollection AddFileSystemDataProtection(this IServiceCollection instance, FileSystemDataProtectionOptions options)
+		[UsedImplicitly]
+		public static IServiceCollection AddFileSystemDataProtection(this IServiceCollection services, FileSystemDataProtectionOptions options)
 		{
 			#region [Validation]
 			// Validate the options
@@ -46,20 +50,22 @@ namespace Memento.Shared.Middleware.DataProtection
 			}
 			#endregion
 
-			instance
+			services
 				.AddDataProtection()
 				.PersistKeysToFileSystem(new DirectoryInfo(options.Folder))
 				.ProtectKeysWithCertificate(new X509Certificate2(options.CertificateFileName, options.CertificatePassword));
 
-			return instance;
+			return services;
 		}
 
 		/// <summary>
 		/// Registers the FileSystemDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{FileSystemDataProtectionOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="FileSystemDataProtectionOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddFileSystemDataProtection(this IServiceCollection services, Action<FileSystemDataProtectionOptions> action)
 		{
 			// Create the options

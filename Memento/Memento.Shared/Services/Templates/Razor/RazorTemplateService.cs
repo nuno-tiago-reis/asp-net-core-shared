@@ -12,7 +12,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.Templates
+namespace Memento.Shared.Services.Templates.Razor
 {
 	/// <summary>
 	/// Implements the generic interface for a template service using the Razor Template Engine.
@@ -88,7 +88,7 @@ namespace Memento.Shared.Services.Templates
 					throw new ArgumentException($"The {nameof(name)} parameter is invalid (couldn't find the view).");
 				}
 
-				using (var output = new StringWriter())
+				await using (var output = new StringWriter())
 				{
 					// Create the necessary parameters
 					var view = viewEngineResult.View;

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System.Threading.Tasks;
 
 namespace Memento.Shared.Services.Templates
 {
@@ -6,6 +7,7 @@ namespace Memento.Shared.Services.Templates
 	/// Defines the generic interface for a template service.
 	/// Provides methods to render template with and without parameters.
 	/// </summary>
+	[UsedImplicitly]
 	public interface ITemplateService
 	{
 		#region [Methods]
@@ -14,14 +16,16 @@ namespace Memento.Shared.Services.Templates
 		/// </summary>
 		/// 
 		/// <param name="name">The template name.</param>
+		[UsedImplicitly]
 		Task<string> RenderAsync(string name);
 
 		/// <summary>
-		/// Renders the template with the given namea and model.
+		/// Renders the template with the given name and model.
 		/// </summary>
 		/// 
 		/// <param name="name">The template name.</param>
 		/// <param name="model">The template model.</param>
+		[UsedImplicitly]
 		Task<string> RenderAsync<TModel>(string name, TModel model);
 		#endregion
 	}

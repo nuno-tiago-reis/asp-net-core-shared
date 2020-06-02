@@ -1,4 +1,5 @@
 using AutoMapper;
+using JetBrains.Annotations;
 using Memento.Shared.Models.Pagination;
 using Memento.Shared.Models.Repositories;
 using Memento.Shared.Models.Responses;
@@ -16,49 +17,26 @@ namespace Memento.Shared.Controllers
 	/// </summary>
 	/// 
 	/// <seealso cref="ControllerBase" />
+	[UsedImplicitly]
 	public abstract class MementoApiController : ControllerBase
 	{
-		#region [Constants]
-		/// <summary>
-		/// The key for the message that indicates that the model was created successfully.
-		/// </summary>
-		protected const string CREATE_SUCCESSFUL = "{0}_CONTROLLER_CREATE_SUCCESSFUL";
-
-		/// <summary>
-		/// The key for the message that indicates that the model was updated successfully.
-		/// </summary>
-		protected const string UPDATE_SUCCESSFUL = "{0}_CONTROLLER_UPDATE_SUCCESSFUL";
-
-		/// <summary>
-		/// The key for the message that indicates that the model was deleted successfully.
-		/// </summary>
-		protected const string DELETE_SUCCESSFUL = "{0}_CONTROLLER_DELETE_SUCCESSFUL";
-
-		/// <summary>
-		/// The key for the message that indicates that the model was obtained successfully.
-		/// </summary>
-		protected const string GET_SUCCESSFUL = "{0}_CONTROLLER_GET_SUCCESSFUL";
-
-		/// <summary>
-		/// The key for the message that indicates that the models was obtained successfully.
-		/// </summary>
-		protected const string GET_ALL_SUCCESSFUL = "{0}_CONTROLLER_GET_ALL_SUCCESSFUL";
-		#endregion
-
 		#region [Attributes]
 		/// <summary>
 		/// The logger service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILogger Logger;
 
 		/// <summary>
 		/// The mapper service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly IMapper Mapper;
 
 		/// <summary>
 		/// The localizer service.
 		/// </summary>
+		[UsedImplicitly]
 		protected readonly ILocalizerService Localizer;
 		#endregion
 
@@ -87,6 +65,7 @@ namespace Memento.Shared.Controllers
 		/// <typeparam name="TContract">The contract type.</typeparam>
 		/// 
 		/// <param name="model">The model.</param>
+		[UsedImplicitly]
 		protected ActionResult<MementoResponse<TContract>> BuildCreateResponse<TModel, TContract>(TModel model)
 			where TModel : class, IModel
 			where TContract : class
@@ -109,7 +88,8 @@ namespace Memento.Shared.Controllers
 		/// <summary>
 		/// Builds an <seealso cref="ActionResult"/> response for an 'Update'.
 		/// </summary>
-		protected ActionResult<MementoResponse> BuildUpdateResponse<TModel>()
+		[UsedImplicitly]
+		protected ActionResult<MementoResponse> BuildUpdateResponse()
 		{
 			// Build the message
 			var message = this.BuildUpdateSuccessfulMessage();
@@ -126,7 +106,8 @@ namespace Memento.Shared.Controllers
 		/// <summary>
 		/// Builds an <seealso cref="ActionResult"/> response for a 'Delete'.
 		/// </summary>
-		protected ActionResult<MementoResponse> BuildDeleteResponse<TModel>()
+		[UsedImplicitly]
+		protected ActionResult<MementoResponse> BuildDeleteResponse()
 		{
 			// Build the message
 			var message = this.BuildDeleteSuccessfulMessage();
@@ -148,6 +129,7 @@ namespace Memento.Shared.Controllers
 		/// <typeparam name="TContract">The contract type.</typeparam>
 		/// 
 		/// <param name="model">The model.</param>
+		[UsedImplicitly]
 		protected ActionResult<MementoResponse<TContract>> BuildGetResponse<TModel, TContract>(TModel model) 
 			where TModel : class, IModel
 			where TContract : class
@@ -175,6 +157,7 @@ namespace Memento.Shared.Controllers
 		/// <typeparam name="TContract">The contract type.</typeparam>
 		/// 
 		/// <param name="models">The models.</param>
+		[UsedImplicitly]
 		protected ActionResult<MementoResponse<IPage<TContract>>> BuildGetAllResponse<TModel, TContract>(IPage<TModel> models)
 			where TModel : class, IModel
 			where TContract : class
@@ -199,26 +182,31 @@ namespace Memento.Shared.Controllers
 		/// <summary>
 		/// Returns the message that is sent when a 'Create' is successful.
 		/// </summary>
+		[UsedImplicitly]
 		protected abstract string BuildCreateSuccessfulMessage();
 
 		/// <summary>
 		/// Returns the message that is sent when an 'Update' is successful.
 		/// </summary>
+		[UsedImplicitly]
 		protected abstract string BuildUpdateSuccessfulMessage();
 
 		/// <summary>
 		/// Returns the message that is sent when a 'Delete' is successful.
 		/// </summary>
+		[UsedImplicitly]
 		protected abstract string BuildDeleteSuccessfulMessage();
 
 		/// <summary>
 		/// Returns the message that is sent when a 'Get' is successful.
 		/// </summary>
+		[UsedImplicitly]
 		protected abstract string BuildGetSuccessfulMessage();
 
 		/// <summary>
 		/// Returns the message that is sent when a 'GetAll' is successful.
 		/// </summary>
+		[UsedImplicitly]
 		protected abstract string BuildGetAllSuccessfulMessage();
 		#endregion
 	}

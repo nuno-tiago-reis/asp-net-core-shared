@@ -7,7 +7,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.Storage
+namespace Memento.Shared.Services.Storage.Azure
 {
 	/// <summary>
 	/// Implements the generic interface for a storage service using the Azure Storage.

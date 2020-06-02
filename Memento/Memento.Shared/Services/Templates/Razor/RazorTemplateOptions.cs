@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc.Razor;
 
-namespace Memento.Shared.Services.Templates
+namespace Memento.Shared.Services.Templates.Razor
 {
 	/// <summary>
 	/// Implements the 'RazorTemplate' options.

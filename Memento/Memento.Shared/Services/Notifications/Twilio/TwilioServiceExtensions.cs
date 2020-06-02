@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Services.TextMessages
+namespace Memento.Shared.Services.Notifications.Twilio
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="TwilioService"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class TwilioServiceExtensions
 	{
 		#region [Extensions]
@@ -13,8 +15,10 @@ namespace Memento.Shared.Services.TextMessages
 		/// Registers the <see cref="TwilioService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="TwilioOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddTwilioService(this IServiceCollection services, TwilioOptions options)
 		{
 			// Validate the options
@@ -54,8 +58,10 @@ namespace Memento.Shared.Services.TextMessages
 		/// Registers the <see cref="TwilioService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{TwilioOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="TwilioOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddTwilioService(this IServiceCollection services, Action<TwilioOptions> action)
 		{
 			// Create the options

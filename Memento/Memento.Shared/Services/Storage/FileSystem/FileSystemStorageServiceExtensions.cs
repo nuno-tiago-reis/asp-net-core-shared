@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Services.Storage
+namespace Memento.Shared.Services.Storage.FileSystem
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="FileSystemStorageService"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class FileSystemStorageServiceExtensions
 	{
 		#region [Extensions]
@@ -13,8 +15,10 @@ namespace Memento.Shared.Services.Storage
 		/// Registers the <see cref="FileSystemStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="FileSystemStorageOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddFileSystemStorageService(this IServiceCollection services, FileSystemStorageOptions options)
 		{
 			// Validate the options
@@ -45,8 +49,10 @@ namespace Memento.Shared.Services.Storage
 		/// Registers the <see cref="FileSystemStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{FileSystemStorageOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="FileSystemStorageOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddFileSystemStorageService(this IServiceCollection services, Action<FileSystemStorageOptions> action)
 		{
 			// Create the options

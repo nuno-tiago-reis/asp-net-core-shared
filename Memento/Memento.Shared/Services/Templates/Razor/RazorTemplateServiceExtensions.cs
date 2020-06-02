@@ -1,12 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc.Razor;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Services.Templates
+namespace Memento.Shared.Services.Templates.Razor
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="RazorTemplateService"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class RazorTemplateServiceExtensions
 	{
 		#region [Extensions]
@@ -14,8 +16,10 @@ namespace Memento.Shared.Services.Templates
 		/// Registers the <see cref="RazorTemplateService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="RazorTemplateOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddRazorTemplateService(this IServiceCollection services, RazorTemplateOptions options)
 		{
 			// Validate the options
@@ -65,8 +69,10 @@ namespace Memento.Shared.Services.Templates
 		/// Registers the <see cref="RazorTemplateService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{RazorTemplateOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="RazorTemplateOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddRazorTemplateService(this IServiceCollection services, Action<RazorTemplateOptions> action)
 		{
 			// Create the options

@@ -1,14 +1,16 @@
-﻿using Microsoft.AspNetCore.DataProtection;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Azure.Storage;
 using Microsoft.Azure.Storage.Blob;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Middleware.DataProtection
+namespace Memento.Shared.Middleware.DataProtection.Azure
 {
 	/// <summary>
 	/// Implements the necessary methods to add the AzureDataProtection middleware to the ASP.NET Core Pipeline.
 	/// </summary>
+	[UsedImplicitly]
 	public static class AzureDataProtectionExtensions
 	{
 		#region [Constants]
@@ -23,9 +25,11 @@ namespace Memento.Shared.Middleware.DataProtection
 		/// Registers the AzureDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="AzureDataProtectionOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
-		public static IServiceCollection AddAzureDataProtection(this IServiceCollection instance, AzureDataProtectionOptions options)
+		[UsedImplicitly]
+		public static IServiceCollection AddAzureDataProtection(this IServiceCollection services, AzureDataProtectionOptions options)
 		{
 			#region [Validation]
 			// Validate the options
@@ -83,21 +87,23 @@ namespace Memento.Shared.Middleware.DataProtection
 			storageContainer.CreateIfNotExistsAsync().Wait();
 			#endregion
 
-			instance
+			services
 				.AddDataProtection()
 				.SetDefaultKeyLifetime(options.KeyVault.KeyLifetime.Value)
 				.PersistKeysToAzureBlobStorage(storageContainer, DATA_PROTECTION_FILENAME)
 				.ProtectKeysWithAzureKeyVault(options.KeyVault.KeyId, options.KeyVault.ClientId, options.KeyVault.ClientSecret);
 
-			return instance;
+			return services;
 		}
 
 		/// <summary>
 		/// Registers the AzureDataProtection middleware in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{AzureDataProtectionOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="AzureDataProtectionOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddAzureDataProtection(this IServiceCollection services, Action<AzureDataProtectionOptions> action)
 		{
 			// Create the options

@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Serilog;
 using System;
-using System.Collections.Generic;
 
 namespace Memento.Shared.Middleware.Logging
 {

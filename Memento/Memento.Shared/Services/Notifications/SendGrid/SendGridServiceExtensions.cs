@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Services.Emails
+namespace Memento.Shared.Services.Notifications.SendGrid
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="SendGridService"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class SendGridServiceExtensions
 	{
 		#region [Extensions]
@@ -13,8 +15,10 @@ namespace Memento.Shared.Services.Emails
 		/// Registers the <see cref="SendGridService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="SendGridOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddSendGridService(this IServiceCollection services, SendGridOptions options)
 		{
 			// Validate the options
@@ -54,8 +58,10 @@ namespace Memento.Shared.Services.Emails
 		/// Registers the <see cref="SendGridService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{SendGridOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="SendGridOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddSendGridService(this IServiceCollection services, Action<SendGridOptions> action)
 		{
 			// Create the options

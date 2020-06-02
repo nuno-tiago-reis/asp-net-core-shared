@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JetBrains.Annotations;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -9,6 +10,7 @@ namespace Memento.Shared.Exceptions
 	/// </summary>
 	/// 
 	/// <seealso cref="Exception" />
+	[UsedImplicitly]
 	public sealed class MementoException : Exception
 	{
 		#region [Properties]
@@ -90,27 +92,33 @@ namespace Memento.Shared.Exceptions
 	/// These exception types are then read by an exception handler
 	/// in order to return the corresponding http status code instead of a generic 500 error.
 	/// </summary>
+	[UsedImplicitly]
 	public enum MementoExceptionType
 	{
 		/// <summary>
 		/// Maps to the 400 status code.
 		/// </summary>
+		[UsedImplicitly]
 		BadRequest,
 		/// <summary>
 		/// Maps to the 401 status code.
 		/// </summary>
+		[UsedImplicitly]
 		Unauthorized,
 		/// <summary>
 		/// Maps to the 403 status code.
 		/// </summary>
+		[UsedImplicitly]
 		Forbidden,
 		/// <summary>
 		/// Maps to the 404 status code.
 		/// </summary>
+		[UsedImplicitly]
 		NotFound,
 		/// <summary>
 		/// Maps to the 500 status code.
 		/// </summary>
+		[UsedImplicitly]
 		InternalServerError
 	}
 }

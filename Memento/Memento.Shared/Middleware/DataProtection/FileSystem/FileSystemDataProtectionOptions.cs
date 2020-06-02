@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Middleware.DataProtection
+﻿namespace Memento.Shared.Middleware.DataProtection.FileSystem
 {
 	/// <summary>
 	/// Implements the 'FileSystemDataProtection' options.

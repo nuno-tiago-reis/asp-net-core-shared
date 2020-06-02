@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.TextMessages
+﻿namespace Memento.Shared.Services.Notifications.Twilio
 {
 	/// <summary>
 	/// Implements the 'Twilio' options.

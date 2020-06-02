@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Memento.Shared.Middleware.DataProtection
+namespace Memento.Shared.Middleware.DataProtection.Azure
 {
 	/// <summary>
 	/// Implements the 'AzureDataProtection' options.

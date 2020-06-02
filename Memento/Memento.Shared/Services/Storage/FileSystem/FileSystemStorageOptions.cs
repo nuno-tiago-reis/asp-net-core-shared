@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.Storage
+﻿namespace Memento.Shared.Services.Storage.FileSystem
 {
 	/// <summary>
 	/// Implements the 'FileSystemStorage' options.

@@ -88,14 +88,14 @@ namespace Memento.Shared.Middleware.Logging
 				collector.AddOrUpdate(new LogEventProperty("RequestPath", GetRequestPath(context)));
 
 				// Check if payloads should be included by default
-				bool includePayloads = true;
+				// bool includePayloads = true;
 
-				if (includePayloads)
-				{
+				// if (includePayloads)
+				// {
 					// Extract the properties
-					var requestBody = await GetRequestBody(context);
+					var requestBody = await this.GetRequestBody(context);
 					var requestContentType = new ScalarValue(context.Request.ContentType);
-					var responseBody = await GetResponseBody(context);
+					var responseBody = await this.GetResponseBody(context);
 					var responseContentType = new ScalarValue(context.Response.ContentType);
 
 					// Add the properties to the log event collector
@@ -103,20 +103,20 @@ namespace Memento.Shared.Middleware.Logging
 					collector.AddOrUpdate(new LogEventProperty("RequestType", requestContentType));
 					collector.AddOrUpdate(new LogEventProperty("ResponseBody", responseBody));
 					collector.AddOrUpdate(new LogEventProperty("ResponseType", responseContentType));
-				}
-				else
-				{
-					// Invoke the next handler
-					await this.Next.Invoke(context).ConfigureAwait(false);
+				//}
+				//else
+				//{
+				//	// Invoke the next handler
+				//	await this.Next.Invoke(context).ConfigureAwait(false);
 
-					// Extract the properties
-					var requestContentType = new ScalarValue(context.Request.ContentType);
-					var responseContentType = new ScalarValue(context.Response.ContentType);
+				//	// Extract the properties
+				//	var requestContentType = new ScalarValue(context.Request.ContentType);
+				//	var responseContentType = new ScalarValue(context.Response.ContentType);
 
-					// Add the properties to the log event collector
-					collector.AddOrUpdate(new LogEventProperty("RequestType", requestContentType));
-					collector.AddOrUpdate(new LogEventProperty("ResponseType", responseContentType));
-				}
+				//	// Add the properties to the log event collector
+				//	collector.AddOrUpdate(new LogEventProperty("RequestType", requestContentType));
+				//	collector.AddOrUpdate(new LogEventProperty("ResponseType", responseContentType));
+				//}
 
 				// Log the event completion	
 				LogRequest(context, collector, startTime);
@@ -223,7 +223,7 @@ namespace Memento.Shared.Middleware.Logging
 		/// <param name="start">The start timestamp (milliseconds).</param>
 		private static ScalarValue GetRequestElapsedTime(long start)
 		{
-			long stop = Stopwatch.GetTimestamp();
+			var stop = Stopwatch.GetTimestamp();
 
 			return new ScalarValue((stop - start) * 1000 / (double)Stopwatch.Frequency);
 		}

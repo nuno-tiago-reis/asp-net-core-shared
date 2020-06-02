@@ -1,4 +1,5 @@
-﻿using Memento.Shared.Models.Pagination;
+﻿using JetBrains.Annotations;
+using Memento.Shared.Models.Pagination;
 using System;
 using System.Threading.Tasks;
 
@@ -13,6 +14,7 @@ namespace Memento.Shared.Models.Repositories
 	/// <typeparam name="TModelFilter">The model filter type.</typeparam>
 	/// <typeparam name="TModelFilterOrderBy">The model filter order by type.</typeparam>
 	/// <typeparam name="TModelFilterOrderDirection">The model filter order direction type.</typeparam>
+	[UsedImplicitly]
 	public interface IModelRepository<TModel, TModelFilter, TModelFilterOrderBy, TModelFilterOrderDirection>
 		where TModel : class, IModel
 		where TModelFilter : class, IModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>
@@ -25,6 +27,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="model">The model.</param>
+		[UsedImplicitly]
 		Task<TModel> CreateAsync(TModel model);
 
 		/// <summary>
@@ -32,6 +35,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="model">The model.</param>
+		[UsedImplicitly]
 		Task<TModel> UpdateAsync(TModel model);
 
 		/// <summary>
@@ -39,6 +43,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="modelId">The model identifier.</param>
+		[UsedImplicitly]
 		Task DeleteAsync(long modelId);
 
 		/// <summary>
@@ -46,6 +51,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="modelId">The model identifier.</param>
+		[UsedImplicitly]
 		Task<TModel> GetAsync(long modelId);
 
 		/// <summary>
@@ -53,6 +59,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="modelFilter">The model filter.</param>
+		[UsedImplicitly]
 		Task<IPage<TModel>> GetAllAsync(TModelFilter modelFilter = null);
 
 		/// <summary>
@@ -60,6 +67,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="modelId">The model identifier.</param>
+		[UsedImplicitly]
 		Task<bool> ExistsAsync(long modelId);
 		#endregion
 	}

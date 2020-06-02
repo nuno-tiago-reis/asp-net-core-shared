@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.ReCaptcha
+﻿namespace Memento.Shared.Services.ReCaptcha.Google
 {
 	/// <summary>
 	/// Implements the 'GoogleReCaptcha' options.

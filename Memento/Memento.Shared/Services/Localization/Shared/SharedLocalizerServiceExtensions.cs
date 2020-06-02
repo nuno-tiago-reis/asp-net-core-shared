@@ -1,15 +1,17 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Localization;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Globalization;
 using System.Linq;
 
-namespace Memento.Shared.Services.Localization
+namespace Memento.Shared.Services.Localization.Shared
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="SharedLocalizerServiceExtensions"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class SharedLocalizerServiceExtensions
 	{
 		#region [Extensions]
@@ -17,10 +19,12 @@ namespace Memento.Shared.Services.Localization
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IMvcBuilder"/>.
 		/// Uses the specified <seealso cref="SharedLocalizerOptions"/>
 		/// </summary>
-		/// 
-		/// <param name="options">The options.</param>
 		///
 		/// <typeparam name="T">The shared resources type.</typeparam>
+		///
+		/// <param name="builder">The mvc builder.</param>
+		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IMvcBuilder AddSharedLocalization<T>(this IMvcBuilder builder, SharedLocalizerOptions options) where T : class
 		{
 			// Validate the options
@@ -51,9 +55,9 @@ namespace Memento.Shared.Services.Localization
 			builder.Services.AddSingleton(options);
 
 			// Register the data annotations provider
-			builder.AddDataAnnotationsLocalization(options =>
+			builder.AddDataAnnotationsLocalization(annotationOptions =>
 			{
-				options.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(T));
+				annotationOptions.DataAnnotationLocalizerProvider = (type, factory) => factory.Create(typeof(T));
 			});
 
 			// Configure the localization options
@@ -74,8 +78,12 @@ namespace Memento.Shared.Services.Localization
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IMvcBuilder"/>.
 		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <typeparam name="T">The shared resources type.</typeparam>
+		///
+		/// <param name="builder">The mvc builder.</param>
 		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
+		[UsedImplicitly]
 		public static IMvcBuilder AddSharedLocalization<T>(this IMvcBuilder builder, Action<SharedLocalizerOptions> action) where T : class
 		{
 			// Create the options
@@ -93,10 +101,12 @@ namespace Memento.Shared.Services.Localization
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="SharedLocalizerOptions"/>
 		/// </summary>
-		/// 
-		/// <param name="options">The options.</param>
 		///
 		/// <typeparam name="T">The shared resources type.</typeparam>
+		///
+		/// <param name="services">The service collection.</param>
+		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddSharedLocalization<T>(this IServiceCollection services, SharedLocalizerOptions options) where T : class
 		{
 			// Validate the options
@@ -144,9 +154,13 @@ namespace Memento.Shared.Services.Localization
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <typeparam name="T">The shared resources type.</typeparam>
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
-		public static IServiceCollection AddSharedLocalization<T>(this IServiceCollection builder, Action<SharedLocalizerOptions> action) where T : class
+		[UsedImplicitly]
+		public static IServiceCollection AddSharedLocalization<T>(this IServiceCollection services, Action<SharedLocalizerOptions> action) where T : class
 		{
 			// Create the options
 			var options = new SharedLocalizerOptions();
@@ -154,17 +168,19 @@ namespace Memento.Shared.Services.Localization
 			action?.Invoke(options);
 
 			// Register the service
-			builder.AddSharedLocalization<T>(options);
+			services.AddSharedLocalization<T>(options);
 
-			return builder;
+			return services;
 		}
 
 		/// <summary>
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
 		/// Uses the specified <seealso cref="SharedLocalizerOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="builder">The application builder.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IApplicationBuilder UseSharedLocalization(this IApplicationBuilder builder, SharedLocalizerOptions options)
 		{
 			// Configure the localization options
@@ -185,8 +201,10 @@ namespace Memento.Shared.Services.Localization
 		/// Registers the <see cref="SharedLocalizerService{T}"/> in the pipeline of the specified <seealso cref="IApplicationBuilder"/>.
 		/// Configures the options using specified <seealso cref="Action{SharedLocalizerOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="builder">The application builder.</param>
 		/// <param name="action">The action that configures the <seealso cref="SharedLocalizerOptions"/>.</param>
+		[UsedImplicitly]
 		public static IApplicationBuilder UseSharedLocalization(this IApplicationBuilder builder, Action<SharedLocalizerOptions> action)
 		{
 			// Create the options

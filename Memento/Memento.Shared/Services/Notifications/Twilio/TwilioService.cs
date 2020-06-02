@@ -2,13 +2,12 @@
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 
-namespace Memento.Shared.Services.TextMessages
+namespace Memento.Shared.Services.Notifications.Twilio
 {
 	/// <summary>
 	/// Implements the generic interface for a text message service using Twilio.
@@ -23,11 +22,6 @@ namespace Memento.Shared.Services.TextMessages
 		private readonly TwilioOptions Options;
 
 		/// <summary>
-		/// The http client.
-		/// </summary>
-		private readonly HttpClient HttpClient;
-
-		/// <summary>
 		/// The logger.
 		/// </summary>
 		private readonly ILogger Logger;
@@ -39,12 +33,10 @@ namespace Memento.Shared.Services.TextMessages
 		/// </summary>
 		/// 
 		/// <param name="options">The options.</param>
-		/// <param name="httpClient">The http client.</param>
 		/// <param name="logger">The logger.</param>
-		public TwilioService(IOptions<TwilioOptions> options, HttpClient httpClient, ILogger<TwilioService> logger)
+		public TwilioService(IOptions<TwilioOptions> options, ILogger<TwilioService> logger)
 		{
 			this.Options = options.Value;
-			this.HttpClient = httpClient;
 			this.Logger = logger;
 		}
 		#endregion

@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using JetBrains.Annotations;
 using Memento.Shared.Models.Pagination;
 
 namespace Memento.Shared.Configuration
@@ -8,22 +9,14 @@ namespace Memento.Shared.Configuration
 	/// </summary>
 	/// 
 	/// <seealso cref="Profile" />
+	[UsedImplicitly]
 	public abstract class MementoMapperProfile : Profile
 	{
-		#region [Constructor]
-		/// <summary>
-		/// Initializes a new instance of the <see cref="MementoMapperProfile"/> class.
-		/// </summary>
-		public MementoMapperProfile()
-		{
-			this.CreateMappings();
-		}
-		#endregion
-
 		#region [Methods]
 		/// <summary>
 		/// Creates the mapping configurations.
 		/// </summary>
+		[UsedImplicitly]
 		protected virtual void CreateMappings()
 		{
 			#region [Pagination]

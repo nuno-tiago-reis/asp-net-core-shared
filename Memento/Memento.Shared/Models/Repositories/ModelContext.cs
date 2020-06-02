@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using JetBrains.Annotations;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading;
@@ -10,6 +11,7 @@ namespace Memento.Shared.Models.Repositories
 	/// Implements the generic interface for a model context.
 	/// Provides methods to automatically maintain traceability during create and update operations.
 	/// </summary>
+	[UsedImplicitly]
 	public abstract class ModelContext : DbContext, IModelContext
 	{
 		#region [Constructors]
@@ -18,14 +20,15 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="options">The options.</param>
-		public ModelContext(DbContextOptions options) : base(options)
+		protected ModelContext(DbContextOptions options) : base(options)
 		{
 			// Nothing to do here.
 		}
 		#endregion
 
 		#region [Methods]
-		/// <inheritdoc />
+		/// <inheritdoc cref="IModelContext"/> />
+		[UsedImplicitly]
 		public override int SaveChanges()
 		{
 			this.UpdateModelTimestamps();
@@ -33,7 +36,8 @@ namespace Memento.Shared.Models.Repositories
 			return base.SaveChanges();
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc cref="IModelContext"/> />
+		[UsedImplicitly]
 		public override int SaveChanges(bool acceptAllChangesOnSuccess)
 		{
 			this.UpdateModelTimestamps();
@@ -41,7 +45,8 @@ namespace Memento.Shared.Models.Repositories
 			return base.SaveChanges(acceptAllChangesOnSuccess);
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc cref="IModelContext"/> />
+		[UsedImplicitly]
 		public override Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
 		{
 			this.UpdateModelTimestamps();
@@ -49,7 +54,8 @@ namespace Memento.Shared.Models.Repositories
 			return base.SaveChangesAsync(cancellationToken);
 		}
 
-		/// <inheritdoc />
+		/// <inheritdoc cref="IModelContext"/> />
+		[UsedImplicitly]
 		public override Task<int> SaveChangesAsync(bool acceptAllChangesOnSuccess, CancellationToken cancellationToken = default)
 		{
 			this.UpdateModelTimestamps();
@@ -62,6 +68,7 @@ namespace Memento.Shared.Models.Repositories
 		/// - If an entry was created, then the 'CreatedAt' field is automatically populated.
 		/// - If an entry was updated, then the 'UpdatedAt' field is automatically populated.
 		/// </summary>
+		[UsedImplicitly]
 		private void UpdateModelTimestamps()
 		{
 			// Find entries that were created

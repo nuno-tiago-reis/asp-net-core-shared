@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.ModelBinding;
+﻿using JetBrains.Annotations;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Memento.Shared.Models.Bindings
 	/// </summary>
 	/// 
 	/// <seealso cref="IModelBinder" />
+	[UsedImplicitly]
 	public sealed class UtcAwareDateTimeModelBinder : IModelBinder
 	{
 		#region [Methods]
@@ -21,7 +23,7 @@ namespace Memento.Shared.Models.Bindings
 				throw new ArgumentNullException(nameof(bindingContext));
 			}
 
-			string modelName = bindingContext.ModelName;
+			var modelName = bindingContext.ModelName;
 			var valueProviderResult = bindingContext.ValueProvider.GetValue(modelName);
 			if (valueProviderResult == ValueProviderResult.None)
 			{

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Primitives;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 
@@ -11,6 +12,7 @@ namespace Memento.Shared.Models.Repositories
 	/// 
 	/// <typeparam name="TModelFilterOrderBy">The model filter order by type.</typeparam>
 	/// <typeparam name="TModelFilterOrderDirection">The model filter order direction type.</typeparam>
+	[UsedImplicitly]
 	public abstract class ModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection> : IModelFilter<TModelFilterOrderBy, TModelFilterOrderDirection>
 		where TModelFilterOrderBy : Enum
 		where TModelFilterOrderDirection : Enum
@@ -19,17 +21,17 @@ namespace Memento.Shared.Models.Repositories
 		/// <summary>
 		/// The maximum page size.
 		/// </summary>
-		public const int MaximumPageSize = 50;
+		public const int MAXIMUM_PAGE_SIZE = 50;
 
 		/// <summary>
 		/// The default page size.
 		/// </summary>
-		public const int DefaultPageSize = 10;
+		public const int DEFAULT_PAGE_SIZE = 10;
 
 		/// <summary>
 		/// The minimum page size.
 		/// </summary>
-		public const int MinimumPageSize = 1;
+		public const int MINIMUM_PAGE_SIZE = 1;
 		#endregion
 
 		#region [Attributes]
@@ -46,6 +48,7 @@ namespace Memento.Shared.Models.Repositories
 
 		#region [Properties]
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public int PageNumber
 		{
 			get { return this.InnerPageNumber; }
@@ -53,27 +56,30 @@ namespace Memento.Shared.Models.Repositories
 		}
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public int PageSize
 		{
 			get { return this.InnerPageSize; }
-			set { this.InnerPageSize = Math.Min(Math.Max(value, MinimumPageSize), MaximumPageSize); }
+			set { this.InnerPageSize = Math.Min(Math.Max(value, MINIMUM_PAGE_SIZE), MAXIMUM_PAGE_SIZE); }
 		}
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public TModelFilterOrderBy OrderBy { get; set; }
 
 		/// <inheritdoc />
+		[UsedImplicitly]
 		public TModelFilterOrderDirection OrderDirection { get; set; }
 		#endregion
 
 		#region [Constructors]
 		/// <summary>
-		/// Initializes a new instance of the <see cref="ModelFilter{TModelFilterOrder}"/> class.
+		/// Initializes a new instance of the <see cref="ModelFilter{TModelFilterOrder, TModelFilterOrderDirection}"/> class.
 		/// </summary>
-		public ModelFilter()
+		protected ModelFilter()
 		{
 			this.PageNumber = 1;
-			this.PageSize = DefaultPageSize;
+			this.PageSize = DEFAULT_PAGE_SIZE;
 		}
 		#endregion
 
@@ -83,6 +89,7 @@ namespace Memento.Shared.Models.Repositories
 		/// </summary>
 		/// 
 		/// <param name="query">The query.</param>
+		[UsedImplicitly]
 		public virtual void ReadFromQuery(Dictionary<string, StringValues> query)
 		{
 			if (query != null)
@@ -96,8 +103,7 @@ namespace Memento.Shared.Models.Repositories
 		/// <summary>
 		/// Writes the filter to a query string.
 		/// </summary>
-		/// 
-		/// <param name="query">The query.</param>
+		[UsedImplicitly]
 		public virtual Dictionary<string, string> WriteToQuery()
 		{
 			var query = new Dictionary<string, string>();

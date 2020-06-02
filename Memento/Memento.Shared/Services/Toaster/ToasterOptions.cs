@@ -11,7 +11,7 @@ namespace Memento.Shared.Services.Toaster
 		/// <summary>
 		/// Initializes a new instance of the <see cref="ToasterOptions"/> class.
 		/// </summary>
-		public ToasterOptions(): base()
+		public ToasterOptions()
 		{
 			this.PositionClass = Defaults.Classes.Position.TopRight;
 			this.PreventDuplicates = false;

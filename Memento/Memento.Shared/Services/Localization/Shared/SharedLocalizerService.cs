@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Localization;
 using System;
 
-namespace Memento.Shared.Services.Localization
+namespace Memento.Shared.Services.Localization.Shared
 {
 	/// <summary>
 	/// Implements the generic interface for a shared localizer service.
@@ -20,7 +20,7 @@ namespace Memento.Shared.Services.Localization
 
 		#region [Constructors]
 		/// <summary>
-		/// Initializes a new instance of the <see cref="SharedLocalizer"/> class.
+		/// Initializes a new instance of the <see cref="SharedLocalizerService{TSharedResources}"/> class.
 		/// </summary>
 		/// 
 		/// <param name="stringLocalizer">The string localizer.</param>
@@ -32,7 +32,7 @@ namespace Memento.Shared.Services.Localization
 
 		#region [Methods]
 		/// <inheritdoc />
-		public String GetString(string key, params string[] arguments)
+		public string GetString(string key, params object[] arguments)
 		{
 			if (arguments != null && arguments.Length > 0)
 			{
@@ -45,7 +45,7 @@ namespace Memento.Shared.Services.Localization
 		}
 
 		/// <inheritdoc />
-		public String GetString<T>(string key, params string[] arguments) where T : class
+		public string GetString<T>(string key, params object[] arguments) where T : class
 		{
 			string format = $"{typeof(T).FullName}.{key}";
 
@@ -60,7 +60,7 @@ namespace Memento.Shared.Services.Localization
 		}
 
 		/// <inheritdoc />
-		public String GetString(Type type, string key, params string[] arguments)
+		public string GetString(Type type, string key, params object[] arguments)
 		{
 			string format = $"{type.FullName}.{key}";
 

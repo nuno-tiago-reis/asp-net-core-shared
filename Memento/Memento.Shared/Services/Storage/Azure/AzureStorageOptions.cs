@@ -1,4 +1,4 @@
-﻿namespace Memento.Shared.Services.Storage
+﻿namespace Memento.Shared.Services.Storage.Azure
 {
 	/// <summary>
 	/// Implements the 'AzureStorage' options.

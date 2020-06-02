@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using JetBrains.Annotations;
+using System.Collections.Generic;
 
 namespace Memento.Shared.Models.Responses
 {
@@ -6,6 +7,7 @@ namespace Memento.Shared.Models.Responses
 	/// Implements the generic 'Memento' response.
 	/// Provides a shared structure to be used in every request.
 	/// </summary>
+	[UsedImplicitly]
 	public sealed class MementoResponse<T> where T : class
 	{
 		#region [Properties]
@@ -45,6 +47,7 @@ namespace Memento.Shared.Models.Responses
 		/// <param name="message">The message.</param>
 		/// <param name="data">The data.</param>
 		/// <param name="errors">The errors.</param>
+		[UsedImplicitly]
 		public MementoResponse(bool success, int statusCode, string message, T data = null, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
@@ -57,6 +60,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MementoResponse{T}"/> class.
 		/// </summary>
+		[UsedImplicitly]
 		public MementoResponse()
 		{
 			// Nothing to do here.
@@ -68,6 +72,7 @@ namespace Memento.Shared.Models.Responses
 	/// Implements the 'Memento' response.
 	/// Provides a shared structure to be used in every request.
 	/// </summary>
+	[UsedImplicitly]
 	public sealed class MementoResponse
 	{
 		#region [Properties]
@@ -101,6 +106,7 @@ namespace Memento.Shared.Models.Responses
 		/// <param name="statusCode">The status code.</param>
 		/// <param name="message">The message.</param>
 		/// <param name="errors">The errors.</param>
+		[UsedImplicitly]
 		public MementoResponse(bool success, int statusCode, string message, IEnumerable<string> errors = null)
 		{
 			this.Success = success;
@@ -112,6 +118,7 @@ namespace Memento.Shared.Models.Responses
 		/// <summary>
 		/// Initializes a new instance of the <see cref="MementoResponse"/> class.
 		/// </summary>
+		[UsedImplicitly]
 		public MementoResponse()
 		{
 			// Nothing to do here.

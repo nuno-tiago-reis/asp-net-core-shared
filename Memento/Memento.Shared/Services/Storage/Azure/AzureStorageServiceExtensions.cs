@@ -1,11 +1,13 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using JetBrains.Annotations;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Memento.Shared.Services.Storage
+namespace Memento.Shared.Services.Storage.Azure
 {
 	/// <summary>
 	/// Implements the necessary methods to add the <see cref="AzureStorageService"/> to the ASP.NET Core Dependency Injection.
 	/// </summary>
+	[UsedImplicitly]
 	public static class AzureStorageServiceExtensions
 	{
 		#region [Extensions]
@@ -13,8 +15,10 @@ namespace Memento.Shared.Services.Storage
 		/// Registers the <see cref="AzureStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Uses the specified <seealso cref="AzureStorageOptions"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="options">The options.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddAzureStorageService(this IServiceCollection services, AzureStorageOptions options)
 		{
 			// Validate the options
@@ -48,8 +52,10 @@ namespace Memento.Shared.Services.Storage
 		/// Registers the <see cref="AzureStorageService"/> in the dependency injection mechanism of the specified <seealso cref="IServiceCollection"/>.
 		/// Configures the options using specified <seealso cref="Action{AzureStorageOptions}"/>
 		/// </summary>
-		/// 
+		///
+		/// <param name="services">The service collection.</param>
 		/// <param name="action">The action that configures the <seealso cref="AzureStorageOptions"/>.</param>
+		[UsedImplicitly]
 		public static IServiceCollection AddAzureStorageService(this IServiceCollection services, Action<AzureStorageOptions> action)
 		{
 			// Create the options

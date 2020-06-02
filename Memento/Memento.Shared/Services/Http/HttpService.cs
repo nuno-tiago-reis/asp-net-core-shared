@@ -69,16 +69,16 @@ namespace Memento.Shared.Services.Http
 				if (responseMessage.HasMementoHeader())
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+					var response = await DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
 
 					return response;
 				}
 				else
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
+					var response = await DeserializeAsync<TResponse>(responseMessage.Content);
 
-					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode ,responseMessage.ReasonPhrase, response, null);
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode ,responseMessage.ReasonPhrase, response);
 				}
 			}
 			catch (Exception exception)
@@ -105,13 +105,13 @@ namespace Memento.Shared.Services.Http
 				if (responseMessage.HasMementoHeader())
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
+					var response = await DeserializeAsync<MementoResponse>(responseMessage.Content);
 
 					return response;
 				}
 				else
 				{
-					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, null);
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase);
 				}
 			}
 			catch (Exception exception)
@@ -134,13 +134,13 @@ namespace Memento.Shared.Services.Http
 				if (responseMessage.HasMementoHeader())
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<MementoResponse>(responseMessage.Content);
+					var response = await DeserializeAsync<MementoResponse>(responseMessage.Content);
 
 					return response;
 				}
 				else
 				{
-					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, null);
+					return new MementoResponse(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase);
 				}
 			}
 			catch (Exception exception)
@@ -170,16 +170,16 @@ namespace Memento.Shared.Services.Http
 				if (responseMessage.HasMementoHeader())
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
+					var response = await DeserializeAsync<MementoResponse<TResponse>>(responseMessage.Content);
 
 					return response;
 				}
 				else
 				{
 					// Deserialize the response
-					var response = await this.DeserializeAsync<TResponse>(responseMessage.Content);
+					var response = await DeserializeAsync<TResponse>(responseMessage.Content);
 
-					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, response, null);
+					return new MementoResponse<TResponse>(responseMessage.IsSuccessStatusCode, (int)responseMessage.StatusCode, responseMessage.ReasonPhrase, response);
 				}
 			}
 			catch (Exception exception)
@@ -198,11 +198,11 @@ namespace Memento.Shared.Services.Http
 		/// Serializes the given object into a string content.
 		/// </summary>
 		/// 
-		/// <typeparam name="TRequest">The request type.</typeparam>
+		/// <typeparam name="T">The request type.</typeparam>
 		/// 
-		/// <param name="@object">The object.</param>
-		private StringContent Serialize<TRequest>(TRequest request)
-			where TRequest : class
+		/// <param name="request">The request.</param>
+		private static StringContent Serialize<T>(T request)
+			where T : class
 		{
 			var @string = JsonSerializer.Serialize(request);
 
@@ -218,7 +218,7 @@ namespace Memento.Shared.Services.Http
 		/// <typeparam name="T">The object type.</typeparam>
 		/// 
 		/// <param name="content">The content.</param>
-		private async Task<T> DeserializeAsync<T>(HttpContent content)
+		private static async Task<T> DeserializeAsync<T>(HttpContent content)
 			where T : class
 		{
 			var @string = await content.ReadAsStringAsync();

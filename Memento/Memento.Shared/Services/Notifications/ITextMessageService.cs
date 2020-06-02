@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using JetBrains.Annotations;
+using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.TextMessages
+namespace Memento.Shared.Services.Notifications
 {
 	/// <summary>
 	/// Defines the interface for a notifications service.
 	/// </summary>
+	[UsedImplicitly]
 	public interface ITextMessageService
 	{
 		#region [Methods]
@@ -14,6 +16,7 @@ namespace Memento.Shared.Services.TextMessages
 		/// 
 		/// <param name="phoneNumber">The phone number.</param>
 		/// <param name="content">The content.</param>
+		[UsedImplicitly]
 		Task SendTextMessageAsync(string phoneNumber, string content);
 		#endregion
 	}

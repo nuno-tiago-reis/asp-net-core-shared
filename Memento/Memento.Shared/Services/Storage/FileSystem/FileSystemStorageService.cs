@@ -6,7 +6,7 @@ using System;
 using System.IO;
 using System.Threading.Tasks;
 
-namespace Memento.Shared.Services.Storage
+namespace Memento.Shared.Services.Storage.FileSystem
 {
 	/// <summary>
 	/// Implements the generic interface for a storage service using the File System Storage.
@@ -157,8 +157,7 @@ namespace Memento.Shared.Services.Storage
 		/// <summary>
 		/// Creates a file in the local storage.
 		/// </summary>
-		/// 
-		/// <param name="container">The container.</param>
+		///
 		/// <param name="file">The file (base64).</param>
 		/// <param name="fileName">The file name (optional, only if it should be override the file).</param>
 		private async Task<string> CreateLocalFileAsync(string file, string fileName)
@@ -188,14 +187,14 @@ namespace Memento.Shared.Services.Storage
 		/// <summary>
 		/// Gets a file from the local storage.
 		/// </summary>
-		/// 
+		///
 		/// <param name="fileName">The file name.</param>
 		private async Task<FileStream> GetLocalFileAsync(string fileName)
 		{
 			// Create the folder path
-			string folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
+			var folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
 			// Create the file path
-			string filePath = Path.Combine(folderPath, fileName);
+			var filePath = Path.Combine(folderPath, fileName);
 
 			// Check if the file exists
 			if (File.Exists(filePath))
@@ -214,9 +213,9 @@ namespace Memento.Shared.Services.Storage
 		private async Task DeleteLocalFileAsync(string fileName)
 		{
 			// Create the folder path
-			string folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
+			var folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
 			// Create the file path
-			string filePath = Path.Combine(folderPath, fileName);
+			var filePath = Path.Combine(folderPath, fileName);
 
 			// Check if the file exists
 			if (File.Exists(filePath))
