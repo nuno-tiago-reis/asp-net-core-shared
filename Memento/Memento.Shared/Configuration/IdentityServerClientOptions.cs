@@ -29,6 +29,16 @@ namespace Memento.Shared.Configuration
 		public string PostLogoutRedirectUri { get; set; }
 
 		/// <summary>
+		/// Gets or sets the black listed uris
+		/// </summary>
+		public IEnumerable<string> BlackListedUris { get; set; }
+
+		/// <summary>
+		/// Gets or sets the white listed uris
+		/// </summary>
+		public IEnumerable<string> WhiteListedUris { get; set; }
+
+		/// <summary>
 		/// Gets or sets the response type to use on the authorization flow.
 		/// </summary>
 		public string ResponseType { get; set; }

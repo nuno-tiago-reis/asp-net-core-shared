@@ -3,8 +3,10 @@ using JetBrains.Annotations;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.Extensions.Logging;
 using Sotsera.Blazor.Toaster;
+using System;
 using System.Threading.Tasks;
 
 namespace Memento.Shared.Components
@@ -84,6 +86,31 @@ namespace Memento.Shared.Components
 			var state = await this.AuthenticationState;
 
 			return state.User.IsInRole("Administrator");
+		}
+
+		/// <summary>
+		/// Logs the exception to the standard logger and if the exception is an
+		/// <seealso cref="AccessTokenNotAvailableException"/> redirects to the configured handler.
+		/// </summary>
+		///
+		/// <param name="exception">The exception.</param>
+		[UsedImplicitly]
+		protected void HandleException(Exception exception)
+		{
+			if (exception is AccessTokenNotAvailableException)
+			{
+				// Redirect to the exception handler
+				((AccessTokenNotAvailableException)exception).Redirect();
+			}
+
+			if (exception.InnerException is AccessTokenNotAvailableException)
+			{
+				// Redirect to the exception handler
+				((AccessTokenNotAvailableException)exception.InnerException).Redirect();
+			}
+
+			// Log the error
+			this.Logger.LogError(exception.Message, exception);
 		}
 		#endregion
 	}
