@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using JetBrains.Annotations;
+using Memento.Shared.Exceptions;
 using Memento.Shared.Services.Localization;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -97,16 +98,27 @@ namespace Memento.Shared.Components
 		[UsedImplicitly]
 		protected void HandleException(Exception exception)
 		{
-			if (exception is AccessTokenNotAvailableException)
+			if (exception is AccessTokenNotAvailableException accessTokenException)
 			{
 				// Redirect to the exception handler
-				((AccessTokenNotAvailableException)exception).Redirect();
+				accessTokenException.Redirect();
+				return;
 			}
 
-			if (exception.InnerException is AccessTokenNotAvailableException)
+			if (exception.InnerException is AccessTokenNotAvailableException innerAccessTokenException)
 			{
 				// Redirect to the exception handler
-				((AccessTokenNotAvailableException)exception.InnerException).Redirect();
+				innerAccessTokenException.Redirect();
+				return;
+			}
+
+			if (exception is MementoException)
+			{
+				// TODO - Redirect to the Error Page (Expected)
+			}
+			else
+			{
+				// TODO - Redirect to the Error Page (Unexpected)
 			}
 
 			// Log the error
