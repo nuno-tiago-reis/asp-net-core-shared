@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Collections.Generic;
 
 namespace Memento.Shared.Controllers
 {
@@ -150,7 +151,7 @@ namespace Memento.Shared.Controllers
 		}
 
 		/// <summary>
-		/// Builds an <seealso cref="ActionResult"/> response for a 'GetAll'.
+		/// Builds an <seealso cref="ActionResult"/> response for a 'GetAll' using an IPage collection of models.
 		/// </summary>
 		/// 
 		/// <typeparam name="TModel">The model type.</typeparam>
@@ -170,6 +171,34 @@ namespace Memento.Shared.Controllers
 
 			// Build the response
 			var response = new MementoResponse<Page<TContract>>(true, StatusCodes.Status200OK, message, contracts);
+
+			// Build the response header
+			this.HttpContext.Response.AddMementoHeader();
+
+			return this.Ok(response);
+		}
+
+		/// <summary>
+		/// Builds an <seealso cref="ActionResult"/> response for a 'GetAll' using an IList collection of models.
+		/// </summary>
+		/// 
+		/// <typeparam name="TModel">The model type.</typeparam>
+		/// <typeparam name="TContract">The contract type.</typeparam>
+		/// 
+		/// <param name="models">The models.</param>
+		[UsedImplicitly]
+		protected ActionResult<MementoResponse<IList<TContract>>> BuildGetAllResponse<TModel, TContract>(IList<TModel> models)
+			where TModel : class, IModel
+			where TContract : class
+		{
+			// Build the message
+			var message = this.BuildGetAllSuccessfulMessage();
+
+			// Build the contracts
+			var contracts = this.Mapper.Map<IList<TContract>>(models);
+
+			// Build the response
+			var response = new MementoResponse<IList<TContract>>(true, StatusCodes.Status200OK, message, contracts);
 
 			// Build the response header
 			this.HttpContext.Response.AddMementoHeader();
