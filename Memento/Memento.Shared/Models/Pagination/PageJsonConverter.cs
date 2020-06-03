@@ -87,10 +87,10 @@ namespace Memento.Shared.Models.Pagination
 					throw new JsonException();
 				}
 
-				int pageNumber = 0;
-				int pageSize = 0;
-				int totalPages = 0;
-				int totalItems = 0;
+				var pageNumber = 0;
+				var pageSize = 0;
+				var totalPages = 0;
+				var totalItems = 0;
 				string orderBy = default;
 				string orderDirection = default;
 				var items = new List<T>();
@@ -107,7 +107,7 @@ namespace Memento.Shared.Models.Pagination
 						throw new JsonException();
 					}
 
-					string propertyName = reader.GetString();
+					var propertyName = reader.GetString();
 
 					// PageSize
 					if (PropertyNameMatches(propertyName, nameof(Page<T>.PageSize), options))

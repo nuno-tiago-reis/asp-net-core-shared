@@ -70,7 +70,7 @@ namespace Memento.Shared.Services.Templates
 		public async Task<string> RenderAsync(string name)
 		{
 			// Render the template with no model
-			return await RenderAsync<object>(name, null);
+			return await this.RenderAsync<object>(name, null);
 		}
 
 		/// <inheritdoc />
@@ -133,7 +133,7 @@ namespace Memento.Shared.Services.Templates
 		/// </summary>
 		private ActionContext GetActionContext()
 		{
-			var httpContext = new DefaultHttpContext { RequestServices = ServiceProvider };
+			var httpContext = new DefaultHttpContext { RequestServices = this.ServiceProvider };
 			var routeData = new RouteData();
 			var actionDescriptor = new ActionDescriptor();
 

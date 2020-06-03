@@ -72,7 +72,7 @@ namespace Memento.Shared.Models.Repositories
 		private void UpdateModelTimestamps()
 		{
 			// Find entries that were created
-			var createdEntries = ChangeTracker.Entries().Where(entry => entry.State == EntityState.Added);
+			var createdEntries = this.ChangeTracker.Entries().Where(entry => entry.State == EntityState.Added);
 
 			// Update their 'CreatedAt' fields if they implement 'IModel'
 			foreach (var createdEntry in createdEntries)
@@ -84,7 +84,7 @@ namespace Memento.Shared.Models.Repositories
 			}
 
 			// Find entries that were created
-			var modifiedEntries = ChangeTracker.Entries().Where(entry => entry.State == EntityState.Modified);
+			var modifiedEntries = this.ChangeTracker.Entries().Where(entry => entry.State == EntityState.Modified);
 
 			// Update their 'UpdatedAt' fields if they implement 'IModel'
 			foreach (var modifiedEntry in modifiedEntries)

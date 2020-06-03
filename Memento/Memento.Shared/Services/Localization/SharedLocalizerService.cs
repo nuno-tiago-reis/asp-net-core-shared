@@ -47,7 +47,7 @@ namespace Memento.Shared.Services.Localization
 		/// <inheritdoc />
 		public string GetString<T>(string key, params object[] arguments) where T : class
 		{
-			string format = $"{typeof(T).FullName}.{key}";
+			var format = $"{typeof(T).FullName}.{key}";
 
 			if (arguments != null && arguments.Length > 0)
 			{
@@ -62,7 +62,7 @@ namespace Memento.Shared.Services.Localization
 		/// <inheritdoc />
 		public string GetString(Type type, string key, params object[] arguments)
 		{
-			string format = $"{type.FullName}.{key}";
+			var format = $"{type.FullName}.{key}";
 
 			if (arguments != null && arguments.Length > 0)
 			{

@@ -163,9 +163,9 @@ namespace Memento.Shared.Services.Storage
 		private async Task<string> CreateLocalFileAsync(string file, string fileName)
 		{
 			// Create the folder path
-			string folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
+			var folderPath = Path.Combine(this.Environment.WebRootPath, this.Options.Folder);
 			// Create the file path
-			string filePath = Path.Combine(folderPath, fileName);
+			var filePath = Path.Combine(folderPath, fileName);
 
 			// Create the folder if missing
 			if (!Directory.Exists(folderPath))

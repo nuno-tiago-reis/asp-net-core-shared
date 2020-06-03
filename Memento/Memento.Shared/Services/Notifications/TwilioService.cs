@@ -53,8 +53,8 @@ namespace Memento.Shared.Services.Notifications
 				// Send the message
 				await MessageResource.CreateAsync
 				(
-					to: new PhoneNumber(phoneNumber),
 					from: new PhoneNumber(this.Options.Sender.PhoneNumber),
+					to: new PhoneNumber(phoneNumber),
 					body: content
 				);
 			}

@@ -350,7 +350,7 @@ namespace Memento.Shared.Extensions
 			var result = new List<char>();
 			var array = @string.ToCharArray();
 
-			foreach (char item in array)
+			foreach (var item in array)
 			{
 				if (char.IsUpper(item))
 				{

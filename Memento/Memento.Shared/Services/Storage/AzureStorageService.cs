@@ -51,7 +51,7 @@ namespace Memento.Shared.Services.Storage
 				var container = await this.GetCloudBlobContainerAsync();
 
 				// Create the blob
-				var blob = await this.CreateCloudBlobAsync(container, file, fileName);
+				var blob = await CreateCloudBlobAsync(container, file, fileName);
 
 				// Return the blob uri
 				return blob.Uri.ToString();
@@ -75,10 +75,10 @@ namespace Memento.Shared.Services.Storage
 				var container = await this.GetCloudBlobContainerAsync();
 
 				// Delete the blob
-				await this.DeleteCloudBlobAsync(container, fileName);
+				await DeleteCloudBlobAsync(container, fileName);
 
 				// Create the blob
-				var blob = await this.CreateCloudBlobAsync(container, file, fileName);
+				var blob = await CreateCloudBlobAsync(container, file, fileName);
 				
 				// Return the blob uri
 				return blob.Uri.ToString();
@@ -102,7 +102,7 @@ namespace Memento.Shared.Services.Storage
 				var container = await this.GetCloudBlobContainerAsync();
 
 				// Delete the blob
-				await this.DeleteCloudBlobAsync(container, fileName);
+				await DeleteCloudBlobAsync(container, fileName);
 			}
 			catch (Exception exception)
 			{
@@ -123,7 +123,7 @@ namespace Memento.Shared.Services.Storage
 				var container = await this.GetCloudBlobContainerAsync();
 
 				// Get the blob
-				var blob = await this.GetCloudBlobAsync(container, fileName);
+				var blob = await GetCloudBlobAsync(container, fileName);
 
 				// Return the blob stream
 				return await blob.OpenReadAsync();
@@ -167,7 +167,7 @@ namespace Memento.Shared.Services.Storage
 		/// <param name="container">The container.</param>
 		/// <param name="file">The file (base64).</param>
 		/// <param name="fileName">The file name (optional, only if it should be override the file).</param>
-		private async Task<CloudBlockBlob> CreateCloudBlobAsync(CloudBlobContainer container, string file, string fileName)
+		private static async Task<CloudBlockBlob> CreateCloudBlobAsync(CloudBlobContainer container, string file, string fileName)
 		{
 			// Get the blob reference
 			var blob = container.GetBlockBlobReference(fileName);
@@ -201,7 +201,7 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="container">The container.</param>
 		/// <param name="fileName">The file name.</param>
-		private async Task<ICloudBlob> GetCloudBlobAsync(CloudBlobContainer container, string fileName)
+		private static async Task<ICloudBlob> GetCloudBlobAsync(CloudBlobContainer container, string fileName)
 		{
 			// Get the blob reference
 			var blob = await container.GetBlobReferenceFromServerAsync(fileName);
@@ -215,7 +215,7 @@ namespace Memento.Shared.Services.Storage
 		/// 
 		/// <param name="container">The container.</param>
 		/// <param name="fileName">The file name.</param>
-		private async Task DeleteCloudBlobAsync(CloudBlobContainer container, string fileName)
+		private static async Task DeleteCloudBlobAsync(CloudBlobContainer container, string fileName)
 		{
 			// Get the blob reference
 			var blob = container.GetBlockBlobReference(fileName);

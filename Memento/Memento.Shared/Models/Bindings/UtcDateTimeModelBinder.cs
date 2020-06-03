@@ -36,7 +36,7 @@ namespace Memento.Shared.Models.Bindings
 			var metadata = bindingContext.ModelMetadata;
 			var type = metadata.UnderlyingOrModelType;
 
-			string value = valueProviderResult.FirstValue;
+			var value = valueProviderResult.FirstValue;
 			var culture = valueProviderResult.Culture;
 
 			object model;
