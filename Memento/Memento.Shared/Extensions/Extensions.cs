@@ -221,6 +221,8 @@ namespace Memento.Shared.Extensions
 			options.PropertyNameCaseInsensitive = true;
 			// convert properties to camel case
 			options.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+			// ignore comments
+			options.ReadCommentHandling = JsonCommentHandling.Skip;
 		}
 		#endregion
 
